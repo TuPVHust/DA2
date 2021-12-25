@@ -13,4 +13,8 @@ class Schedule extends Model
     protected $table='schedules';
     protected $primaryKey = 'id';
     protected $fillable=['description','driver_id','truck_id','shift','status','order_id','init_money'];
+
+    public function schedule_details(){
+        return $this.hasMany(ScheduleDetail::class, 'schedule_id');
+    }
 }

@@ -12,5 +12,8 @@ class Category extends Model
     protected $table='categories';
     protected $primaryKey = 'id';
     protected $fillable=['name',];
-    
+
+    public function schedule_details(){
+        return $this->hasMany(ScheduleDetail::class, 'category_id');
+    }
 }

@@ -13,4 +13,8 @@ class Order extends Model
     protected $table='orders';
     protected $primaryKey = 'id';
     protected $fillable=['name','partner_id','piority','status'];
+
+    public function schedules_details(){
+        return $this.hasMany(Schedule::class, 'order_id');
+    }
 }

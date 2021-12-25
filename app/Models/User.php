@@ -26,6 +26,10 @@ class User extends Authenticatable
         'status',
     ];
 
+
+    public function schedules(){
+        return $this.hasMany(Schedule::class, 'driver_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

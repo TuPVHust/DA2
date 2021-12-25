@@ -11,4 +11,8 @@ class Truck extends Model
     protected $table='schedules';
     protected $primaryKey = 'id';
     protected $fillable=['plate','figure','brand','capacity','owner_id','status'];
+    
+    public function schedules(){
+        return $this.hasMany(Schedule::class, 'truck_id');
+    }
 }

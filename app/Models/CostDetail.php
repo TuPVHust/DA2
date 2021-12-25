@@ -12,4 +12,8 @@ class CostDetail extends Model
     protected $table='cost_details';
     protected $primaryKey = 'id';
     protected $fillable=['schedule_id','cost_group_id','cost','actual_cost','description',];
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class);
+    }
 }

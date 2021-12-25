@@ -13,4 +13,14 @@ class Partner extends Model
     protected $table='partners';
     protected $primaryKey = 'id';
     protected $fillable=['name','phone','NCC','NM','car_owner'];
+
+    public function orders(){
+        return $this.hasMany(Order::class, 'partner_id');
+    }
+    public function schedule_details_as_buyer(){
+        return $this.hasMany(ScheduleDetail::class, 'buyer_id');
+    }
+    public function schedule_details_as_seller(){
+        return $this.hasMany(ScheduleDetail::class, 'seller_id');
+    }
 }
