@@ -19,6 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->text('description')->nullable()->collation('utf8mb4_unicode_ci');
             $table->bigInteger('driver_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('truck_id')->unsigned()->nullable()->default(null);
+            $table->bigInteger('car_owner_id')->unsigned()->nullable()->default(null);
             $table->tinyInteger('shift');
             $table->tinyInteger('status')->default(1);
             $table->bigInteger('order_id')->unsigned()->nullable()->default(null);
@@ -26,6 +27,7 @@ class CreateSchedulesTable extends Migration
             $table->foreign('driver_id')->references('id')->on('users');
             $table->foreign('truck_id')->references('id')->on('trucks');
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('car_owner_id')->references('id')->on('partners');
         });
     }
 

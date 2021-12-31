@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->string('phone')->unique();
             $table->tinyInteger('role')->comment('0->driver; 1->boss; 2->sysAdmin ')->default(0);
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(0);
         });
     }
 

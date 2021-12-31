@@ -12,9 +12,13 @@ class Order extends Model
 
     protected $table='orders';
     protected $primaryKey = 'id';
-    protected $fillable=['name','partner_id','piority','status'];
+    protected $fillable=['partner_id','piority','status','summary','description'];
 
     public function schedules_details(){
         return $this.hasMany(Schedule::class, 'order_id');
+    }
+
+    public function partner(){
+        return $this->belongsTo(Partner::class, 'partner_id');
     }
 }

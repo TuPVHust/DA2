@@ -7,6 +7,14 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    
+    public function render($request, Throwable $exception)
+{
+    if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+        return redirect()->route('login');
+    }
+    return parent::render($request, $exception);
+}
     /**
      * A list of the exception types that are not reported.
      *

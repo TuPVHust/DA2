@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->bigInteger('partner_id')->unsigned()->nullable()->default(null);
             $table->text('description')->nullable()->collation('utf8mb4_unicode_ci');
+            $table->text('summary')->collation('utf8mb4_unicode_ci');
             $table->integer('piority')->default(0);
             $table->foreign('partner_id')->references('id')->on('partners')->default(null);
             $table->tinyInteger('status')->default(1);

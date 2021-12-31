@@ -9,6 +9,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    @yield('css')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -28,6 +29,9 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
+    {{-- select2 --}}
+
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -48,7 +52,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="{{ route('boss.dashboard') }}" class="nav-link">Dash board</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -181,6 +185,36 @@
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
+                @guest
+                    @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                    @endif
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
 
             </ul>
         </nav>
@@ -228,11 +262,72 @@
                         <!-- Add icons to the links using the .nav-icon class
                        with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="{{ route('boss.truck.index') }}" @class([
+                                'nav-link',
+                                'active' => Route::currentRouteName() == 'boss.truck.index',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.create',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.edit',
+                            ])>
+                                <i class="nav-icon fas fa-truck-moving"></i>
                                 <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
+                                    Quản lý xe
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.partner.index') }}" @class([
+                                'nav-link',
+                                'active' => Route::currentRouteName() == 'boss.partner.index',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.create',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.edit',
+                            ])>
+                                <i class=" nav-icon fas fa-handshake"></i>
+                                <p>
+                                    Quản lý đối tác
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.cost_group.index') }}" @class([
+                                'nav-link',
+                                'active' => Route::currentRouteName() == 'boss.cost_group.index',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.create',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.edit',
+                            ])>
+                                <i class="nav-icon fas fa-dollar-sign"></i>
+                                <p>
+                                    Quản lý chi phí
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.category.index') }}" @class([
+                                'nav-link',
+                                'active' => Route::currentRouteName() == 'boss.category.index',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.create',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.edit',
+                            ])>
+                                <i class="nav-icon fas fa-boxes"></i>
+                                <p>
+                                    Quản lý hàng hóa
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.order.index') }}" @class([
+                                'nav-link',
+                                'active' => Route::currentRouteName() == 'boss.order.index',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.create',
+                                // 'active' => Route::currentRouteName() == 'boss.partner.edit',
+                            ])>
+                                <i class="nav-icon fas fa-dolly-flatbed"></i>
+                                <p>
+                                    Quản lý đơn hàng
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
                         </li>
@@ -843,20 +938,19 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard</h1>
+                            @yield('title')
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="boss.dashboard">Home</a></li>
                                 <li class="breadcrumb-item active">Dashboard v1</li>
                             </ol>
                         </div>
                         <!-- /.col -->
                     </div>
 
-
-                    <div class="text">content </div>
+                    @yield('content')
                     <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
@@ -928,6 +1022,7 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    @yield('js')
 </body>
 
 </html>

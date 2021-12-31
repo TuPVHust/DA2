@@ -20,10 +20,12 @@ class CreateScheduleDetailsTable extends Migration
             $table->bigInteger('buyer_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('category_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('order_id')->unsigned()->nullable()->default(null);
+            
             $table->float('price');
             $table->float('actual_price');
             $table->float('revenue');
             $table->float('actual_revenue');
+            $table->float('quantity');
             $table->text('description')->nullable()->collation('utf8mb4_unicode_ci');
             $table->float('distance');
             $table->timestamps();
