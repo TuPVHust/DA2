@@ -16,7 +16,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="plate">Tóm tắt</label>
-                    <input type="text" class="form-control" id="summary" name="summary" @if (old('summary')) value="{{ old('summary') }}" @else value={{ $order->summary }} @endif
+                    <input type="text" class="form-control" id="summary" name="summary" @if (old('summary')) value="{{ old('summary') }}" @else value= "{{ $order->summary }}" @endif
                         placeholder="Nhập tóm tắt nội dung đơn hàng...">
                     @error('summary')
                         <small class="text-danger">{{ $message }}</small>
@@ -74,7 +74,25 @@
                                 <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status')== null and $order->status == 1) selected='selected' @endif>Đang tiến hành</option>
                                 <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status')== null and $order->status == 0) selected='selected'  @endif>Đã hoàn thành</option>
                             </select>
+                            @error('status')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Date:</label>
+                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
+                            name="date" placeholder="dd-mm-yyyy" @if (old('date')) value="{{ old('date') }}" @else value="{{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}" @endif />
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <div>
+                        @error('date')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -86,16 +104,19 @@
     </div>
 @endsection
 @section('js')
+
     <script>
+        $('#reservationdate').datetimepicker({
+            format: 'DD-MM-YYYY',
+        });
         $(function() {
             // Summernote
             $('#summernote').summernote()
-
             // CodeMirror
-            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                mode: "htmlmixed",
-                theme: "monokai"
-            });
+            // CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            //     mode: "htmlmixed",
+            //     theme: "monokai"
+            // });
         })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

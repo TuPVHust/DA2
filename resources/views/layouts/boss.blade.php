@@ -205,7 +205,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -264,7 +264,7 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.truck.index') }}" @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'boss.truck.index',
+                                'active' => strpos(Route::currentRouteName(), 'truck'),
                                 // 'active' => Route::currentRouteName() == 'boss.truck.create',
                                 // 'active' => Route::currentRouteName() == 'boss.truck.edit',
                             ])>
@@ -278,7 +278,7 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.partner.index') }}" @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'boss.partner.index',
+                                'active' => strpos(Route::currentRouteName(), 'partner'),
                                 // 'active' => Route::currentRouteName() == 'boss.partner.create',
                                 // 'active' => Route::currentRouteName() == 'boss.partner.edit',
                             ])>
@@ -292,7 +292,7 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.cost_group.index') }}" @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'boss.cost_group.index',
+                                'active' => strpos(Route::currentRouteName(), 'cost_group'),
                                 // 'active' => Route::currentRouteName() == 'boss.partner.create',
                                 // 'active' => Route::currentRouteName() == 'boss.partner.edit',
                             ])>
@@ -306,7 +306,7 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.category.index') }}" @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'boss.category.index',
+                                'active' => strpos(Route::currentRouteName(), 'category'),
                                 // 'active' => Route::currentRouteName() == 'boss.partner.create',
                                 // 'active' => Route::currentRouteName() == 'boss.partner.edit',
                             ])>
@@ -320,7 +320,7 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.order.index') }}" @class([
                                 'nav-link',
-                                'active' => Route::currentRouteName() == 'boss.order.index',
+                                'active' => strpos(Route::currentRouteName(), 'order'),
                                 // 'active' => Route::currentRouteName() == 'boss.partner.create',
                                 // 'active' => Route::currentRouteName() == 'boss.partner.edit',
                             ])>
@@ -996,6 +996,7 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ url('bossUI') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->

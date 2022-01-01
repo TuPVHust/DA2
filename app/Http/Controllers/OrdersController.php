@@ -102,11 +102,13 @@ class OrdersController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $check = (bool)strtotime($request->input('date'));
         if($request->validate([
             'summary'=>'required|unique:orders,summary,' . $order->id,
             'partner_id' => 'required|numeric',
             'piority' => 'required|numeric',
             'status' => 'required|in:0,1',
+            'date' => 'required|date_format:d-m-Y'
         ],
         [
             'summary.required' => 'Cần nhập tóm tắt cho đơn hàng',
@@ -117,8 +119,10 @@ class OrdersController extends Controller
             'piority.required' => 'cần nhập độ ưu tiên',
             'status.required' => 'trạng thái không tồn tại',
             'status.in' => 'trạng thái không hợp lệ',
+            'date.required' => 'cần nhập ngày tháng bắt đầu',
+            'date.date_format' => 'ngày tháng không đúng định dạng',
         ]
-        )){
+        )&& $check){
             // dd($request);
             $order->update([
                 'summary' => $request->input('summary'),
@@ -126,8 +130,12 @@ class OrdersController extends Controller
                 'piority' => $request->input('piority'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
+                'created_at' => date('Y-m-d',strtotime($request->input('date'))) ,
             ]); 
             return redirect()->route('boss.order.index')->with('alert-success','Cập nhật thành công.');
+        }
+        else{
+            return redirect()->route('boss.order.index')->with('alert-danger','Cập nhật thất bại, định dạng ngày tháng khoogn đúng.');
         }
     }
 

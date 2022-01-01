@@ -1,7 +1,9 @@
 @extends('layouts.boss')
 @section('css')
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> --}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endsection
 @section('title')
     <h1>Quản lý đổi tác</h1>
@@ -91,7 +93,20 @@
     </form>
 @endsection
 @section('js')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="{{ url('bossUI') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script> --}}
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -99,8 +114,9 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                select: true
-            });
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');;
         });
     </script>
     <script>
