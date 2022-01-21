@@ -867,43 +867,43 @@
                                                                                 </div>
                                                                             </div>
                                                                             {{-- Kết thúc bẳng chuyến --}}
-                                    {{-- bắt đầu bảng chi phí --}}
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Chi phí
-                                            </h3>
-                                        </div>
-                                        <!-- ./card-header -->
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-hover table-sm">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Loại</th>
-                                                        <th>Giá</th>
-                                                        <th>Thực chi</th>
-                                                        <th>Mô Tả</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($schedule->cost_details as $cost_detail)
-                                                        <tr data-widget="expandable-table" aria-expanded="false">
-                                                            <td>{{ $cost_detail->id }}</td>
-                                                            <td>{{ $cost_detail->cost_group->name }}</td>
-                                                            <td>{{ number_format($cost_detail->cost, 0) }}
-                                                            </td>
-                                                            <td>{{ number_format($cost_detail->actual_cost, 0) }}
-                                                            </td>
-                                                            <td>
-                                                                {!! $cost_detail->description !!}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
-                                    </div>
+                                                                            {{-- bắt đầu bảng chi phí --}}
+                                                                            <div class="card">
+                                                                               <div class="card-header">
+                                                                                    <h3 class="card-title">Chi phí
+                                                                                    </h3>
+                                                                                </div>
+                                                                                <!-- ./card-header -->
+                                                                                <div class="card-body">
+                                                                                    <table class="table table-bordered table-hover table-sm">
+                                                                                        <thead class="thead-light">
+                                                                                            <tr>
+                                                                                                <th>#</th>
+                                                                                                <th>Loại</th>
+                                                                                                <th>Giá</th>
+                                                                                                <th>Thực chi</th>
+                                                                                                <th>Mô Tả</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($schedule->cost_details as $cost_detail)
+                                                                                                <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                    <td>{{ $cost_detail->id }}</td>
+                                                                                                    <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                                                    <td>{{ number_format($cost_detail->cost, 0) }}
+                                                                                                    </td>
+                                                                                                    <td>{{ number_format($cost_detail->actual_cost, 0) }}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                    {!! $cost_detail->description !!}
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            <!-- /.card-body -->
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -944,7 +944,7 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    {{-- <script>
+    <script>
         $(function() {
             $("#example1").DataTable({
                 paging: false,
@@ -955,7 +955,7 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');;
         });
-    </script> --}}
+    </script>
     <script>
         $(".btndelete").click(function(ev) {
             ev.preventDefault();
