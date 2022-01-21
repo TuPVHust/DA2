@@ -1,4 +1,7 @@
 @extends('layouts.boss')
+@section('title')
+    AdminLTE 3 | Chỉnh sửa thông tin đơn hàng
+@endsection
 @section('css')
     {{-- select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -71,8 +74,8 @@
                         <div class="form-group">
                             <label for="status">Trạng thái</label>
                             <select class="form-control" name="status" id="status">
-                                <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status')== null and $order->status == 1) selected='selected' @endif>Đang tiến hành</option>
-                                <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status')== null and $order->status == 0) selected='selected'  @endif>Đã hoàn thành</option>
+                                <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status') == null and $order->status == 1) selected='selected' @endif>Đang tiến hành</option>
+                                <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status') == null and $order->status == 0) selected='selected'  @endif>Đã hoàn thành</option>
                             </select>
                             @error('status')
                                 <small class="text-danger">{{ $message }}</small>
@@ -104,7 +107,6 @@
     </div>
 @endsection
 @section('js')
-
     <script>
         $('#reservationdate').datetimepicker({
             format: 'DD-MM-YYYY',

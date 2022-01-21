@@ -11,6 +11,7 @@ use App\Http\Controllers\ScheduleDetailsController;
 use App\Http\Controllers\CostDetailsController;
 use App\Http\Controllers\CostGroupsController;
 use App\Http\Controllers\DriversController;
+
 // use Auth;
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,9 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
         'schedule_detail' => ScheduleDetailsController::class,
         'cost_detail' => CostDetailsController::class,
         'cost_group' => CostGroupsController::class,
-        'driver' => DriversController::class,
+    ]);
+    Route::resource('driver', DriversController::class)->only([
+        'index', 'show', 'edit' ,'update',
     ]);
 });
 
@@ -62,7 +65,7 @@ Route::get('/', function () {
     }
     elseif(Auth::user()->role = 1)
     {
-        return redirect()->route('home');
+        return redirect()->route('boss.dashboard');
     }
     elseif(Auth::user()->role = 0){
         return redirect()->route('index');

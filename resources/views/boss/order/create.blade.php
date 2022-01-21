@@ -1,4 +1,7 @@
 @extends('layouts.boss')
+@section('title')
+    AdminLTE 3 | Thêm mới đơn hàng
+@endsection
 @section('css')
     {{-- select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -35,7 +38,7 @@
             </div> --}}
                 <div class="form-group">
                     <label for="summernote">Mô tả chi tiết đơn hàng (không bắt buộc)</label>
-                    <textarea id="summernote" name="description" class="form-control"></textarea>
+                    <textarea id="summernote" name="description" class="form-control">@if (old('description')) {{ old('description') }} @else  @endif</textarea>
                     @error('summernote')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

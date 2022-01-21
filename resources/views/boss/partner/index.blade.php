@@ -1,4 +1,7 @@
 @extends('layouts.boss')
+@section('title')
+    AdminLTE 3 | Danh mục đối tác
+@endsection
 @section('css')
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> --}}
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">

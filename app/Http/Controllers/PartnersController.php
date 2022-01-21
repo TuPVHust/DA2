@@ -104,6 +104,7 @@ class PartnersController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
+        // dd($partner);
         if($request->validate([
             'name'=>'required|unique:partners,name,' . $partner->id,
             'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|digits:10|unique:partners,phone,' . $partner->id,

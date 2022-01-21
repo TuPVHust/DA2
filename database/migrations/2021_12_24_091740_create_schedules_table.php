@@ -20,13 +20,12 @@ class CreateSchedulesTable extends Migration
             $table->bigInteger('driver_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('truck_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('car_owner_id')->unsigned()->nullable()->default(null);
+            $table->timestamp('date', $precision = 0);
             $table->tinyInteger('shift');
             $table->tinyInteger('status')->default(1);
-            $table->bigInteger('order_id')->unsigned()->nullable()->default(null);
-            $table->float('init_money');
+            $table->double('init_money');
             $table->foreign('driver_id')->references('id')->on('users');
             $table->foreign('truck_id')->references('id')->on('trucks');
-            $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('car_owner_id')->references('id')->on('partners');
         });
     }

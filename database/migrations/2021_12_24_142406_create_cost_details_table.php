@@ -17,8 +17,8 @@ class CreateCostDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('schedule_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('cost_group_id')->unsigned()->nullable()->default(null);
-            $table->float('cost');
-            $table->float('actual_cost');
+            $table->double('cost');
+            $table->double('actual_cost');
             $table->text('description')->nullable()->collation('utf8mb4_unicode_ci');
             $table->timestamps();
             $table->foreign('schedule_id')->references('id')->on('schedules')->default(null);

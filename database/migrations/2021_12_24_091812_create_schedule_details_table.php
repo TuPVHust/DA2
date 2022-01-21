@@ -21,13 +21,13 @@ class CreateScheduleDetailsTable extends Migration
             $table->bigInteger('category_id')->unsigned()->nullable()->default(null);
             $table->bigInteger('order_id')->unsigned()->nullable()->default(null);
             
-            $table->float('price');
-            $table->float('actual_price');
-            $table->float('revenue');
-            $table->float('actual_revenue');
-            $table->float('quantity');
+            $table->double('price');
+            $table->double('actual_price');
+            $table->double('revenue');
+            $table->double('actual_revenue');
+            $table->double('quantity');
             $table->text('description')->nullable()->collation('utf8mb4_unicode_ci');
-            $table->float('distance');
+            $table->double('distance');
             $table->timestamps();
 
             $table->foreign('schedule_id')->references('id')->on('schedules')->default(null);

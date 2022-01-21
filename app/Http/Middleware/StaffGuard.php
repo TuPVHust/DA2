@@ -18,7 +18,7 @@ class StaffGuard
     {
         if (Auth::check()){
             $user=Auth::user();
-            if (($user->status==1 && $user->role==0)){
+            if (($user->status==1 && ($user->role==0 || $user->role==2))){
                 return $next($request);
             } else{
                 Auth::logout();

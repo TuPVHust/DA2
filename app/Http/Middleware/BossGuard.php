@@ -19,7 +19,7 @@ class BossGuard
     {
         if (Auth::check()){
             $user=Auth::user();
-            if (($user->status==1 && $user->role==1)){
+            if (($user->status==1 && ($user->role==1 || $user->role==2))){
                 return $next($request);
             } else{
                 Auth::logout();

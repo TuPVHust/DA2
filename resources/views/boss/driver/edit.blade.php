@@ -1,72 +1,44 @@
 @extends('layouts.boss')
 @section('title')
-    AdminLTE 3 | Chỉnh sửa thông tin đối tác
+    AdminLTE 3 | Chỉnh sửa thông tin tài xế
 @endsection
 
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Chỉnh sửa thông tin đối tác</h3>
+            <h3 class="card-title">Chỉnh sửa thông tin tài xế</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form action="{{ route('boss.partner.update', $partner->id) }}" method="POST">
+        <form action="{{ route('boss.driver.update', $driver->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
                     <label for="name">Tên</label>
-                    <input type="text" class="form-control" id="name" name="name" @if (old('name')) value="{{ old('name') }}" @else value="{{ $partner->name }}" @endif
-                        placeholder="Nhập tên đối tác...">
+                    <input type="text" class="form-control" id="name" name="name" @if (old('name')) value="{{ old('name') }}" @else value="{{ $driver->name }}" @endif
+                        placeholder="Nhập tên tài xế...">
                     @error('name')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="phone">Số điện thoại</label>
-                    <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" name="phone"
-                        @if (old('phone')) value="{{ old('phone') }}" @else value={{ $partner->phone }} @endif>
+                    <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại..." name="phone"
+                        @if (old('phone')) value="{{ old('phone') }}" @else value={{ $driver->phone }} @endif>
                     @error('phone')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                {{-- <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                    </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                    </div>
-                </div> --}}
-                <div class="">
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input class="custom-control-input" type="checkbox" id="NCC" value="0">
-                        <input type="text" style="display: none" id="NCCText" name="NCC" @if (old('NCC')) value="{{ old('NCC') }}" @else value={{ $partner->NCC }} @endif>
-                        <label for="NCC" class="custom-control-label">Nhà cung cấp(người bán)</label>
-                        @error('NCC')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input class="custom-control-input" type="checkbox" id="NM" value="0">
-                        <input type="text" style="display: none" id="NMText" name="NM" @if (old('NM')) value="{{ old('NM') }}" @else value={{ $partner->NM }} @endif>
-                        <label for="NM" class="custom-control-label">Người mua</label>
-                        @error('NM')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input class="custom-control-input" type="checkbox" id="car_owner" value="0">
-                        <input type="text" style="display: none" id="car_ownerText" name="car_owner"
-                            @if (old('car_owner')) value="{{ old('car_owner') }}" @else value={{ $partner->car_owner }} @endif>
-                        <label for="car_owner" class="custom-control-label">Chủ xe</label>
-                        @error('car_owner')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label for="status">Trạng thái</label>
+                    <select class="form-control" name="status" id="status">
+                        <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status') == null and $driver->status == 1) selected='selected' @endif>Đang làm việc</option>
+                        <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status') == null and $driver->status == 0) selected='selected'  @endif>Đã nghỉ</option>
+                    </select>
+                    @error('status')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
             <!-- /.card-body -->

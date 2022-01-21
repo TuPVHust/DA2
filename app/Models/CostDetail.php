@@ -16,4 +16,7 @@ class CostDetail extends Model
     public function schedule(){
         return $this->belongsTo(Schedule::class);
     }
+    public function cost_group(){
+        return $this->belongsTo(CostGroup::class);
+    }
 }

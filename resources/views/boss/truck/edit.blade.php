@@ -1,4 +1,7 @@
 @extends('layouts.boss')
+@section('title')
+    AdminLTE 3 | chỉnh sửa thông tin xe
+@endsection
 @section('css')
     {{-- select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -80,8 +83,8 @@
                         <div class="form-group">
                             <label for="status">Trạng thái</label>
                             <select class="form-control" name="status" id="status">
-                                <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status')== null and $truck->status == 1) selected='selected' @endif>Hoạt động</option>
-                                <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status')== null and $truck->status == 0) selected='selected'  @endif>Không hoạt động</option>
+                                <option value=1 @if (old('status') == 1) selected='selected' @elseif(old('status') == null and $truck->status == 1) selected='selected' @endif>Hoạt động</option>
+                                <option value=0 @if (old('status') != null and old('status') == 0) selected='selected' @elseif(old('status') == null and $truck->status == 0) selected='selected'  @endif>Không hoạt động</option>
                             </select>
                         </div>
                     </div>

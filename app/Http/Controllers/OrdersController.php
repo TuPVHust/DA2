@@ -130,7 +130,7 @@ class OrdersController extends Controller
                 'piority' => $request->input('piority'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
-                'created_at' => date('Y-m-d',strtotime($request->input('date'))) ,
+                'created_at' => date('Y-m-d',strtotime($request->input('date'))),
             ]); 
             return redirect()->route('boss.order.index')->with('alert-success','Cập nhật thành công.');
         }

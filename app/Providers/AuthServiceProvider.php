@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +26,22 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-driver', function (User $user, User $driver) {
+            $check = false;
+            if($user->role === 2 && $driver->role !== 2)
+            {
+                $check = true;
+            }
+            else{
+                if($user->role === 1 && $driver->role === 0)
+                {
+                    $check = true;
+                }
+                else{
+                    $check = false;
+                }
+            }
+            return $check;
+        });
     }
 }

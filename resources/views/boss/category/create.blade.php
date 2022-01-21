@@ -1,4 +1,7 @@
 @extends('layouts.boss')
+@section('title')
+    AdminLTE 3 | Thêm mới danh mục hàng hóa
+@endsection
 
 @section('content')
     <div class="card card-primary">
