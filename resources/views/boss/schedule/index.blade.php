@@ -73,15 +73,15 @@
                                                                     <div class="card-header w-100">
                                                                         <h4 class="card-title w-100">
                                                                             <button type="button"
-                                                                                class="btn btn-outline-info"><i
+                                                                                class="btn btn-outline-info btn-sm"><i
                                                                                     class="fas fa-truck-moving"></i>
                                                                                 {{ $todayDoingSchedule->truck->plate }}</button>
                                                                             <button type="button"
-                                                                                class="btn  btn-outline-info"><i
+                                                                                class="btn  btn-outline-info btn-sm"><i
                                                                                     class="fas fa-users"></i>
                                                                                 {{ $todayDoingSchedule->driver->name }}</button>
                                                                             <button type="button"
-                                                                                class="btn btn-outline-info"><i
+                                                                                class="btn btn-outline-info btn-sm"><i
                                                                                     class="fas fa-adjust"></i>
                                                                                 @if ($todayDoingSchedule->shift == 1)
                                                                                     <span>Ngày</span>
@@ -91,7 +91,7 @@
                                                                             </button>
 
                                                                             <button type="button"
-                                                                                class="btn btn-outline-info"><i
+                                                                                class="btn btn-outline-info btn-sm"><i
                                                                                     class="fas fa-dollar-sign"></i>
                                                                                 {{ number_format($todayDoingSchedule->init_money, 0) }}</button>
                                                                             {{-- <a href="#"
@@ -132,34 +132,30 @@
                                                                                                 @foreach ($todayDoingSchedule->schedule_details as $schedule_detail)
                                                                                                     <tr data-widget="expandable-table"
                                                                                                         aria-expanded="false">
-                                                                                                        <td>1</td>
-                                                                                                        <td>Cát</td>
-                                                                                                        <td>Tàu cát</td>
-                                                                                                        <td>Công trình</td>
-                                                                                                        <td>40</td>
+                                                                                                        <td>{{ $schedule_detail->id }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->category->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->seller->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->buyer->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->quantity }}
+                                                                                                        </td>
                                                                                                     </tr>
                                                                                                     <tr
                                                                                                         class="expandable-body">
                                                                                                         <td colspan="5">
-
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:Lorem
-                                                                                                                Ipsum is
-                                                                                                                simply
-                                                                                                                dummy
-                                                                                                                text
-                                                                                                                of the
-                                                                                                                printing
+                                                                                                                    chú</span>:{!! $schedule_detail->description !!}
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Đơn
-                                                                                                                    hàng</span>:Không
-                                                                                                                có
+                                                                                                                    hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
                                                                                                             </div>
-
                                                                                                             <div
                                                                                                                 class="row">
                                                                                                                 <div
@@ -167,12 +163,12 @@
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Bán</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->revenue, 0) }}
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Mua</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->price, 0) }}
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div
@@ -181,13 +177,13 @@
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Thực
                                                                                                                             Thu</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->actual_revenue, 0) }}
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Thực
                                                                                                                             Chi</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->actual_price, 0) }}
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
@@ -197,20 +193,17 @@
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <!-- /.card-body -->
                                                                                 </div>
-                                                                                <!-- /.card -->
                                                                                 {{-- Kết thúc bẳng chuyến --}}
                                                                                 {{-- bắt đầu bảng chi phí --}}
                                                                                 <div class="card">
-                                                                                    <div class="card-header">
+                                                                                   <div class="card-header">
                                                                                         <h3 class="card-title">Chi phí
                                                                                         </h3>
                                                                                     </div>
                                                                                     <!-- ./card-header -->
                                                                                     <div class="card-body">
-                                                                                        <table
-                                                                                            class="table table-bordered table-hover table-sm">
+                                                                                        <table class="table table-bordered table-hover table-sm">
                                                                                             <thead class="thead-light">
                                                                                                 <tr>
                                                                                                     <th>#</th>
@@ -222,23 +215,22 @@
                                                                                             </thead>
                                                                                             <tbody>
                                                                                                 @foreach ($todayDoingSchedule->cost_details as $cost_detail)
-                                                                                                    <tr data-widget="expandable-table"
-                                                                                                        aria-expanded="false">
-                                                                                                        <td>1</td>
-                                                                                                        <td>Ăn</td>
-                                                                                                        <td>{{ number_format(100, 0) }}
+                                                                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                        <td>{{ $cost_detail->id }}</td>
+                                                                                                        <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                                                        <td>{{ number_format($cost_detail->cost, 0) }}
                                                                                                         </td>
-                                                                                                        <td>{{ number_format(100, 0) }}
+                                                                                                        <td>{{ number_format($cost_detail->actual_cost, 0) }}
                                                                                                         </td>
                                                                                                         <td>
-                                                                                                            Mô tả
+                                                                                                        {!! $cost_detail->description !!}
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <!-- /.card-body -->
+                                                                                <!-- /.card-body -->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -280,15 +272,15 @@
                                                                     <div class="card-header w-100">
                                                                         <h4 class="card-title w-100">
                                                                             <button type="button"
-                                                                                class="btn btn-outline-success"><i
+                                                                                class="btn btn-outline-success btn-sm"><i
                                                                                     class="fas fa-truck-moving"></i>
                                                                                 {{ $todayCompltedSchedule->truck->plate }}</button>
                                                                             <button type="button"
-                                                                                class="btn btn-outline-success"><i
+                                                                                class="btn btn-outline-success btn-sm"><i
                                                                                     class="fas fa-users"></i>
                                                                                 {{ $todayCompltedSchedule->driver->name }}</button>
                                                                             <button type="button"
-                                                                                class="btn btn-outline-success"><i
+                                                                                class="btn btn-outline-success btn-sm"><i
                                                                                     class="fas fa-adjust"></i>
                                                                                 @if ($todayCompltedSchedule->shift == 1)
                                                                                     <span>Ngày</span>
@@ -297,12 +289,12 @@
                                                                                 @endif
                                                                             </button>
                                                                             <button type="button"
-                                                                                class="btn btn-outline-success"><i
+                                                                                class="btn btn-outline-success btn-sm"><i
                                                                                     class="fas fa-dollar-sign"></i>
                                                                                 {{ number_format($todayCompltedSchedule->init_money, 0) }}</button>
                                                                             <button onclick="location.href='#'"
                                                                                 type="button"
-                                                                                class="btn btn-success float-right"><i
+                                                                                class="btn btn-success float-right btn-sm"><i
                                                                                     class="fas fa-edit"></i>
                                                                             </button>
                                                                         </h4>
@@ -321,8 +313,8 @@
                                                                             <div class="col-12">
                                                                                 <div class="card">
                                                                                     <div class="card-header">
-                                                                                        <h3 class="card-title">Chuyến
-                                                                                            đã hoàn thành</h3>
+                                                                                        <h3 class="card-title">Chuyến đã
+                                                                                            hoàn thành</h3>
                                                                                     </div>
                                                                                     <!-- ./card-header -->
                                                                                     <div class="card-body">
@@ -341,34 +333,30 @@
                                                                                                 @foreach ($todayCompltedSchedule->schedule_details as $schedule_detail)
                                                                                                     <tr data-widget="expandable-table"
                                                                                                         aria-expanded="false">
-                                                                                                        <td>1</td>
-                                                                                                        <td>Cát</td>
-                                                                                                        <td>Tàu cát</td>
-                                                                                                        <td>Công trình</td>
-                                                                                                        <td>40</td>
+                                                                                                        <td>{{ $schedule_detail->id }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->category->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->seller->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->buyer->name }}
+                                                                                                        </td>
+                                                                                                        <td>{{ $schedule_detail->quantity }}
+                                                                                                        </td>
                                                                                                     </tr>
                                                                                                     <tr
                                                                                                         class="expandable-body">
                                                                                                         <td colspan="5">
-
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:Lorem
-                                                                                                                Ipsum is
-                                                                                                                simply
-                                                                                                                dummy
-                                                                                                                text
-                                                                                                                of the
-                                                                                                                printing
+                                                                                                                    chú</span>:{!! $schedule_detail->description !!}
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Đơn
-                                                                                                                    hàng</span>:Không
-                                                                                                                có
+                                                                                                                    hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
                                                                                                             </div>
-
                                                                                                             <div
                                                                                                                 class="row">
                                                                                                                 <div
@@ -376,19 +364,12 @@
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Bán</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->revenue, 0) }}
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Mua</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
-                                                                                                                    </div>
-                                                                                                                    <div>
-                                                                                                                        <span
-                                                                                                                            class="font-weight-bold">Chi
-                                                                                                                            phí
-                                                                                                                            khác</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->price, 0) }}
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div
@@ -397,20 +378,13 @@
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Thực
                                                                                                                             Thu</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->actual_revenue, 0) }}
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span
                                                                                                                             class="font-weight-bold">Thực
                                                                                                                             Chi</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
-                                                                                                                    </div>
-                                                                                                                    <div>
-                                                                                                                        <span
-                                                                                                                            class="font-weight-bold">Chi
-                                                                                                                            phí
-                                                                                                                            thực</span>:
-                                                                                                                        {{ number_format(3000000, 0) }}
+                                                                                                                        {{ number_format($schedule_detail->actual_price, 0) }}
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
@@ -420,20 +394,17 @@
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <!-- /.card-body -->
                                                                                 </div>
-                                                                                <!-- /.card -->
                                                                                 {{-- Kết thúc bẳng chuyến --}}
                                                                                 {{-- bắt đầu bảng chi phí --}}
                                                                                 <div class="card">
-                                                                                    <div class="card-header">
+                                                                                   <div class="card-header">
                                                                                         <h3 class="card-title">Chi phí
                                                                                         </h3>
                                                                                     </div>
                                                                                     <!-- ./card-header -->
                                                                                     <div class="card-body">
-                                                                                        <table
-                                                                                            class="table table-bordered table-hover table-sm">
+                                                                                        <table class="table table-bordered table-hover table-sm">
                                                                                             <thead class="thead-light">
                                                                                                 <tr>
                                                                                                     <th>#</th>
@@ -445,23 +416,22 @@
                                                                                             </thead>
                                                                                             <tbody>
                                                                                                 @foreach ($todayCompltedSchedule->cost_details as $cost_detail)
-                                                                                                    <tr data-widget="expandable-table"
-                                                                                                        aria-expanded="false">
-                                                                                                        <td>1</td>
-                                                                                                        <td>Ăn</td>
-                                                                                                        <td>{{ number_format(100, 0) }}
+                                                                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                        <td>{{ $cost_detail->id }}</td>
+                                                                                                        <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                                                        <td>{{ number_format($cost_detail->cost, 0) }}
                                                                                                         </td>
-                                                                                                        <td>{{ number_format(100, 0) }}
+                                                                                                        <td>{{ number_format($cost_detail->actual_cost, 0) }}
                                                                                                         </td>
                                                                                                         <td>
-                                                                                                            Mô tả
+                                                                                                        {!! $cost_detail->description !!}
                                                                                                         </td>
                                                                                                     </tr>
-                                                                                                @endforeach    
+                                                                                                @endforeach
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
-                                                                                    <!-- /.card-body -->
+                                                                                <!-- /.card-body -->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -560,15 +530,15 @@
                                                                     <div class="col-12">
                                                                         <div class="card">
                                                                             <div class="card-header">
-                                                                                <h3 class="card-title">Chuyến đã hoàn
-                                                                                    thành</h3>
+                                                                                <h3 class="card-title">Chuyến đã
+                                                                                    hoàn thành</h3>
                                                                             </div>
                                                                             <!-- ./card-header -->
                                                                             <div class="card-body">
                                                                                 <table
                                                                                     class="table table-bordered table-hover table-sm">
-                                                                                    <thead>
-                                                                                        <tr class="thead-light">
+                                                                                    <thead class="thead-light">
+                                                                                        <tr>
                                                                                             <th>#</th>
                                                                                             <th>Loại</th>
                                                                                             <th>Mua</th>
@@ -580,28 +550,29 @@
                                                                                         @foreach ($inQueueSchedule->schedule_details as $schedule_detail)
                                                                                             <tr data-widget="expandable-table"
                                                                                                 aria-expanded="false">
-                                                                                                <td>1</td>
-                                                                                                <td>Cát</td>
-                                                                                                <td>Tàu cát</td>
-                                                                                                <td>Công trình</td>
-                                                                                                <td>40</td>
+                                                                                                <td>{{ $schedule_detail->id }}
+                                                                                                </td>
+                                                                                                <td>{{ $schedule_detail->category->name }}
+                                                                                                </td>
+                                                                                                <td>{{ $schedule_detail->seller->name }}
+                                                                                                </td>
+                                                                                                <td>{{ $schedule_detail->buyer->name }}
+                                                                                                </td>
+                                                                                                <td>{{ $schedule_detail->quantity }}
+                                                                                                </td>
                                                                                             </tr>
-                                                                                            <tr class="expandable-body">
+                                                                                            <tr
+                                                                                                class="expandable-body">
                                                                                                 <td colspan="5">
                                                                                                     <div>
                                                                                                         <span
                                                                                                             class="font-weight-bold">Ghi
-                                                                                                            chú</span>:Lorem
-                                                                                                        Ipsum is simply
-                                                                                                        dummy
-                                                                                                        text
-                                                                                                        of the printing
+                                                                                                            chú</span>:{!! $schedule_detail->description !!}
                                                                                                     </div>
                                                                                                     <div>
                                                                                                         <span
                                                                                                             class="font-weight-bold">Đơn
-                                                                                                            hàng</span>:Không
-                                                                                                        có
+                                                                                                            hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
                                                                                                     </div>
                                                                                                     <div
                                                                                                         class="row">
@@ -610,12 +581,12 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Bán</span>:
-                                                                                                                {{ number_format(3000000, 0) }}
+                                                                                                                {{ number_format($schedule_detail->revenue, 0) }}
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Mua</span>:
-                                                                                                                {{ number_format(3000000, 0) }}
+                                                                                                                {{ number_format($schedule_detail->price, 0) }}
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <div
@@ -624,13 +595,13 @@
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Thực
                                                                                                                     Thu</span>:
-                                                                                                                {{ number_format(3000000, 0) }}
+                                                                                                                {{ number_format($schedule_detail->actual_revenue, 0) }}
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Thực
                                                                                                                     Chi</span>:
-                                                                                                                {{ number_format(3000000, 0) }}
+                                                                                                                {{ number_format($schedule_detail->actual_price, 0) }}
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -640,20 +611,17 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
-                                                                            <!-- /.card-body -->
                                                                         </div>
-                                                                        <!-- /.card -->
                                                                         {{-- Kết thúc bẳng chuyến --}}
                                                                         {{-- bắt đầu bảng chi phí --}}
                                                                         <div class="card">
-                                                                            <div class="card-header">
+                                                                           <div class="card-header">
                                                                                 <h3 class="card-title">Chi phí
                                                                                 </h3>
                                                                             </div>
                                                                             <!-- ./card-header -->
                                                                             <div class="card-body">
-                                                                                <table
-                                                                                    class="table table-bordered table-hover table-sm">
+                                                                                <table class="table table-bordered table-hover table-sm">
                                                                                     <thead class="thead-light">
                                                                                         <tr>
                                                                                             <th>#</th>
@@ -665,23 +633,22 @@
                                                                                     </thead>
                                                                                     <tbody>
                                                                                         @foreach ($inQueueSchedule->cost_details as $cost_detail)
-                                                                                            <tr data-widget="expandable-table"
-                                                                                                aria-expanded="false">
-                                                                                                <td>1</td>
-                                                                                                <td>Ăn</td>
-                                                                                                <td>{{ number_format(100, 0) }}
+                                                                                            <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                <td>{{ $cost_detail->id }}</td>
+                                                                                                <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                                                <td>{{ number_format($cost_detail->cost, 0) }}
                                                                                                 </td>
-                                                                                                <td>{{ number_format(100, 0) }}
+                                                                                                <td>{{ number_format($cost_detail->actual_cost, 0) }}
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    Mô tả
+                                                                                                {!! $cost_detail->description !!}
                                                                                                 </td>
                                                                                             </tr>
                                                                                         @endforeach
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
-                                                                            <!-- /.card-body -->
+                                                                        <!-- /.card-body -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -714,7 +681,7 @@
                                 <div class="row">
                                     <div class="card col-12">
                                         <div class="card-header">
-                                            <h3 class="card-title">Danh lịch trình</h3>
+                                            <h3 class="card-title">Danh sách lịch trình</h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
@@ -729,7 +696,7 @@
                                                         <th>Ca</th>
                                                         <th>Tiền giao</th>
                                                         <th>Trạng thái</th>
-                                                        <th>Hành động</th>
+                                                        <th class="text-right">Hành động</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -908,6 +875,14 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
+                                                            {{-- <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
