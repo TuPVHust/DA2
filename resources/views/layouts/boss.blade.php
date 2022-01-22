@@ -31,7 +31,8 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
     {{-- select2 --}}
 
-
+    {{-- livewire --}}
+    @livewireStyles
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -535,6 +536,8 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    {{-- livewire --}}
+    @livewireStyles
     @yield('js')
 </body>
 

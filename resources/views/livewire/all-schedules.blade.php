@@ -1,0 +1,318 @@
+<div>
+    @if ($schedules->count() == 0)
+        <h2 class="text-center alert mt-5">Không tìm thấy dữ liệu</h2>
+    @else
+        <div class="row">
+            <div class="card col-12">
+                <div class="card-header">
+                  <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Sắp xếp theo:</label>
+                                    <select class="select2_no_delete" style="width: 100%;">
+                                        <option selected>Ngày làm việc</option>
+                                        <option>Tên tài xế</option>
+                                        <option>Số chuyến</option>
+                                        <option>Ca làm việc</option>
+                                        <option>Tên chủ xe</option>
+                                        <option>Ngày cập nhật</option>
+                                        <option>Tiền giao</option>
+                                        <option>Trạng thái</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Thứ tự:</label>
+                                    <select class="select2_no_delete" style="width: 100%;">
+                                        <option selected>Giảm</option>
+                                        <option>Tăng</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Tìm kiếm:</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Tìm kiếm</span>
+                                    </div>
+                                    <input type="text" class="form-control search" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Tài xế:</label>
+                                    <select class="select2" style="width: 100%;">
+                                        <option selected>ASC</option>
+                                        <option>DESC</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Xe:</label>
+                                    <select class="select2" style="width: 100%;">
+                                        <option selected>ASC</option>
+                                        <option>DESC</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Chủ xe:</label>
+                                    <select class="select2" style="width: 100%;">
+                                        <option selected>ASC</option>
+                                        <option>DESC</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Số chuyến</label>
+                                    <input type="number" class="form-control" placeholder="Nhập số chuyến ...">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Date and time range:</label>
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                      </div>
+                                      <input type="text" class="form-control float-right" id="reservation">
+                                    </div>
+                                    <!-- /.input group -->
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="card col-12">
+                <div class="card-header font-size-bold">
+                    <h3 class="card-title ">Danh sách lịch trình</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-hover table-responsive-xl" id="example1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tài xế</th>
+                                <th>Xe</th>
+                                <th>Chuyến</th>
+                                <th>Ngày</th>
+                                <th>Ca</th>
+                                <th>Tiền giao</th>
+                                <th>Chủ xe</th>
+                                <th>Trạng thái</th>
+                                <th class="text-right">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($schedules as $schedule)
+                                <tr data-widget="expandable-table" aria-expanded="false">
+                                    <td>{{ $schedule->id }}</td>
+                                    <td>{{ $schedule->driver->name }}</td>
+                                    <td>{{ $schedule->truck->plate }}</td>
+                                    <td>{{$schedule->schedule_details->count()}}</td>
+                                    <td>{{ Carbon\Carbon::parse($schedule->date)->format('Y-m-d') }}
+                                    </td>
+                                    <td>
+                                        @if ($schedule->shift == 1)
+                                            <span>Ngày</span>
+                                        @else
+                                            <span>Đêm</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($schedule->init_money, 0) }}</td>
+                                    <td>{{ $schedule->car_owner->name }}</td>
+                                    <td>
+                                        @if ($schedule->status == 1)
+                                            <span class="badge badge-secondary">Waiting</span>
+                                        @else
+                                            <span class="badge badge-success">Complete</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="btn btn-info btn-sm"
+                                            href="{{ route('boss.schedule.edit', $schedule->id) }}">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btndelete"
+                                            href="{{ route('boss.schedule.destroy', $schedule->id) }}">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="expandable-body">
+                                    <td colspan="10">
+                                        <div class="card-body">
+                                            <span class="font-weight-bold">Mô tả</span>:
+                                            @if ($schedule->description)
+                                                {!! $schedule->description !!}
+                                            @else
+                                                không có
+                                            @endif
+                                            <div class="row mt-3">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Chuyến đã
+                                                                hoàn thành</h3>
+                                                        </div>
+                                                        <!-- ./card-header -->
+                                                        <div class="card-body">
+                                                            <table
+                                                                class="table table-bordered table-hover table-sm">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Loại</th>
+                                                                        <th>Mua</th>
+                                                                        <th>Bán</th>
+                                                                        <th>Lượng</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($schedule->schedule_details as $schedule_detail)
+                                                                        <tr data-widget="expandable-table"
+                                                                            aria-expanded="false">
+                                                                            <td>{{ $schedule_detail->id }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->category->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->seller->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->buyer->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->quantity }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr
+                                                                            class="expandable-body">
+                                                                            <td colspan="5">
+                                                                                <div>
+                                                                                    <span
+                                                                                        class="font-weight-bold">Ghi
+                                                                                        chú</span>:{!! $schedule_detail->description !!}
+                                                                                </div>
+                                                                                <div>
+                                                                                    <span
+                                                                                        class="font-weight-bold">Đơn
+                                                                                        hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                </div>
+                                                                                <div
+                                                                                    class="row">
+                                                                                    <div
+                                                                                        class="col-6">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Bán</span>:
+                                                                                            {{ number_format($schedule_detail->revenue, 0) }}
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Mua</span>:
+                                                                                            {{ number_format($schedule_detail->price, 0) }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="col-6">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Thực
+                                                                                                Thu</span>:
+                                                                                            {{ number_format($schedule_detail->actual_revenue, 0) }}
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Thực
+                                                                                                Chi</span>:
+                                                                                            {{ number_format($schedule_detail->actual_price, 0) }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    {{-- Kết thúc bẳng chuyến --}}
+                                                    {{-- bắt đầu bảng chi phí --}}
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Chi phí
+                                                            </h3>
+                                                        </div>
+                                                        <!-- ./card-header -->
+                                                        <div class="card-body">
+                                                            <table class="table table-bordered table-hover table-sm">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Loại</th>
+                                                                        <th>Giá</th>
+                                                                        <th>Thực chi</th>
+                                                                        <th>Mô Tả</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($schedule->cost_details as $cost_detail)
+                                                                        <tr data-widget="expandable-table" aria-expanded="false">
+                                                                            <td>{{ $cost_detail->id }}</td>
+                                                                            <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                            <td>{{ number_format($cost_detail->cost, 0) }}
+                                                                            </td>
+                                                                            <td>{{ number_format($cost_detail->actual_cost, 0) }}
+                                                                            </td>
+                                                                            <td>
+                                                                            {!! $cost_detail->description !!}
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    <!-- /.card-body -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    {{-- <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td> --}}
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    @endif
+</div>

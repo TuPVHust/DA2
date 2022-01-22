@@ -179,6 +179,13 @@ class SchedulesController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        
+        if($schedule->schedule_details->count()==0 && $schedule->cost_details->count()==0)
+        {
+            $schedule->delete();
+        return redirect()->route('boss.schedule.index')->with('alert-success','Xóa bản ghi thành công.');
+        }
+        else{
+            return redirect()->route('boss.schedule.index')->with('alert-danger','Xóa không thành công do có tồn tại chuyến hoặc chi phí.');
+        }
     }
 }
