@@ -16,6 +16,7 @@
         .border-2 {
             border-width: 2px !important;
         }
+
     </style>
 @endsection
 @section('title')
@@ -43,7 +44,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: rgb(240, 240, 240)">
                     <div class="card-title">
                         <ul class="nav nav-tabs card-header-tabs" class="d-inline">
                             <li class="nav-item">
@@ -52,11 +53,11 @@
                                     nay</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active font-size-bold" style="color: black" href="#timeline"
+                                <a class="nav-link font-size-bold" style="color: black" href="#timeline"
                                     data-toggle="tab">Đang chờ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link font-size-bold" style="color: black" href="#settings"
+                                <a class="nav-link active font-size-bold" style="color: black" href="#settings"
                                     data-toggle="tab">Tất
                                     cả</a>
                             </li>
@@ -236,6 +237,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
+                                                                                                
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -277,6 +279,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
+                                                                                                
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -453,6 +456,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
+                                                                                                
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -494,6 +498,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
+                                                                                                
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -527,7 +532,7 @@
 
 
                         {{-- waiting schedule begin --}}
-                        <div class="tab-pane active" id="timeline" style="height: 380px">
+                        <div class="tab-pane" id="timeline" style="height: 380px">
                             <div class="card card-secondary overflow-auto" style="height: 100%">
                                 <div class="card-header">
                                     <h3 class="card-title"><i class="far fa-clock"></i> Đang chờ </h3>
@@ -780,7 +785,7 @@
 
 
                         {{-- All schedule begin --}}
-                        <div class="tab-pane" id="settings">
+                        <div class="tab-pane active" id="settings">
                             @livewire('all-schedules')
                         </div>
                     </div>
@@ -848,9 +853,42 @@
         });
     </script>
     <script>
-        $('#reservationdate').datetimepicker({
-            format: 'DD-MM-YYYY',
-        });
-        $('#reservation').daterangepicker()
+        $('#timeRangeFilter').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY',
+                separator: " - ",
+            }
+        })
     </script>
+    <script>
+        function handleChangeTiemRange(src) {
+            Livewire.emit('ChangeTimeRange', src.value);
+        }
+    </script>
+    <script>
+        $(document).on('change.select', '#orderBy', function(event) {
+            Livewire.emit('changeOrderBy', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#order', function(event) {
+            Livewire.emit('changeOrder', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#driverFilter', function(event) {
+            Livewire.emit('changeDriver', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#truckFilter', function(event) {
+            Livewire.emit('changeTruck', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#carOwnerFilter', function(event) {
+            Livewire.emit('changeCarOwner', event.target.value);
+        });
+    </script>
+    
 @endsection

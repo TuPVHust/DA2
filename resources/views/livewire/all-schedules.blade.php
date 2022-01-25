@@ -1,103 +1,124 @@
 <div>
-    @if ($schedules->count() == 0)
-        <h2 class="text-center alert mt-5">Không tìm thấy dữ liệu</h2>
-    @else
-        <div class="row">
-            <div class="card col-12">
-                <div class="card-header">
-                  <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
+    <div class="">
+        @foreach (['date'] as $msg)
+            @if (Session::has('alert-' . $msg))
+                <div class="alert alert-{{ $msg }} alert-dismissible fade show ">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ Session::get('alert-' . $msg) }}
                 </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Sắp xếp theo:</label>
-                                    <select class="select2_no_delete" style="width: 100%;">
-                                        <option selected>Ngày làm việc</option>
-                                        <option>Tên tài xế</option>
-                                        <option>Số chuyến</option>
-                                        <option>Ca làm việc</option>
-                                        <option>Tên chủ xe</option>
-                                        <option>Ngày cập nhật</option>
-                                        <option>Tiền giao</option>
-                                        <option>Trạng thái</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Thứ tự:</label>
-                                    <select class="select2_no_delete" style="width: 100%;">
-                                        <option selected>Giảm</option>
-                                        <option>Tăng</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Tìm kiếm:</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Tìm kiếm</span>
-                                    </div>
-                                    <input type="text" class="form-control search" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Tài xế:</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>ASC</option>
-                                        <option>DESC</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Xe:</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>ASC</option>
-                                        <option>DESC</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Chủ xe:</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>ASC</option>
-                                        <option>DESC</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Số chuyến</label>
-                                    <input type="number" class="form-control" placeholder="Nhập số chuyến ...">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label>Date and time range:</label>
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                      </div>
-                                      <input type="text" class="form-control float-right" id="reservation">
-                                    </div>
-                                    <!-- /.input group -->
-                                  </div>
+            @endif
+        @endforeach
+    </div>
+    <div class="row">
+        <div class="card col-12" wire:ignore>
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Sắp xếp theo:</label>
+                                <select class="select2_no_delete" style="width: 100%;" id="orderBy"
+                                    wire:model='orderBy'>
+                                    <option value="date" {{ $orderBy == 'date' ? 'selected="selected"' : '' }}>Ngày làm việc</option>
+                                    <option value="driverName" {{ $orderBy == 'driverName' ? 'selected="selected"' : '' }}>Tên tài xế</option>
+                                    <option value="detailNum" {{ $orderBy == 'detailNum' ? 'selected="selected"' : '' }}>Số chuyến</option>
+                                    <option value="shift" {{ $orderBy == 'shift' ? 'selected="selected"' : '' }}>Ca làm việc</option>
+                                    <option value="carOwnerName" {{ $orderBy == 'carOwnerName' ? 'selected="selected"' : '' }}>Tên chủ xe</option>
+                                    <option value="updated_at" {{ $orderBy == 'updated_at' ? 'selected="selected"' : '' }}>Ngày cập nhật</option>
+                                    <option value="init_money" {{ $orderBy == 'init_money' ? 'selected="selected"' : '' }}>Tiền giao</option>
+                                    <option value="status" {{ $orderBy == 'status' ? 'selected="selected"' : '' }}>Trạng thái</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Thứ tự:</label>
+                                <select class="select2_no_delete" style="width: 100%;" id="order" wire:model='order'>
+                                    <option selected value="desc">Giảm</option>
+                                    <option value="asc">Tăng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Tìm kiếm:</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="searchKey">Tìm kiếm</span>
+                                </div>
+                                <input type="text" class="form-control search" aria-label="Default"
+                                    aria-describedby="searchKey">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Tài xế:</label>
+                                <select class="select2" style="width: 100%;" id="driverFilter" wire:model='driverFilter'>
+                                    <option></option>
+                                    @foreach ($drivers as $driver)
+                                        <option value="{{ $driver->id }}"> {{ $driver->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Xe:</label>
+                                <select class="select2" style="width: 100%;" id="truckFilter" wire:model='truckFilter'>
+                                    <option></option>
+                                    @foreach ($trucks as $truck)
+                                        <option value="{{ $truck->id }}"> {{ $truck->plate }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Chủ xe:</label>
+                                <select class="select2" style="width: 100%;" id="carOwnerFilter" wire:model='carOwnerFilter'>
+                                    <option></option>
+                                    @foreach ($car_owners as $car_owner)
+                                        <option value="{{ $car_owner->id }}"> {{ $car_owner->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Số chuyến</label>
+                                <input type="number" class="form-control" placeholder="Nhập số chuyến ..."
+                                    id="detailNumFilter" wire:model='detailNumFilter'>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Khoảng thời gian:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="timeRangeFilter"
+                                        wire:model='timeRange' onchange="handleChangeTiemRange(this);">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
+            <!-- /.card-body -->
+        </div>
+        @if ($schedules->count() == 0)
+            <h2 class="text-center alert mt-5">Không tìm thấy dữ liệu</h2>
+        @else
             <div class="card col-12">
                 <div class="card-header font-size-bold">
                     <h3 class="card-title ">Danh sách lịch trình</h3>
@@ -125,7 +146,7 @@
                                     <td>{{ $schedule->id }}</td>
                                     <td>{{ $schedule->driver->name }}</td>
                                     <td>{{ $schedule->truck->plate }}</td>
-                                    <td>{{$schedule->schedule_details->count()}}</td>
+                                    <td>{{ $schedule->schedule_details->count() }}</td>
                                     <td>{{ Carbon\Carbon::parse($schedule->date)->format('Y-m-d') }}
                                     </td>
                                     <td>
@@ -159,7 +180,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                                <tr class="expandable-body">
+                                <tr class="expandable-body d-none">
                                     <td colspan="10">
                                         <div class="card-body">
                                             <span class="font-weight-bold">Mô tả</span>:
@@ -177,8 +198,7 @@
                                                         </div>
                                                         <!-- ./card-header -->
                                                         <div class="card-body">
-                                                            <table
-                                                                class="table table-bordered table-hover table-sm">
+                                                            <table class="table table-bordered table-hover table-sm">
                                                                 <thead class="thead-light">
                                                                     <tr>
                                                                         <th>#</th>
@@ -203,23 +223,18 @@
                                                                             <td>{{ $schedule_detail->quantity }}
                                                                             </td>
                                                                         </tr>
-                                                                        <tr
-                                                                            class="expandable-body">
+                                                                        <tr class="expandable-body d-none">
                                                                             <td colspan="5">
                                                                                 <div>
-                                                                                    <span
-                                                                                        class="font-weight-bold">Ghi
+                                                                                    <span class="font-weight-bold">Ghi
                                                                                         chú</span>:{!! $schedule_detail->description !!}
                                                                                 </div>
                                                                                 <div>
-                                                                                    <span
-                                                                                        class="font-weight-bold">Đơn
+                                                                                    <span class="font-weight-bold">Đơn
                                                                                         hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
                                                                                 </div>
-                                                                                <div
-                                                                                    class="row">
-                                                                                    <div
-                                                                                        class="col-6">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
                                                                                         <div>
                                                                                             <span
                                                                                                 class="font-weight-bold">Bán</span>:
@@ -231,8 +246,7 @@
                                                                                             {{ number_format($schedule_detail->price, 0) }}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div
-                                                                                        class="col-6">
+                                                                                    <div class="col-6">
                                                                                         <div>
                                                                                             <span
                                                                                                 class="font-weight-bold">Thực
@@ -275,22 +289,24 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     @foreach ($schedule->cost_details as $cost_detail)
-                                                                        <tr data-widget="expandable-table" aria-expanded="false">
+                                                                        <tr data-widget="expandable-table"
+                                                                            aria-expanded="false">
                                                                             <td>{{ $cost_detail->id }}</td>
-                                                                            <td>{{ $cost_detail->cost_group->name }}</td>
+                                                                            <td>{{ $cost_detail->cost_group->name }}
+                                                                            </td>
                                                                             <td>{{ number_format($cost_detail->cost, 0) }}
                                                                             </td>
                                                                             <td>{{ number_format($cost_detail->actual_cost, 0) }}
                                                                             </td>
                                                                             <td>
-                                                                            {!! $cost_detail->description !!}
+                                                                                {!! $cost_detail->description !!}
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                    <!-- /.card-body -->
+                                                        <!-- /.card-body -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,6 +329,7 @@
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
-        </div>
-    @endif
+        @endif
+    </div>
+
 </div>

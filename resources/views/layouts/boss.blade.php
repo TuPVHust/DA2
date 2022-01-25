@@ -537,7 +537,7 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
     {{-- livewire --}}
-    @livewireStyles
+    @livewireScripts
     @yield('js')
 </body>
 

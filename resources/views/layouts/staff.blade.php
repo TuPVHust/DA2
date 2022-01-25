@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
+    @livewireStyles
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -954,6 +955,7 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    @livewireScripts
 </body>
 
 </html>

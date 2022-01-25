@@ -26,7 +26,6 @@ class SchedulesController extends Controller
             'todayDoingSchedules' => $todayDoingSchedules,
             'todayCompltedSchedules' => $todayCompltedSchedules,
             'inQueueSchedules' => $inQueueSchedules,
-            'schedules' => $schedules,
         ]);
     }
 

@@ -132,6 +132,7 @@ class OrdersController extends Controller
                 'status' => $request->input('status'),
                 'created_at' => date('Y-m-d',strtotime($request->input('date'))),
             ]); 
+            dd(date('Y-m-d',strtotime($request->input('date'))));
             return redirect()->route('boss.order.index')->with('alert-success','Cập nhật thành công.');
         }
         else{
