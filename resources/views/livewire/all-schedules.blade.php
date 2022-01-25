@@ -35,6 +35,7 @@
                                     <option value="updated_at" {{ $orderBy == 'updated_at' ? 'selected="selected"' : '' }}>Ngày cập nhật</option>
                                     <option value="init_money" {{ $orderBy == 'init_money' ? 'selected="selected"' : '' }}>Tiền giao</option>
                                     <option value="status" {{ $orderBy == 'status' ? 'selected="selected"' : '' }}>Trạng thái</option>
+                                    <option value="truckPlate" {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Biển xe</option>
                                 </select>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
                                     <span class="input-group-text" id="searchKey">Tìm kiếm</span>
                                 </div>
                                 <input type="text" class="form-control search" aria-label="Default"
-                                    aria-describedby="searchKey">
+                                    aria-describedby="searchKey" wire:model='searchKey'>
                             </div>
                         </div>
                         <div class="col-3">
@@ -333,3 +334,4 @@
     </div>
 
 </div>
+
