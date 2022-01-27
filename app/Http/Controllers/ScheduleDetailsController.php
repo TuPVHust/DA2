@@ -14,7 +14,9 @@ class ScheduleDetailsController extends Controller
      */
     public function index()
     {
-        //
+        return view('boss.schedule_detail.index',[
+            
+        ]);
     }
 
     /**

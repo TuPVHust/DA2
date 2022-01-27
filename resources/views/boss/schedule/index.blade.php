@@ -549,7 +549,7 @@
                                                         <a class="d-inline w-80" data-toggle="collapse"
                                                             href="#waitingOne{{ $inQueueSchedule->id }}">
                                                             <div
-                                                                class="card-header border-left border-warning border-bottom-0 border-5">
+                                                                class="card-header border-left  border-bottom-0 border-5">
                                                                 <h4 class="card-title">
                                                                     {{-- <span class="badge badge-info letf">2</span> --}}
                                                                     {{-- {{ $i }}. --}}
@@ -813,7 +813,7 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script>
+    {{-- <script>
         $(function() {
             $("#example1").DataTable({
                 paging: false,
@@ -822,9 +822,9 @@
                 "autoWidth": false,
                 select: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');;
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
-    </script>
+    </script> --}}
     <script>
         $(".btndelete").click(function(ev) {
             ev.preventDefault();

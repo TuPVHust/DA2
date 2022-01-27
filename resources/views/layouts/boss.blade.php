@@ -281,13 +281,27 @@
                         <li class="nav-item">
                             <a href="{{ route('boss.schedule.index') }}" @class([
                                 'nav-link',
-                                'active' => strpos(Route::currentRouteName(), 'schedule'),
+                                'active' => strpos(Route::currentRouteName(), 'schedule.'),
                                 // 'active' => Route::currentRouteName() == 'boss.truck.create',
                                 // 'active' => Route::currentRouteName() == 'boss.truck.edit',
                             ])>
                                 <i class="nav-icon fas fa-network-wired"></i>
                                 <p>
                                     Quản lý công việc
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.schedule_detail.index') }}" @class([
+                                'nav-link',
+                                'active' => strpos(Route::currentRouteName(), 'schedule_detail'),
+                                // 'active' => Route::currentRouteName() == 'boss.truck.create',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.edit',
+                            ])>
+                                <i class="nav-icon fas fa-truck-loading"></i>
+                                <p>
+                                    Chuyến
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

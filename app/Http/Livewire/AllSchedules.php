@@ -9,11 +9,13 @@ use App\Models\Truck;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AllSchedules extends Component
 {
-    
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $orderBy = 'date';
     public $order = 'desc';
     public $searchKey = null;
@@ -24,6 +26,7 @@ class AllSchedules extends Component
     public $floorTimeBound;
     public $ceilingTimeBound;
     public $timeRange;
+    public $itemsPerPage = 2;
 
     public function mount() {
         $this->floorTimeBound=Schedule::min('date');
@@ -59,6 +62,7 @@ class AllSchedules extends Component
 
     public function ChangeTimeRange($value)
     {
+
         if((bool)strtotime(str_replace('/', '-', explode( ' - ', $value )[0])) && (bool)strtotime(str_replace('/', '-', explode( ' - ', $value )[0])))
         {
             $this->floorTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[0])));
@@ -69,6 +73,7 @@ class AllSchedules extends Component
         else{
             session()->flash('alert-date', 'Khong dung dinh dang ngay !!!');
         }
+        // $this->dispatchBrowserEvent('contentChanged');
     }
 
     public function render()
@@ -81,10 +86,10 @@ class AllSchedules extends Component
         
         if($this->searchKey != null)
         {
-            $schedules = Schedule::leftJoin('schedule_details','schedule_details.schedule_id','=','schedules.id')->leftJoin('users','schedules.driver_id','=','users.id')->leftJoin('trucks','schedules.truck_id','=','trucks.id')->leftJoin('partners','schedules.car_owner_id','=','partners.id')->where('users.name' ,'LIKE','%'.$this->searchKey.'%')->orWhere('partners.name' ,'LIKE','%'.$this->searchKey.'%')->orWhere('trucks.plate' ,'LIKE','%'.$this->searchKey.'%')->select('schedules.id as id',DB::raw('count(schedule_details.id) as detailNum'),'trucks.id as truck_id','schedules.*','users.name as driverName','partners.id as car_owner_id','users.id as driver_id','trucks.id as truck_id','partners.name as carOwnerName','trucks.plate as truckPlate')->groupBy('schedules.id')->where('date','>=', $this->floorTimeBound)->where('date','<=',$this->ceilingTimeBound)->orderBy($this->orderBy, $this->order)->get();   
+            $schedules = Schedule::leftJoin('schedule_details','schedule_details.schedule_id','=','schedules.id')->leftJoin('users','schedules.driver_id','=','users.id')->leftJoin('trucks','schedules.truck_id','=','trucks.id')->leftJoin('partners','schedules.car_owner_id','=','partners.id')->where('users.name' ,'LIKE','%'.$this->searchKey.'%')->orWhere('partners.name' ,'LIKE','%'.$this->searchKey.'%')->orWhere('trucks.plate' ,'LIKE','%'.$this->searchKey.'%')->orWhere('schedules.description' ,'LIKE','%'.$this->searchKey.'%')->select('schedules.id as schedule_id',DB::raw('count(schedule_details.id) as detailNum'),'schedules.*','users.name as driverName','partners.name as carOwnerName','trucks.plate as truckPlate')->groupBy('schedules.id')->where('date','>=', $this->floorTimeBound)->where('date','<=',$this->ceilingTimeBound)->orderBy($this->orderBy, $this->order);   
         }
         else{
-            $schedules = Schedule::leftJoin('schedule_details','schedule_details.schedule_id','=','schedules.id')->leftJoin('users','schedules.driver_id','=','users.id')->leftJoin('trucks','schedules.truck_id','=','trucks.id')->leftJoin('partners','schedules.car_owner_id','=','partners.id')->select('schedules.id as id',DB::raw('count(schedule_details.id) as detailNum'),'trucks.id as truck_id','schedules.*','users.name as driverName','partners.id as car_owner_id','users.id as driver_id','trucks.id as truck_id','partners.name as carOwnerName','trucks.plate as truckPlate')->groupBy('schedules.id')->where('date','>=', $this->floorTimeBound)->where('date','<=',$this->ceilingTimeBound)->orderBy($this->orderBy, $this->order)->get();
+            $schedules = Schedule::leftJoin('schedule_details','schedule_details.schedule_id','=','schedules.id')->leftJoin('users','schedules.driver_id','=','users.id')->leftJoin('trucks','schedules.truck_id','=','trucks.id')->leftJoin('partners','schedules.car_owner_id','=','partners.id')->select('schedules.id as schedule_id',DB::raw('count(schedule_details.id) as detailNum'),'schedules.*','users.name as driverName','partners.name as carOwnerName','trucks.plate as truckPlate')->groupBy('schedules.id')->where('date','>=', $this->floorTimeBound)->where('date','<=',$this->ceilingTimeBound)->orderBy($this->orderBy, $this->order);
         }
         if($this->detailNumFilter != null)
         {
@@ -102,11 +107,9 @@ class AllSchedules extends Component
         {
             $schedules = $schedules->where('car_owner_id',$this->carOwnerFilter);
         }
-        
-        
         //dd($this->ceilingTimeBound);
-        
-        
+        $schedules= $schedules->paginate($this->itemsPerPage);
+        $this->resetPage();
         // dd($schedules);
         return view('livewire.all-schedules',[
             'schedules' => $schedules,
@@ -114,6 +117,5 @@ class AllSchedules extends Component
             'trucks' => $trucks,
             'drivers' => $drivers,
         ]);
-        
     }
 }
