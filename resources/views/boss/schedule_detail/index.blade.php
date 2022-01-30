@@ -9,14 +9,14 @@
     {{-- select2 --}}
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <!-- Select2 -->
-  <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endsection
 @section('title')
     <h1>Chuyến</h1>
 @endsection
 @section('content')
- @livewire('all-schedule-detail')
+    @livewire('all-schedule-detail')
 @endsection
 
 @section('js')
@@ -34,6 +34,20 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/select2/js/select2.full.min.js"></script>
+    <script>
+        Livewire.on('contentChanged', () => {
+            table = $("#example1").DataTable({
+                destroy: true,
+                searching: false,
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        })
+    </script>
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -72,12 +86,12 @@
         //Initialize Select2 Elements
     </script>
     <script>
-        $("#hiden_Colums").on("select2:select select2:unselect", function (e) {
-        //this returns all the selected item
-        var items= $(this).val();       
-        //Gets the last selected item
-        var lastSelectedItem = e.params.data.id;
-        alert(items);
+        $("#hiden_Colums").on("select2:select select2:unselect", function(e) {
+            //this returns all the selected item
+            var items = $(this).val();
+            //Gets the last selected item
+            var lastSelectedItem = e.params.data.id;
+            Livewire.emit('ChangeHiddenColums', items);
         })
     </script>
     <script>
@@ -95,11 +109,7 @@
             }
         })
     </script>
-    <script>
-        function handleChangeTiemRange(src) {
-            Livewire.emit('ChangeTimeRange', src.value);
-        }
-    </script>
+
     <script>
         $(document).on('change.select', '#orderBy', function(event) {
             Livewire.emit('changeOrderBy', event.target.value);
@@ -123,6 +133,26 @@
     <script>
         $(document).on('change.select', '#carOwnerFilter', function(event) {
             Livewire.emit('changeCarOwner', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#categoryFilter', function(event) {
+            Livewire.emit('changeCategory', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#sellerFilter', function(event) {
+            Livewire.emit('changeSeller', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#buyerFilter', function(event) {
+            Livewire.emit('changeBuyer', event.target.value);
+        });
+    </script>
+    <script>
+        $(document).on('change.select', '#orderFilter', function(event) {
+            Livewire.emit('changeOrder1', event.target.value);
         });
     </script>
 @endsection

@@ -27,17 +27,32 @@
                                 <label>Sắp xếp theo:</label>
                                 <select class="select2_no_delete" style="width: 100%;" id="orderBy"
                                     wire:model='orderBy'>
-                                    <option value="date" {{ $orderBy == 'date' ? 'selected="selected"' : '' }}>Ngày làm việc</option>
-                                    <option value="driverName" {{ $orderBy == 'driverName' ? 'selected="selected"' : '' }}>Tên tài xế</option>
-                                    <option value="shift" {{ $orderBy == 'shift' ? 'selected="selected"' : '' }}>Ca làm việc</option>
-                                    <option value="carOwnerName" {{ $orderBy == 'carOwnerName' ? 'selected="selected"' : '' }}>Tên chủ xe</option>
-                                    <option value="updated_at" {{ $orderBy == 'updated_at' ? 'selected="selected"' : '' }}>Ngày cập nhật</option>
-                                    <option value="truckPlate" {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Biển xe</option>
-                                    <option value="category" {{ $orderBy == 'category' ? 'selected="selected"' : '' }}>Loại hàng</option>
-                                    <option value="buyer" {{ $orderBy == 'buyer' ? 'selected="selected"' : '' }}>Nơi bán<nav></nav></option>
-                                    <option value="seller" {{ $orderBy == 'seller' ? 'selected="selected"' : '' }}>Nơi mua</option>
-                                    <option value="price" {{ $orderBy == 'price' ? 'selected="selected"' : '' }}>Giá mua</option>
-                                    <option value="revenue" {{ $orderBy == 'revenue' ? 'selected="selected"' : '' }}>Giá bán</option>
+                                    <option value="date" {{ $orderBy == 'date' ? 'selected="selected"' : '' }}>Ngày
+                                        làm việc</option>
+                                    <option value="driverName"
+                                        {{ $orderBy == 'driverName' ? 'selected="selected"' : '' }}>Tên tài xế
+                                    </option>
+                                    <option value="shift" {{ $orderBy == 'shift' ? 'selected="selected"' : '' }}>Ca
+                                        làm việc</option>
+                                    <option value="carOwnerName"
+                                        {{ $orderBy == 'carOwnerName' ? 'selected="selected"' : '' }}>Tên chủ xe
+                                    </option>
+                                    <option value="updated_at"
+                                        {{ $orderBy == 'updated_at' ? 'selected="selected"' : '' }}>Ngày cập nhật
+                                    </option>
+                                    <option value="truckPlate"
+                                        {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Biển xe</option>
+                                    <option value="category"
+                                        {{ $orderBy == 'category' ? 'selected="selected"' : '' }}>Loại hàng</option>
+                                    <option value="buyer" {{ $orderBy == 'buyer' ? 'selected="selected"' : '' }}>Nơi
+                                        bán<nav></nav>
+                                    </option>
+                                    <option value="seller" {{ $orderBy == 'seller' ? 'selected="selected"' : '' }}>
+                                        Nơi mua</option>
+                                    <option value="price" {{ $orderBy == 'price' ? 'selected="selected"' : '' }}>Giá
+                                        mua</option>
+                                    <option value="revenue" {{ $orderBy == 'revenue' ? 'selected="selected"' : '' }}>
+                                        Giá bán</option>
                                 </select>
                             </div>
                         </div>
@@ -66,7 +81,8 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label>Tài xế:</label>
-                                <select class="select2" style="width: 100%;" id="driverFilter" wire:model='driverFilter'>
+                                <select class="select2" style="width: 100%;" id="driverFilter"
+                                    wire:model='driverFilter'>
                                     <option></option>
                                     @foreach ($drivers as $driver)
                                         <option value="{{ $driver->id }}"> {{ $driver->name }}</option>
@@ -77,7 +93,8 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label>Xe:</label>
-                                <select class="select2" style="width: 100%;" id="truckFilter" wire:model='truckFilter'>
+                                <select class="select2" style="width: 100%;" id="truckFilter"
+                                    wire:model='truckFilter'>
                                     <option></option>
                                     @foreach ($trucks as $truck)
                                         <option value="{{ $truck->id }}"> {{ $truck->plate }}</option>
@@ -88,7 +105,8 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label>Chủ xe:</label>
-                                <select class="select2" style="width: 100%;" id="carOwnerFilter" wire:model='carOwnerFilter'>
+                                <select class="select2" style="width: 100%;" id="carOwnerFilter"
+                                    wire:model='carOwnerFilter'>
                                     <option></option>
                                     @foreach ($car_owners as $car_owner)
                                         <option value="{{ $car_owner->id }}"> {{ $car_owner->name }}</option>
@@ -108,21 +126,23 @@
             </div>
             <!-- /.card-body -->
         </div>
-            <div class="card col-12">
-                <div class="card-header font-size-bold">
-                    <h3 class="card-title ">Danh sách lịch trình</h3>
-                    <div class="input-group input-group-sm card-tools w-50">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="searchKey">Tìm kiếm</span>
-                        </div>
-                        <input type="text" class="form-control form-control-sm search" aria-label="Default"
-                            aria-describedby="searchKey" wire:model='searchKey'>
+        <div class="card col-12">
+            <div class="card-header font-size-bold">
+                <h3 class="card-title ">Danh sách lịch trình</h3>
+                <div class="input-group input-group-sm card-tools w-50">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="searchKey">Tìm kiếm</span>
                     </div>
+                    <input type="text" class="form-control form-control-sm search" aria-label="Default"
+                        aria-describedby="searchKey" wire:model='searchKey'>
                 </div>
-                <!-- /.card-header -->
-                @if ($schedules->count() == 0)
-                    <div class="text-center alert mt-5"><h2 >Không tìm thấy dữ liệu</h2></div>
-                @else
+            </div>
+            <!-- /.card-header -->
+            @if ($schedules->count() == 0)
+                <div class="text-center alert mt-5">
+                    <h2>Không tìm thấy dữ liệu</h2>
+                </div>
+            @else
                 <div class="card-body">
                     <table class="table table-hover table-responsive-xl" id="example1">
                         <thead>
@@ -325,27 +345,24 @@
                         </tbody>
                     </table>
                 </div>
-                @endif
-                <!-- /.card-body -->
-                <div class="container">
-                    {{ $schedules->links() }}
-                </div>
+            @endif
+            <!-- /.card-body -->
+            <div class="container">
+                {{ $schedules->links() }}
             </div>
-            <!-- /.card -->
-        
+        </div>
+        <!-- /.card -->
     </div>
-
 </div>
-
 <script>
     window.addEventListener('contentChanged', event => {
         $("#example1").DataTable({
-                paging: false,
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                select: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            paging: false,
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            select: true,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>
