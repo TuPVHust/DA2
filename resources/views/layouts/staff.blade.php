@@ -4,11 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    {{-- additional css --}}
+    <link href="/css/app.css" rel="stylesheet">
+    @yield('css')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -28,6 +31,8 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
+    {{-- AlpineJS --}}
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
     @livewireStyles
 </head>
 
@@ -49,7 +54,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="{{ route('staff.index') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -200,8 +205,9 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                                                                                                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -257,11 +263,14 @@
                         <!-- Add icons to the links using the .nav-icon class
                        with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="{{ route('staff.index') }}" @class([
+                                'nav-link',
+                                'active' => strpos(Route::currentRouteName(), '.index'),
+                            ])>
+                                <i class="nav-icon fas fa-home"></i>
                                 <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
+                                    Home
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
                         </li>
@@ -866,24 +875,26 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div @class([
+            'content-wrapper',
+            'kanban' => strpos(Route::currentRouteName(), '.index'),
+        ])>
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard</h1>
+                            <h1 class="m-0">@yield('title')</h1>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('staff.index') }}">Home</a></li>
                                 <li class="breadcrumb-item active">Dashboard v1</li>
                             </ol>
                         </div>
                         <!-- /.col -->
                     </div>
-                    @yield('content')
                     <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
@@ -891,13 +902,13 @@
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
+            <section @class([
+                'content',
+                'pb-3' => strpos(Route::currentRouteName(), '.index'),
+            ])>
+                <div class="container-fluid h-100 ">
                     <!-- Small boxes (Stat box) -->
-
-
-
-
+                    @yield('content')
                     <!-- /.row (main row) -->
                 </div>
                 <!-- /.container-fluid -->
@@ -929,6 +940,7 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <script src="/js/app.js"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ url('bossUI') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->
@@ -955,7 +967,9 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    @yield('js')
     @livewireScripts
+
 </body>
 
 </html>

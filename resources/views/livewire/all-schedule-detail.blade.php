@@ -170,6 +170,11 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-3">
+                            <label>Định dạng lại bảng:</label>
+                            <button type="button" class="btn btn-block btn-default"
+                                onclick="contentChanged()">Default</button>
+                        </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Ẩn cột:</label>
@@ -189,6 +194,7 @@
                                 </select>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -263,13 +269,13 @@
                                             @endif
                                         </td>
                                     @endif
-                                    @if (!$hiddenColums['Loại hàng'])
+                                    @if (!$hiddenColums['Hàng'])
                                         <td>{{ $schedule_detail->category->name }}</td>
                                     @endif
-                                    @if (!$hiddenColums['Nơi mua'])
+                                    @if (!$hiddenColums['Mua'])
                                         <td>{{ $schedule_detail->seller->name }}</td>
                                     @endif
-                                    @if (!$hiddenColums['Nơi bán'])
+                                    @if (!$hiddenColums['Bán'])
                                         <td>{{ $schedule_detail->buyer->name }}</td>
                                     @endif
                                     @if (!$hiddenColums['Giá mua'])
@@ -287,7 +293,7 @@
                                     @if (!$hiddenColums['Đơn hàng'])
                                         <td>@if ($schedule_detail->order_id) {{ $schedule_detail->order->summary }}@else Không có @endif</td>
                                     @endif
-                                    @if (!$hiddenColums['Khối lượng'])
+                                    @if (!$hiddenColums['K.lượng'])
                                         <td>{{ $schedule_detail->quantity }}</td>
                                     @endif
                                     @if (!$hiddenColums['Mô tả'])
@@ -334,9 +340,12 @@
             Livewire.emit('ChangeTimeRange', src.value);
         }
     </script>
-    {{-- <script>
-        window.addEventListener('contentChanged', event => {
-            table = $("#example1").DataTable({
+    <script>
+        async function contentChanged() {
+            await table = $("#example1").DataTable({
+                destroy: true,
+            });
+            await table = $("#example1").DataTable({
                 destroy: true,
                 searching: false,
                 paging: false,
@@ -346,6 +355,46 @@
                 select: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            // await table = $("#example1").DataTable({
+            //     //destroy: true,
+            //     searching: false,
+            //     paging: false,
+            //     "responsive": true,
+            //     "lengthChange": false,
+            //     "autoWidth": false,
+            //     select: true,
+            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        }
+        window.addEventListener('contentChanged', event => {
+            // table = $("#example1").DataTable({
+            //     destroy: true,
+            //     searching: false,
+            //     paging: false,
+            //     "responsive": true,
+            //     "lengthChange": false,
+            //     "autoWidth": false,
+            //     select: true,
+            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            alert('oki');
         });
-    </script> --}}
+    </script>
 </div>
+@push('scripts')
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                searching: false,
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        // window.addEventListener('contentChanged', event => {
+        //             alert('oki');
+    </script>
+@endpush

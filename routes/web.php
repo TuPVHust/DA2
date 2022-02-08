@@ -48,11 +48,15 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
 });
 
 
+Route::prefix('staff')->name('staff.')->middleware(\App\Http\Middleware\Authenticate::class)->middleware(\App\Http\Middleware\StaffGuard::class)->group(function(){
+    Route::get('/', function () {
+        return view('staff.index');
+    })->name('index');
+});
 
-
-Route::get('/staff', function () {
-    return view('staff.index');
-})->middleware(\App\Http\Middleware\Authenticate::class)->middleware(\App\Http\Middleware\StaffGuard::class)->name('index');
+// Route::get('/staff', function () {
+//     return view('staff.index');
+// })->middleware(\App\Http\Middleware\Authenticate::class)->middleware(\App\Http\Middleware\StaffGuard::class)->name('index');
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 Auth::routes();
@@ -68,7 +72,7 @@ Route::get('/', function () {
         return redirect()->route('boss.dashboard');
     }
     elseif(Auth::user()->role = 0){
-        return redirect()->route('index');
+        return redirect()->route('staff.index');
     }
     else{
         return redirect()->route('logout');

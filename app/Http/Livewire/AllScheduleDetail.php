@@ -32,7 +32,7 @@ class AllScheduleDetail extends Component
     public $ceilingTimeBound;
     public $timeRange;
     public $itemsPerPage = 5;
-    public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Loại hàng'=>false,'Nơi mua'=>false,'Nơi bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'Khối lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
+    public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
 
     public function ChangeTimeRange($value)
     {
@@ -78,6 +78,7 @@ class AllScheduleDetail extends Component
                 }
             }
         }
+        $this->emitself('refresh_me');
     }
     public function changeOrderBy($value)
     {
@@ -123,7 +124,7 @@ class AllScheduleDetail extends Component
         $this->orderFilter = $value;
         //dd($value);
     }
-    protected $listeners = ['ChangeTimeRange','changeOrderBy','changeOrder','changeDriver','changeTruck','changeCarOwner','ChangeHiddenColums','changeCategory','changeSeller','changeBuyer','changeOrder1'];
+    protected $listeners = ['ChangeTimeRange','changeOrderBy','changeOrder','changeDriver','changeTruck','changeCarOwner','ChangeHiddenColums','changeCategory','changeSeller','changeBuyer','changeOrder1','refresh_me' => '$refresh',];
     public function mount() {
         $this->floorTimeBound=Schedule::min('date');
         $this->ceilingTimeBound=Schedule::max('date');
@@ -132,7 +133,7 @@ class AllScheduleDetail extends Component
     public function updated()
     {
         //$this->dispatchBrowserEvent('contentChanged');
-        //$this->emit('contentChanged');
+        $this->emit('contentChanged');
     }
 
     public function render()

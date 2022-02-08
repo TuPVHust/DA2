@@ -246,7 +246,7 @@
                                                                             <td colspan="5">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
-                                                                                        chú</span>:{!! $schedule_detail->description !!}
+                                                                                        chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
                                                                                 </div>
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Đơn

@@ -83,10 +83,10 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane" id="activity">
+                        <div class="tab-pane fade" id="activity">
                             <div class="row">
                                 {{-- công việc hôm nay --}}
-                                <div class="col-md-6" style="height: 380px">
+                                <div class="col-md-6" style="height: 432px">
                                     <div class="card card-info overflow-auto" style="height: 100%">
                                         <div class="card-header">
                                             <h3 class="card-title"><i class="fas fa-shipping-fast"></i> Đang tiến hành
@@ -196,7 +196,7 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:{!! $schedule_detail->description !!}
+                                                                                                                    chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
@@ -305,7 +305,7 @@
                                     <!-- /.card -->
                                 </div>
                                 {{-- Đã hoàn thành hôm nay --}}
-                                <div class="col-md-6" style="height: 380px">
+                                <div class="col-md-6" style="height: 432px">
                                     <div class="card card-success overflow-auto" style="height: 100%">
                                         <div class="card-header">
                                             <h3 class="card-title"><i class="far fa-check-circle"></i> Hoàn thành</h3>
@@ -415,7 +415,7 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:{!! $schedule_detail->description !!}
+                                                                                                                    chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
@@ -532,7 +532,7 @@
 
 
                         {{-- waiting schedule begin --}}
-                        <div class="tab-pane" id="timeline" style="height: 380px">
+                        <div class="tab-pane fade" id="timeline" style="height: 432px">
                             <div class="card card-secondary overflow-auto" style="height: 100%">
                                 <div class="card-header">
                                     <h3 class="card-title"><i class="far fa-clock"></i> Đang chờ </h3>
@@ -584,6 +584,7 @@
                                                                         class="btn btn-secondary float-right btn-sm"><i
                                                                             class="fas fa-edit"></i>
                                                                     </button> --}}
+                                                                    
                                                                 </h4>
                                                                 <div class="card-tools">
                                                                     @if ($inQueueSchedule->schedule_details)
@@ -674,7 +675,7 @@
                                                                                                     <div>
                                                                                                         <span
                                                                                                             class="font-weight-bold">Ghi
-                                                                                                            chú</span>:{!! $schedule_detail->description !!}
+                                                                                                            chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
                                                                                                     </div>
                                                                                                     <div>
                                                                                                         <span
@@ -785,7 +786,7 @@
 
 
                         {{-- All schedule begin --}}
-                        <div class="tab-pane active" id="settings">
+                        <div class="tab-pane  active" id="settings">
                             @livewire('all-schedules')
                         </div>
                     </div>

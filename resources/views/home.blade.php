@@ -19,7 +19,7 @@
                                 Đến trang boss
                             </button>
                         </a>
-                        <a href="/staff">
+                        <a href="{{ route('staff.index') }}">
                             <button class="btn btn-info">
                                 Đến trang staff
                             </button>

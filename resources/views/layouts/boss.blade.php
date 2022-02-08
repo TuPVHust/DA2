@@ -55,9 +55,9 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="{{ route('boss.dashboard') }}" class="nav-link">Dash board</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                {{-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
-                </li>
+                </li> --}}
             </ul>
 
             <!-- Right navbar links -->
@@ -206,7 +206,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -465,7 +465,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            @yield('title')
+                            <h1 class="m-0">@yield('title')</h1>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
@@ -476,8 +476,6 @@
                         </div>
                         <!-- /.col -->
                     </div>
-
-                    @yield('content')
                     <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
@@ -488,7 +486,7 @@
             <section class="content">
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
-
+                    @yield('content')
 
 
 
