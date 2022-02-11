@@ -1,8 +1,4 @@
-@extends('layouts.boss')
-@section('title')
-    AdminLTE 3 | Chuyến
-@endsection
-
+@extends('layouts.staff')
 @section('css')
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -20,20 +16,18 @@
     </style>
 @endsection
 @section('title')
-    <h1>Chuyến</h1>
+    My-Work
 @endsection
-
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item active">Danh sách chuyến</li>
+        <li class="breadcrumb-item active">My-Work</li>
     </ol>
 @endsection
-
 @section('content')
-    @livewire('all-schedule-detail')
+    @livewire('staff-all-work')
+    {{-- <livewire:schedule-edit-modal /> --}}
 @endsection
-
 @section('js')
     <!-- DataTables  & Plugins -->
     <script src="{{ url('bossUI') }}/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -51,9 +45,6 @@
     <script src="{{ url('bossUI') }}/plugins/select2/js/select2.full.min.js"></script>
     <script>
         Livewire.on('contentChanged', () => {
-            // table = $("#example1").DataTable({
-            //     destroy: true,
-            // });
             table = $("#example1").DataTable({
                 destroy: true,
                 searching: false,

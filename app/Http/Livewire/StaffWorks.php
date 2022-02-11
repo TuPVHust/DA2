@@ -15,6 +15,7 @@ use App\Models\Partner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 class StaffWorks extends Component
 {
     public $editingScheDetail = null;
@@ -66,16 +67,129 @@ class StaffWorks extends Component
         //'scheDetDescription' => 'required',
         //'email' => 'required|email',
     ];
-    protected $listeners = ['completeWork','addScheduleDetail','handleAddCostDetail','changeOrder','changeBuyer','changeSeller','changeCategory','toggleAddForm','changeTab','deleteScheDetail','deleteCostDetail','editScheDeatail'];
+    protected $listeners = ['completeWork','addScheduleDetail','handleAddCostDetail','changeOrder','changeBuyer','changeSeller','changeCategory','toggleAddForm','changeTab','deleteScheDetail','deleteCostDetail','editScheduleDetail','updateSchedulesDetail','cancelEdit','closeInforModal','editCostDeatail','updateCostDetail'];
     
-    public function editScheDeatail($value){
-        //$schedule_detail = ScheduleDetail::find($value);
-        $this->editingScheDetail = $value;
-        $this->dispatchBrowserEvent('showScheDetailEditForm', []);
+    public function handleEditCostDetail(){
+        //dd('oki');
+        $validateData = Validator::make($this->editingCostDetail, [
+            'cost' => 'required|gt:0',
+            'actual_cost' => 'required|gt:0',
+            'cost_group_id' => 'required'
+        ])->validate();
+        $costDetail = CostDetail::where('id', $this->editingCostDetail['id']);
+        if($costDetail){
+            $costDetail->update([
+                'description' => $this->editingCostDetail['description'],
+                'cost' => $this->editingCostDetail['cost'],
+                'actual_cost' => $this->editingCostDetail['actual_cost'],
+                'cost_group_id' => $this->editingCostDetail['cost_group_id']
+            ]);
+            $this->dispatchBrowserEvent('closeEdititngModal', []);
+            session()->flash('alert-success', 'Cập nhật thành công !!!');
+            $this->editingCostDetail = null;
+        }
+        else{
+            session()->flash('alert-danger', 'Cập nhật thất bại, thử tải lại trang và thử lại !!!');
+            $this->editingCostDetail = null;
+        }
         
     }
-    
-    
+    public function editCostDeatail($value){
+        //dd($value);
+        $this->editingCostDetail = $value;
+        //dd($this->editingScheDetail);
+        $this->dispatchBrowserEvent('showCostDetailEditForm', []);
+        //$this->showAddForm = false;
+        $this->dispatchBrowserEvent('reloadJs', []);   
+    }
+
+    public function closeInforModal(){
+        //dd('oki');
+        $this->resetAttribute();
+        $this->dispatchBrowserEvent('removeInputValue', []);
+    }
+
+    public function cancelEdit(){
+        $this->editingScheDetail = null;
+    }
+    public function updateSchedulesDetail($value,$key)
+    {
+        //dd($key, $value);
+        $this->editingScheDetail[$key] = $value;
+        $this->dispatchBrowserEvent('reloadJs', []);
+    }
+    public function updateCostDetail($value,$key)
+    {
+        //dd($key, $value);
+        $this->editingCostDetail[$key] = $value;
+        $this->dispatchBrowserEvent('reloadJs', []);
+    }
+
+    public function editScheduleDetail()
+    {
+        $validateData = Validator::make($this->editingScheDetail, [
+            'buyer_id' => 'required',
+            'seller_id' => 'required',
+            'order_id' => 'required',
+            'category_id' => 'required',
+            'price' => 'required|gt:0',
+            'actual_price' => 'required|gt:0',
+            'revenue' => 'required|gt:0',
+            'actual_revenue' => 'required|gt:0',
+            'quantity' => 'required|gt:0',
+            'distance' => 'required|gt:0',
+        ])->validate();
+        $editingScheDetail = ScheduleDetail::where('id',$this->editingScheDetail['id']);
+        if($editingScheDetail){
+            if($this->order !== 'none'){
+                $editingScheDetail->update([
+                    'description' => $this->editingScheDetail['description'],
+                    'seller_id' => $this->editingScheDetail['seller_id'],
+                    'buyer_id' => $this->editingScheDetail['buyer_id'],
+                    'order_id' => $this->editingScheDetail['order_id'],
+                    'category_id' => $this->editingScheDetail['category_id'],
+                    'price' => $this->editingScheDetail['price'],
+                    'actual_price' => $this->editingScheDetail['actual_price'],
+                    'revenue' => $this->editingScheDetail['revenue'],
+                    'actual_revenue' => $this->editingScheDetail['actual_revenue'],
+                    'quantity' => $this->editingScheDetail['quantity'],
+                    'distance' => $this->editingScheDetail['distance'],
+                ]);
+            }
+            else{
+                $editingScheDetail->update([
+                    'description' => $this->editingScheDetail['description'],
+                    'seller_id' => $this->editingScheDetail['seller_id'],
+                    'buyer_id' => $this->editingScheDetail['buyer_id'],
+                    'order_id' => null,
+                    'category_id' => $this->editingScheDetail['category_id'],
+                    'price' => $this->editingScheDetail['price'],
+                    'actual_price' => $this->editingScheDetail['actual_price'],
+                    'revenue' => $this->editingScheDetail['revenue'],
+                    'actual_revenue' => $this->editingScheDetail['actual_revenue'],
+                    'quantity' => $this->editingScheDetail['quantity'],
+                    'distance' => $this->editingScheDetail['distance'],
+                ]);
+            }
+            $this->dispatchBrowserEvent('closeEdititngModal', []);
+            session()->flash('alert-success', 'Cập nhật thành công !!!');
+            $this->editingScheDetail = null;
+        }
+        else{
+            session()->flash('alert-edit', 'Có lỗi khi cập nhật !!!');
+            $this->dispatchBrowserEvent('closeEdititngModal', []);
+            $this->editingScheDetail = null;
+        }
+        
+    } 
+    public function editScheDeatail($value){
+        //dd($value);
+        $this->editingScheDetail = $value;
+        //dd($this->editingScheDetail);
+        $this->dispatchBrowserEvent('showScheDetailEditForm', []);
+        //$this->showAddForm = false;
+        $this->dispatchBrowserEvent('reloadJs', []);   
+    }
     public function deleteCostDetail($id){
         $cost_detail = CostDetail::find($id);
         if($cost_detail){
@@ -85,6 +199,7 @@ class StaffWorks extends Component
             }
         }
         $this->dispatchBrowserEvent('reloadJs', []);
+        session()->flash('alert-success', 'Xóa bản ghi thành công !!!');
     }
     public function deleteScheDetail($id){
         $schedule_detail = ScheduleDetail::find($id);
@@ -95,6 +210,7 @@ class StaffWorks extends Component
             }
         }
         $this->dispatchBrowserEvent('reloadJs', []);
+        session()->flash('alert-success', 'Xóa bản ghi thành công !!!');
     }
     public function changeTab(){
         $this->activeCost = !$this->activeCost;
@@ -170,6 +286,7 @@ class StaffWorks extends Component
             ]);
         }
         $this->resetAttribute();
+        session()->flash('alert-success', 'Thêm mới thành công !!!');
     }
     public function handleAddCostDetail($id, $costGroup, $cost, $actual_cost,$costDescription){
         $this->dispatchBrowserEvent('reloadJs', []);
@@ -181,6 +298,7 @@ class StaffWorks extends Component
             'cost_group_id' => $costGroup
         ]);
         $this->resetAttribute();
+        session()->flash('alert-success', 'Thêm mới thành công !!!');
     }
 
     public function completeWork($id){
@@ -213,6 +331,7 @@ class StaffWorks extends Component
         $todayDoingSchedules = Schedule::where('date', Carbon::today('Asia/Bangkok'))->where('status',1)->where('driver_id',Auth::user()->id)->orderBy('id','desc')->get();
         $todayCompltedSchedules = Schedule::where('date', Carbon::today('Asia/Bangkok'))->where('status',0)->where('driver_id',Auth::user()->id)->orderBy('id','desc')->get();
         $inQueueSchedules = Schedule::where('date','!=',Carbon::today('Asia/Bangkok'))->where('status',1)->where('driver_id',Auth::user()->id)->orderBy('id','desc')->get();
+        //dd($todayDoingSchedules->count());
         return view('livewire.staff-works',[
             'todayDoingSchedules' => $todayDoingSchedules,
             'todayCompltedSchedules' => $todayCompltedSchedules,

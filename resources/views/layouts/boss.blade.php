@@ -204,12 +204,10 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
                                 @csrf
                             </form>
@@ -239,7 +237,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -469,10 +467,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
-                            </ol>
+                            @yield('breadcrumb')
                         </div>
                         <!-- /.col -->
                     </div>

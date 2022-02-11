@@ -9,14 +9,6 @@
             @endif
         @endforeach
     </div>
-
-    <div class="text-right mb-2">
-        <a href="{{ route('boss.schedule_detail.create') }}">
-            <button class="btn btn-primary">
-                Thêm mới
-            </button>
-        </a>
-    </div>
     <div class="row">
         <div class="card col-12" wire:ignore>
             <div class="card-header">
@@ -37,9 +29,6 @@
                                     wire:model='orderBy'>
                                     <option value="date" {{ $orderBy == 'date' ? 'selected="selected"' : '' }}>Ngày
                                         làm việc</option>
-                                    <option value="driverName"
-                                        {{ $orderBy == 'driverName' ? 'selected="selected"' : '' }}>Tên tài xế
-                                    </option>
                                     <option value="shift" {{ $orderBy == 'shift' ? 'selected="selected"' : '' }}>Ca
                                         làm việc</option>
                                     <option value="sellerLoan"
@@ -82,18 +71,6 @@
                                         wire:model='timeRange' onchange="handleChangeTimeRange(this);">
                                 </div>
                                 <!-- /.input group -->
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label>Tài xế:</label>
-                                <select class="select2" style="width: 100%;" id="driverFilter"
-                                    wire:model='driverFilter'>
-                                    <option></option>
-                                    @foreach ($drivers as $driver)
-                                        <option value="{{ $driver->id }}"> {{ $driver->name }}</option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         <div class="col-3">
@@ -169,11 +146,6 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="col-3">
-                            <label>Định dạng lại bảng:</label>
-                            <button type="button" class="btn btn-block btn-default"
-                                onclick="contentChanged()">Default</button>
-                        </div> --}}
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Ẩn cột:</label>
@@ -256,9 +228,6 @@
                                     @if (!$hiddenColums['Chủ xe'])
                                         <td>{{ $schedule_detail->schedule->car_owner->name }}</td>
                                     @endif
-                                    @if (!$hiddenColums['Tài xế'])
-                                        <td>{{ $schedule_detail->schedule->driver->name }}</td>
-                                    @endif
                                     @if (!$hiddenColums['Ca'])
                                         <td>
                                             @if ($schedule_detail->schedule->shift == 1)
@@ -298,22 +267,6 @@
                                     @if (!$hiddenColums['Mô tả'])
                                         <td>@if ($schedule_detail->description){!! $schedule_detail->description !!} @else Không có @endif</td>
                                     @endif
-                                    @if (!$hiddenColums['Hành động'])
-                                        <td class="text-right">
-                                            <a class="btn btn-info btn-sm"
-                                                href="{{ route('boss.schedule_detail.edit', $schedule_detail->id) }}">
-                                                <i class="fas fa-pencil-alt">
-                                                </i>
-                                                Edit
-                                            </a>
-                                            <a class="btn btn-danger btn-sm btndelete"
-                                                href="{{ route('boss.schedule_detail.destroy', $schedule_detail->id) }}">
-                                                <i class="fas fa-trash">
-                                                </i>
-                                                Delete
-                                            </a>
-                                        </td>
-                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -339,7 +292,61 @@
             Livewire.emit('ChangeTimeRange', src.value);
         }
     </script>
+    <script>
+        async function contentChanged() {
+            await table = $("#example1").DataTable({
+                destroy: true,
+            });
+            await table = $("#example1").DataTable({
+                destroy: true,
+                searching: false,
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            // await table = $("#example1").DataTable({
+            //     //destroy: true,
+            //     searching: false,
+            //     paging: false,
+            //     "responsive": true,
+            //     "lengthChange": false,
+            //     "autoWidth": false,
+            //     select: true,
+            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        }
+        window.addEventListener('contentChanged', event => {
+            // table = $("#example1").DataTable({
+            //     destroy: true,
+            //     searching: false,
+            //     paging: false,
+            //     "responsive": true,
+            //     "lengthChange": false,
+            //     "autoWidth": false,
+            //     select: true,
+            //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            alert('oki');
+        });
+    </script>
 </div>
 @push('scripts')
-
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                searching: false,
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        // window.addEventListener('contentChanged', event => {
+        //             alert('oki');
+    </script>
 @endpush

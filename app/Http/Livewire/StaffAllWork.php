@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Livewire;
+
+namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Schedule;
 use App\Models\ScheduleDetail;
@@ -12,9 +14,10 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AllScheduleDetail extends Component
+class StaffAllWork extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -32,7 +35,7 @@ class AllScheduleDetail extends Component
     public $ceilingTimeBound;
     public $timeRange;
     public $itemsPerPage = 5;
-    public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
+    public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,);
 
     public function ChangeTimeRange($value)
     {
@@ -126,6 +129,7 @@ class AllScheduleDetail extends Component
     }
     protected $listeners = ['ChangeTimeRange','changeOrderBy','changeOrder','changeDriver','changeTruck','changeCarOwner','ChangeHiddenColums','changeCategory','changeSeller','changeBuyer','changeOrder1','refresh_me' => '$refresh',];
     public function mount() {
+        $this->driverFilter = Auth::user()->id;
         $this->floorTimeBound=Schedule::min('date');
         $this->ceilingTimeBound=Schedule::max('date');
         $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
@@ -133,7 +137,7 @@ class AllScheduleDetail extends Component
     public function updated()
     {
         //$this->dispatchBrowserEvent('contentChanged');
-        //$this->emit('contentChanged');
+        $this->emit('contentChanged');
     }
 
     public function render()
@@ -190,8 +194,8 @@ class AllScheduleDetail extends Component
         $countShowing = $schedule_details->count();
         $total = $schedule_details->total();
         $this->resetPage();
-        $this->emit('contentChanged');
-        return view('livewire.all-schedule-detail',[
+        //$this->emit('contentChanged');
+        return view('livewire.staff-all-work',[
             'schedule_details' => $schedule_details,
             'car_owners' => $car_owners,
             'trucks' => $trucks,

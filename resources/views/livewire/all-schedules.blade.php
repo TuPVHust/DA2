@@ -166,7 +166,7 @@
                                     <td>{{ $schedule->driver->name }}</td>
                                     <td>{{ $schedule->truck->plate }}</td>
                                     <td>{{ $schedule->schedule_details->count() }}</td>
-                                    <td>{{ Carbon\Carbon::parse($schedule->date)->format('Y-m-d') }}
+                                    <td>{{ Carbon\Carbon::parse($schedule->date)->format('d-m-Y') }}
                                     </td>
                                     <td>
                                         @if ($schedule->shift == 1)

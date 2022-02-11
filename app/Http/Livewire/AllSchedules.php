@@ -26,7 +26,7 @@ class AllSchedules extends Component
     public $floorTimeBound;
     public $ceilingTimeBound;
     public $timeRange;
-    public $itemsPerPage = 2;
+    public $itemsPerPage = 5;
 
     public function mount() {
         $this->floorTimeBound=Schedule::min('date');
@@ -68,7 +68,6 @@ class AllSchedules extends Component
             $this->floorTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[0])));
             $this->ceilingTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[1])));
             $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
-            
         }
         else{
             session()->flash('alert-date', 'Khong dung dinh dang ngay !!!');

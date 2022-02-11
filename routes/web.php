@@ -52,6 +52,9 @@ Route::prefix('staff')->name('staff.')->middleware(\App\Http\Middleware\Authenti
     Route::get('/', function () {
         return view('staff.index');
     })->name('index');
+    Route::get('/schedules', function () {
+        return view('staff.schedules');
+    })->name('schedules');
 });
 
 // Route::get('/staff', function () {
