@@ -18,8 +18,9 @@ class ScheduleDetailsController extends Controller
      */
     public function index()
     {
+        // $updateNum =1;
         return view('boss.schedule_detail.index',[
-            
+            // 'updateNum' => $updateNum,
         ]);
     }
 

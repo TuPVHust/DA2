@@ -204,8 +204,9 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                                                                                            document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -285,7 +286,7 @@
                             ])>
                                 <i class="nav-icon fas fa-network-wired"></i>
                                 <p>
-                                    Quản lý công việc
+                                    Công việc
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -304,6 +305,21 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-header">QUẢN LÝ FILES</li>
+                        <li class="nav-item">
+                            <a href="{{ route('boss.file') }}" @class([
+                                'nav-link',
+                                'active' => strpos(Route::currentRouteName(), '.file'),
+                                // 'active' => Route::currentRouteName() == 'boss.truck.create',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.edit',
+                            ])>
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>
+                                    Files manager
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-header">THÔNG TIN CHUNG</li>
                         <li class="nav-item">
                             <a href="{{ route('boss.truck.index') }}" @class([
@@ -314,7 +330,7 @@
                             ])>
                                 <i class="nav-icon fas fa-truck-moving"></i>
                                 <p>
-                                    Quản lý xe
+                                    Xe
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -328,7 +344,7 @@
                             ])>
                                 <i class=" nav-icon fas fa-handshake"></i>
                                 <p>
-                                    Quản lý đối tác
+                                    Đối tác
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -342,7 +358,7 @@
                             ])>
                                 <i class="nav-icon fas fa-dollar-sign"></i>
                                 <p>
-                                    Quản lý chi phí
+                                    Chi phí
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -356,7 +372,7 @@
                             ])>
                                 <i class="nav-icon fas fa-boxes"></i>
                                 <p>
-                                    Quản lý hàng hóa
+                                    Hàng hóa
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -370,7 +386,7 @@
                             ])>
                                 <i class="nav-icon fas fa-dolly-flatbed"></i>
                                 <p>
-                                    Quản lý đơn hàng
+                                    Đơn hàng
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
@@ -384,7 +400,7 @@
                             ])>
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Quản lý tài xế
+                                    Tài xế
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

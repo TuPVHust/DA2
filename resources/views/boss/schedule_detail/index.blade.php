@@ -50,11 +50,14 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/select2/js/select2.full.min.js"></script>
     <script>
-        Livewire.on('contentChanged', () => {
+        Livewire.on('contentChanged', async () => {
+            await $("#example1").removeClass("dataTable no-footer dtr-inline")
+            await $('#example1').removeAttr('aria-describedby');
+            await $('#example1').removeAttr('role');
             // table = $("#example1").DataTable({
             //     destroy: true,
             // });
-            table = $("#example1").DataTable({
+            table = $("#example{{ $updateNum }}").DataTable({
                 destroy: true,
                 searching: false,
                 paging: false,
@@ -63,22 +66,10 @@
                 "autoWidth": false,
                 select: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#example{{ $updateNum }}_wrapper .col-md-6:eq(0)');
         })
     </script>
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                searching: false,
-                paging: false,
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                select: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script>
+
     <script>
         $(".btndelete").click(function(ev) {
             ev.preventDefault();

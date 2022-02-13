@@ -32,6 +32,7 @@ class AllScheduleDetail extends Component
     public $ceilingTimeBound;
     public $timeRange;
     public $itemsPerPage = 5;
+    public $updateNum = 1;
     public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
 
     public function ChangeTimeRange($value)
@@ -130,14 +131,16 @@ class AllScheduleDetail extends Component
         $this->ceilingTimeBound=Schedule::max('date');
         $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
     }
-    public function updated()
+    public function update()
     {
         //$this->dispatchBrowserEvent('contentChanged');
         //$this->emit('contentChanged');
+        $this->updateNum++;
     }
 
     public function render()
     {
+        
         $trucks = Truck::all();
         $categories = Category::all();
         $orders = Order::all();

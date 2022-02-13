@@ -199,7 +199,7 @@
             </div>
             <!-- /.card-body -->
         </div>
-        <div class="card col-12">
+        <div class="card w-100">
             <div class="card-header">
                 <h3 class="card-title">Danh sách chuyến</h3>
                 <div class="input-group input-group-sm card-tools w-50">
@@ -217,7 +217,7 @@
             @else
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table table-bordered table-striped" id="example1">
+                    <table class="table table-bordered table-striped" id="example{{ $updateNum }}" wire:ignore.self>
                         <thead>
                             <tr>
                                 @foreach ($hiddenColums as $key => $value)
@@ -322,11 +322,11 @@
                 <div class="container w-100">
                     <div class="float-right">{{ $schedule_details->links() }}</div>
                 </div>
-                <hr>
-                <div class="card-footer">
-                    Hiển thị: {{ $countShowing }}/{{ $total }}
+                <hr class="mb-0">
+                <div class="card-footer mt-0">
+                    <span class="badge badge-light">
+                        Hiển thị: {{ $countShowing }}/{{ $total }}</span>
                 </div>
-
             @endif
             <!-- /.card-body -->
         </div>
@@ -338,6 +338,24 @@
         function handleChangeTimeRange(src) {
             Livewire.emit('ChangeTimeRange', src.value);
         }
+    </script>
+    <script>
+        window.onload = (event) => {
+            initTable()
+        };
+
+        function initTable() {
+            $("#example{{ $updateNum }}").DataTable({
+                destroy: true,
+                searching: false,
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example{{ $updateNum }}_wrapper .col-md-6:eq(0)');
+        };
     </script>
 </div>
 @push('scripts')

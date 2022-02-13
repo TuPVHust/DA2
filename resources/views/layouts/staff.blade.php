@@ -207,7 +207,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -285,6 +285,21 @@
                                 <i class="nav-icon fas fa-network-wired"></i>
                                 <p>
                                     Tất cả công việc
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">QUẢN LÝ FILES</li>
+                        <li class="nav-item">
+                            <a href="{{ route('staff.file') }}" @class([
+                                'nav-link',
+                                'active' => strpos(Route::currentRouteName(), '.file'),
+                                // 'active' => Route::currentRouteName() == 'boss.truck.create',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.edit',
+                            ])>
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>
+                                    Files manager
                                     {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>

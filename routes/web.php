@@ -45,6 +45,9 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
     Route::resource('driver', DriversController::class)->only([
         'index', 'show', 'edit' ,'update',
     ]);
+    Route::get('/file', function () {
+        return view('files.index');
+    })->name('file');
 });
 
 
@@ -55,6 +58,9 @@ Route::prefix('staff')->name('staff.')->middleware(\App\Http\Middleware\Authenti
     Route::get('/schedules', function () {
         return view('staff.schedules');
     })->name('schedules');
+    Route::get('/file', function () {
+        return view('files.index');
+    })->name('file');
 });
 
 // Route::get('/staff', function () {
