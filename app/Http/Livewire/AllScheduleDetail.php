@@ -135,7 +135,7 @@ class AllScheduleDetail extends Component
     {
         //$this->dispatchBrowserEvent('contentChanged');
         //$this->emit('contentChanged');
-        $this->updateNum++;
+        //$this->updateNum++;
     }
 
     public function render()
@@ -193,7 +193,8 @@ class AllScheduleDetail extends Component
         $countShowing = $schedule_details->count();
         $total = $schedule_details->total();
         $this->resetPage();
-        $this->emit('contentChanged');
+        $this->updateNum++;
+        $this->emit('contentChanged', [$this->updateNum]);
         return view('livewire.all-schedule-detail',[
             'schedule_details' => $schedule_details,
             'car_owners' => $car_owners,

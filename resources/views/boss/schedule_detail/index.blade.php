@@ -50,15 +50,17 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/select2/js/select2.full.min.js"></script>
     <script>
-        Livewire.on('contentChanged', async () => {
-            await $("#example1").removeClass("dataTable no-footer dtr-inline")
-            await $('#example1').removeAttr('aria-describedby');
-            await $('#example1').removeAttr('role');
+        Livewire.on('contentChanged', async (updateNum) => {
+            //alert(updateNum);
+            newID = "#example" + updateNum;
+            await $(newID).removeClass("dataTable no-footer dtr-inline")
+            await $(newID).removeAttr('aria-describedby');
+            await $(newID).removeAttr('role');
             // table = $("#example1").DataTable({
             //     destroy: true,
             // });
-            table = $("#example{{ $updateNum }}").DataTable({
-                destroy: true,
+            table = $(newID).DataTable({
+                //destroy: true,
                 searching: false,
                 paging: false,
                 "responsive": true,
@@ -66,7 +68,7 @@
                 "autoWidth": false,
                 select: true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example{{ $updateNum }}_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo(newID + '_wrapper .col-md-6:eq(0)');
         })
     </script>
 
