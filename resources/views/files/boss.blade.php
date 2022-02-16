@@ -1,5 +1,4 @@
 @extends('layouts.boss')
-
 @section('title')
     File manager
 @endsection

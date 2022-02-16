@@ -46,7 +46,7 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
         'index', 'show', 'edit' ,'update',
     ]);
     Route::get('/file', function () {
-        return view('files.index');
+        return view('files.boss');
     })->name('file');
 });
 
@@ -59,7 +59,7 @@ Route::prefix('staff')->name('staff.')->middleware(\App\Http\Middleware\Authenti
         return view('staff.schedules');
     })->name('schedules');
     Route::get('/file', function () {
-        return view('files.index');
+        return view('files.staff');
     })->name('file');
 });
 
@@ -73,14 +73,18 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(\App\Http\Middleware\AdminGuard::class)->name('home');
 
 Route::get('/', function () {
-    if(Auth::user()->role = 2){
+
+    if(Auth::user()->role == 2){
+        //dd('admin');
         return redirect()->route('home');
     }
-    elseif(Auth::user()->role = 1)
+    elseif(Auth::user()->role == 1)
     {
+        //dd('b');
         return redirect()->route('boss.dashboard');
     }
-    elseif(Auth::user()->role = 0){
+    elseif(Auth::user()->role == 0){
+        //dd('s');
         return redirect()->route('staff.index');
     }
     else{

@@ -66,7 +66,7 @@ class LoginController extends Controller
                 return redirect()->route('boss.dashboard');
             }
             elseif(Auth::user()->role == 0){
-                return redirect()->route('index');
+                return redirect()->route('staff.index');
             }
             else{
                 return redirect()->route('logout');

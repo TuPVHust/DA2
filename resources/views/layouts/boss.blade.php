@@ -84,12 +84,14 @@
                         </form>
                     </div>
                 </li>
-
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link" href="{{ route('chatify') }}">
                         <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        @if (\App\Models\ChMessage::where('seen', 0)->where('to_id', Auth::user()->id)->count() > 0)
+                            <span
+                                class="badge badge-danger navbar-badge">{{ \App\Models\ChMessage::where('seen', 0)->where('to_id', Auth::user()->id)->count() }}</span>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
@@ -153,27 +155,53 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        @if (Auth::user()->unreadNotifications->count() > 0)
+                            <span class="badge badge-warning navbar-badge">
+                                {{ Auth::user()->unreadNotifications->count() }}
+                            </span>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        @foreach (Auth::user()->unreadNotifications as $unreadNotification)
+                            @php
+                                $notifiedUser = \App\Models\User::find($unreadNotification->data['userId']);
+                            @endphp
+                            @if ($notifiedUser)
+                                <a href="#" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="media">
+                                        <img src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . $notifiedUser->avatar) }}"
+                                            alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                        <div class="media-body">
+                                            <h3 class="dropdown-item-title font-weight-bold">
+                                                {{ $unreadNotification->data['name'] }}
+                                                <span class="float-right text-sm text-danger"><i
+                                                        class="fas fa-star"></i></span>
+                                            </h3>
+                                            @if ($unreadNotification->type == 'App\Notifications\NewUserNotification')
+                                                <p class="text-sm">Vừa đăng ký hệ thống với email
+                                                    <span
+                                                        class="font-weight-bold">{{ $unreadNotification->data['email'] }}</span>
+                                                </p>
+                                            @elseif ($unreadNotification->type == 'App\Notifications\completeSchedule')
+                                                <p class="text-sm">Vừa hoàn thành công việc giao ngày ngày
+                                                    <span
+                                                        class="font-weight-bold">{{ Carbon\Carbon::parse($unreadNotification->data['schedule']['date'])->format('d-m-Y') }}</span>
+                                                </p>
+                                            @else
+                                                <p class="text-sm"> Đã có lỗi sảy ra</p>
+                                            @endif
+                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>
+                                                {{ \Carbon\Carbon::createFromTimestamp(strtotime($unreadNotification->created_at))->diffForHumans(\Carbon\Carbon::now()) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+                        @endforeach
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notification</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -206,7 +234,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                            document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -234,8 +262,8 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ url('bossUI') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . Auth::user()->avatar) }}"
+                            class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -305,6 +333,18 @@
                                 </p>
                             </a>
                         </li>
+                        {{-- <li class="nav-header">TIN NHẮN</li>
+                        <li class="nav-item">
+                            <a href="{{ route('chatify') }}" @class([
+                                'nav-link',
+                                'active' => strpos(Route::currentRouteName(), 'chatify'),
+                            ])>
+                                <i class="nav-icon fas fa-messages"></i>
+                                <p>
+                                    Hộp tin nhắn
+                                </p>
+                            </a>
+                        </li> --}}
                         <li class="nav-header">QUẢN LÝ FILES</li>
                         <li class="nav-item">
                             <a href="{{ route('boss.file') }}" @class([

@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Truck;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Notifications\createSchedule;
+use Illuminate\Support\Facades\Auth;
 
 class SchedulesController extends Controller
 {
@@ -90,8 +92,12 @@ class SchedulesController extends Controller
                 'date' => date('Y-m-d',strtotime($request->input('date'))),
                 'shift' => $request->input('shift'),
                 'init_money' => $request->input('init_money'),
-            ]); 
-            return redirect()->route('boss.schedule.index')->with('alert-success','Thêm mới thành công.');
+            ]);
+            $staff = User::find($request->input('driver'));
+            if($staff){
+                \Notification::send($staff, new createSchedule(Auth::user(), $schedule));
+            }
+            return redirect()->route('boss.schedule.index')->with('alert-success','Thêm mới thành công.');    
         }
     }
 

@@ -231,7 +231,7 @@
                                                                             <label>Giá</label>
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập giá ..." name="price"
-                                                                                @if (old('price')) value="{{ old('price') }}" @else  @endif
+                                                                                @if (old('price')) value="{{ old('price') }}" @else @endif
                                                                                 wire:model='price'>
                                                                             @error('price')
                                                                                 <small
@@ -245,7 +245,7 @@
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập tiền thực thu ..."
                                                                                 name="actual_price"
-                                                                                @if (old('actual_price')) value="{{ old('actual_price') }}" @else  @endif
+                                                                                @if (old('actual_price')) value="{{ old('actual_price') }}" @else @endif
                                                                                 wire:model='actual_price'>
                                                                             @error('actual_price')
                                                                                 <small
@@ -258,7 +258,8 @@
                                                                             <label>Thu</label>
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập doanh thu ..."
-                                                                                name="revenue" @if (old('revenue')) value="{{ old('revenue') }}" @else  @endif
+                                                                                name="revenue"
+                                                                                @if (old('revenue')) value="{{ old('revenue') }}" @else @endif
                                                                                 wire:model='revenue'>
                                                                             @error('revenue')
                                                                                 <small
@@ -272,7 +273,7 @@
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập tiền thực thu ..."
                                                                                 name="actual_revenue"
-                                                                                @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else  @endif
+                                                                                @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else @endif
                                                                                 wire:model='actual_revenue'>
                                                                             @error('actual_revenue')
                                                                                 <small
@@ -286,7 +287,8 @@
                                                                             <label>Khối lượng</label>
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập khối lượng hàng ..."
-                                                                                name="quantity" @if (old('quantity')) value="{{ old('quantity') }}" @else @endif
+                                                                                name="quantity"
+                                                                                @if (old('quantity')) value="{{ old('quantity') }}" @else @endif
                                                                                 wire:model='quantity'>
                                                                             @error('quantity')
                                                                                 <small
@@ -299,7 +301,8 @@
                                                                             <label>Quãng đường</label>
                                                                             <input type="number" class="form-control"
                                                                                 placeholder="Nhập quãng đường di chuyển ..."
-                                                                                name="distance" @if (old('distance')) value="{{ old('distance') }}" @else @endif
+                                                                                name="distance"
+                                                                                @if (old('distance')) value="{{ old('distance') }}" @else @endif
                                                                                 wire:model='distance'>
                                                                             @error('distance')
                                                                                 <small
@@ -384,10 +387,16 @@
                                                                             <td colspan="6">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
-                                                                                        chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                        chú</span>:@if ($schedule_detail->description)
+                                                                                        {{ $schedule_detail->description }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                     <br>
                                                                                     <span class="font-weight-bold">Đơn
-                                                                                        hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                        hàng</span>:@if ($schedule_detail->order)
+                                                                                        {{ $schedule_detail->order->summary }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-6">
@@ -730,11 +739,17 @@
                                                                                     <div>
                                                                                         <span
                                                                                             class="font-weight-bold">Ghi
-                                                                                            chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                            chú</span>:@if ($schedule_detail->description)
+                                                                                            {{ $schedule_detail->description }}
+                                                                                        @else Không có
+                                                                                        @endif
                                                                                         <br>
                                                                                         <span
                                                                                             class="font-weight-bold">Đơn
-                                                                                            hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                            hàng</span>:@if ($schedule_detail->order)
+                                                                                            {{ $schedule_detail->order->summary }}
+                                                                                        @else Không có
+                                                                                        @endif
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-6">
@@ -1127,7 +1142,7 @@
                                                                                     class="form-control"
                                                                                     placeholder="Nhập giá ..."
                                                                                     name="price"
-                                                                                    @if (old('price')) value="{{ old('price') }}" @else  @endif
+                                                                                    @if (old('price')) value="{{ old('price') }}" @else @endif
                                                                                     wire:model='price'>
                                                                                 @error('price')
                                                                                     <small
@@ -1142,7 +1157,7 @@
                                                                                     class="form-control"
                                                                                     placeholder="Nhập tiền thực thu ..."
                                                                                     name="actual_price"
-                                                                                    @if (old('actual_price')) value="{{ old('actual_price') }}" @else  @endif
+                                                                                    @if (old('actual_price')) value="{{ old('actual_price') }}" @else @endif
                                                                                     wire:model='actual_price'>
                                                                                 @error('actual_price')
                                                                                     <small
@@ -1157,7 +1172,7 @@
                                                                                     class="form-control"
                                                                                     placeholder="Nhập doanh thu ..."
                                                                                     name="revenue"
-                                                                                    @if (old('revenue')) value="{{ old('revenue') }}" @else  @endif
+                                                                                    @if (old('revenue')) value="{{ old('revenue') }}" @else @endif
                                                                                     wire:model='revenue'>
                                                                                 @error('revenue')
                                                                                     <small
@@ -1172,7 +1187,7 @@
                                                                                     class="form-control"
                                                                                     placeholder="Nhập tiền thực thu ..."
                                                                                     name="actual_revenue"
-                                                                                    @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else  @endif
+                                                                                    @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else @endif
                                                                                     wire:model='actual_revenue'>
                                                                                 @error('actual_revenue')
                                                                                     <small
@@ -1246,7 +1261,9 @@
                                                                         <th>Mua</th>
                                                                         <th>Bán</th>
                                                                         <th>Lượng</th>
-                                                                        @if ($isLate)<th>Hành động</th>@endif
+                                                                        @if ($isLate)
+                                                                            <th>Hành động</th>
+                                                                        @endif
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -1291,10 +1308,16 @@
                                                                             <td colspan="6">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
-                                                                                        chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                        chú</span>:@if ($schedule_detail->description)
+                                                                                        {{ $schedule_detail->description }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                     <br>
                                                                                     <span class="font-weight-bold">Đơn
-                                                                                        hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                        hàng</span>:@if ($schedule_detail->order)
+                                                                                        {{ $schedule_detail->order->summary }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-6">
@@ -1502,13 +1525,14 @@
                                                 <option {{ !$seller ? 'selected="selected"' : '' }}>
                                                 </option>
                                                 @foreach ($sellers as $seller)
-                                                    <option value="{{ $seller->id }}" @if (old('seller') and old('seller') == $seller->id) selected = 'selected' @endif>
+                                                    <option value="{{ $seller->id }}"
+                                                        @if (old('seller') and old('seller') == $seller->id) selected = 'selected' @endif>
                                                         {{ $seller->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('seller')
+                                        @error('seller_id')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -1519,13 +1543,14 @@
                                                 name="buyer_id" wire:model='editingScheDetail.buyer_id'>
                                                 <option></option>
                                                 @foreach ($buyers as $buyer)
-                                                    <option value="{{ $buyer->id }}" @if (old('buyer') and old('buyer') == $buyer->id) selected = 'selected' @endif>
+                                                    <option value="{{ $buyer->id }}"
+                                                        @if (old('buyer') and old('buyer') == $buyer->id) selected = 'selected' @endif>
                                                         {{ $buyer->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('buyer')
+                                        @error('buyer_id')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -1538,13 +1563,14 @@
                                                 <option value='none'> Không thuộc
                                                     đơn hàng nào</option>
                                                 @foreach ($orders as $order)
-                                                    <option value="{{ $order->id }}" @if (old('order') and old('order') == $order->id) selected = 'selected' @endif>
+                                                    <option value="{{ $order->id }}"
+                                                        @if (old('order') and old('order') == $order->id) selected = 'selected' @endif>
                                                         {{ $order->summary }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('order')
+                                        @error('order_id')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -1555,13 +1581,14 @@
                                                 name="category_id" wire:model='editingScheDetail.category_id'>
                                                 <option></option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}" @if (old('category') and old('category') == $category->id) selected = 'selected' @endif>
+                                                    <option value="{{ $category->id }}"
+                                                        @if (old('category') and old('category') == $category->id) selected = 'selected' @endif>
                                                         {{ $category->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('category')
+                                        @error('category_id')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -1569,7 +1596,8 @@
                                         <div class="form-group">
                                             <label>Giá</label>
                                             <input type="number" class="form-control" placeholder="Nhập giá ..."
-                                                name="price" @if (old('price')) value="{{ old('price') }}" @else  @endif
+                                                name="price"
+                                                @if (old('price')) value="{{ old('price') }}" @else @endif
                                                 wire:model='editingScheDetail.price'>
                                             @error('price')
                                                 <small class="text-danger">{{ $message }}</small>
@@ -1581,7 +1609,8 @@
                                             <label>Thực chi</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập tiền thực thu ..." name="actual_price"
-                                                @if (old('actual_price')) value="{{ old('actual_price') }}" @else  @endif wire:model='editingScheDetail.actual_price'>
+                                                @if (old('actual_price')) value="{{ old('actual_price') }}" @else @endif
+                                                wire:model='editingScheDetail.actual_price'>
                                             @error('actual_price')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1592,7 +1621,8 @@
                                             <label>Thu</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập doanh thu ..." name="revenue"
-                                                @if (old('revenue')) value="{{ old('revenue') }}" @else  @endif wire:model='editingScheDetail.revenue'>
+                                                @if (old('revenue')) value="{{ old('revenue') }}" @else @endif
+                                                wire:model='editingScheDetail.revenue'>
                                             @error('revenue')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1603,7 +1633,8 @@
                                             <label>Thực thu</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập tiền thực thu ..." name="actual_revenue"
-                                                @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else  @endif wire:model='editingScheDetail.actual_revenue'>
+                                                @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else @endif
+                                                wire:model='editingScheDetail.actual_revenue'>
                                             @error('actual_revenue')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1615,7 +1646,8 @@
                                             <label>Khối lượng</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập khối lượng hàng ..." name="quantity"
-                                                @if (old('quantity')) value="{{ old('quantity') }}" @else @endif wire:model='editingScheDetail.quantity'>
+                                                @if (old('quantity')) value="{{ old('quantity') }}" @else @endif
+                                                wire:model='editingScheDetail.quantity'>
                                             @error('quantity')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1626,7 +1658,8 @@
                                             <label>Quãng đường</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập quãng đường di chuyển ..." name="distance"
-                                                @if (old('distance')) value="{{ old('distance') }}" @else @endif wire:model='editingScheDetail.distance'>
+                                                @if (old('distance')) value="{{ old('distance') }}" @else @endif
+                                                wire:model='editingScheDetail.distance'>
                                             @error('distance')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1683,7 +1716,8 @@
                                                 <option {{ !$seller ? 'selected="selected"' : '' }}>
                                                 </option>
                                                 @foreach ($costGroups as $costGroup)
-                                                    <option value="{{ $costGroup->id }}" @if (old('cost_group_id') and old('cost_group_id') == $costGroup->id) selected = 'selected' @endif>
+                                                    <option value="{{ $costGroup->id }}"
+                                                        @if (old('cost_group_id') and old('cost_group_id') == $costGroup->id) selected = 'selected' @endif>
                                                         {{ $costGroup->name }}
                                                     </option>
                                                 @endforeach
@@ -1697,7 +1731,8 @@
                                         <div class="form-group">
                                             <label>Chi</label>
                                             <input type="number" class="form-control" placeholder="Nhập giá ..."
-                                                name="cost" @if (old('cost')) value="{{ old('cost') }}" @else  @endif
+                                                name="cost"
+                                                @if (old('cost')) value="{{ old('cost') }}" @else @endif
                                                 wire:model='editingCostDetail.cost'>
                                             @error('cost')
                                                 <small class="text-danger">{{ $message }}</small>
@@ -1709,7 +1744,8 @@
                                             <label>Thực chi</label>
                                             <input type="number" class="form-control"
                                                 placeholder="Nhập tiền thực thu ..." name="actual_cost"
-                                                @if (old('actual_cost')) value="{{ old('actual_cost') }}" @else  @endif wire:model='editingCostDetail.actual_cost'>
+                                                @if (old('actual_cost')) value="{{ old('actual_cost') }}" @else @endif
+                                                wire:model='editingCostDetail.actual_cost'>
                                             @error('actual_cost')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -1739,5 +1775,4 @@
     {{-- <input type="text" wire:model='tester'> --}}
 </div>
 @push('scripts')
-
 @endpush

@@ -15,7 +15,9 @@ use App\Models\Partner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\completeSchedule;
 class StaffWorks extends Component
 {
     public $editingScheDetail = null;
@@ -107,6 +109,7 @@ class StaffWorks extends Component
         //dd('oki');
         $this->resetAttribute();
         $this->dispatchBrowserEvent('removeInputValue', []);
+        //Session::flush('errors');
     }
 
     public function cancelEdit(){
@@ -130,7 +133,6 @@ class StaffWorks extends Component
         $validateData = Validator::make($this->editingScheDetail, [
             'buyer_id' => 'required',
             'seller_id' => 'required',
-            'order_id' => 'required',
             'category_id' => 'required',
             'price' => 'required|gt:0',
             'actual_price' => 'required|gt:0',
@@ -141,7 +143,7 @@ class StaffWorks extends Component
         ])->validate();
         $editingScheDetail = ScheduleDetail::where('id',$this->editingScheDetail['id']);
         if($editingScheDetail){
-            if($this->order !== 'none'){
+            if($this->order !== 'none'&& $this->order !== null){
                 $editingScheDetail->update([
                     'description' => $this->editingScheDetail['description'],
                     'seller_id' => $this->editingScheDetail['seller_id'],
@@ -171,9 +173,9 @@ class StaffWorks extends Component
                     'distance' => $this->editingScheDetail['distance'],
                 ]);
             }
-            $this->dispatchBrowserEvent('closeEdititngModal', []);
-            session()->flash('alert-success', 'Cập nhật thành công !!!');
             $this->editingScheDetail = null;
+            $this->dispatchBrowserEvent('closeEdititngModal', []);
+            session()->flash('alert-success', 'Cập nhật thành công !!!');  
         }
         else{
             session()->flash('alert-edit', 'Có lỗi khi cập nhật !!!');
@@ -312,6 +314,8 @@ class StaffWorks extends Component
             $schedule->update([
                 'status' => 0,
             ]);
+            $admins = User::where('role',1)->get();
+            \Notification::send($admins, new completeSchedule(Auth::user(), $schedule));
             //dd($id);
         }
         else{

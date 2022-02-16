@@ -182,6 +182,7 @@
 
     <script>
         $('.scheduleInforModal').on('hidden.bs.modal', function(e) {
+            //alert('oki');
             Livewire.emit('closeInforModal');
         })
     </script>
