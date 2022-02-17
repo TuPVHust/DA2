@@ -70,7 +70,7 @@ Route::prefix('staff')->name('staff.')->middleware(\App\Http\Middleware\Authenti
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(\App\Http\Middleware\AdminGuard::class)->name('home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->middleware(\App\Http\Middleware\AdminGuard::class)->name('home');
 
 Route::get('/', function () {
 

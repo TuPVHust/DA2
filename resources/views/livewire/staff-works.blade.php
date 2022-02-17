@@ -87,7 +87,8 @@
                                 <div class="modal-body">
                                     <div class="card card-primary card-outline card-outline-tabs">
                                         <div class="card-header p-0 border-bottom-0">
-                                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                            <ul class="nav nav-tabs"
+                                                id="custom-tabs-four-tab{{ $todayDoingSchedule->id }}" role="tablist">
                                                 <li class="nav-item">
                                                     <a @class(['nav-link', 'active' => !$activeCost]) id="custom-tabs-four-home-tab"
                                                         data-toggle="tab"
@@ -127,209 +128,222 @@
                                                             @endif
                                                         @endforeach
                                                     </div>
-                                                    <div class="card">
-                                                        <div class="card-header" id="headingTwo">
-                                                            <h5 class="mb-0">
-                                                                <button class="btn btn-light btn-sm collapsed"
-                                                                    wire:click="toggleAddForm">
-                                                                    Thêm chuyến
-                                                                </button>
-                                                            </h5>
-                                                        </div>
-                                                        <div id="collapseTwo{{ $todayDoingSchedule->id }}"
-                                                            @class(['d-none' => !$showAddForm])
-                                                            aria-labelledby="headingTwo{{ $todayDoingSchedule->id }}">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-3">
-                                                                        <div class="form-group mb-0" wire:ignore>
-                                                                            <label>Mua:</label>
-                                                                            <select class="select2 select2-seller"
-                                                                                style="width: 100%;" name="seller"
-                                                                                wire:model='seller'>
-                                                                                <option
-                                                                                    {{ !$seller ? 'selected="selected"' : '' }}>
-                                                                                </option>
-                                                                                @foreach ($sellers as $seller)
-                                                                                    <option value="{{ $seller->id }}"
-                                                                                        @if (old('seller') and old('seller') == $seller->id) selected = 'selected' @endif>
-                                                                                        {{ $seller->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        @error('seller')
-                                                                            <small
-                                                                                class="text-danger">{{ $message }}</small>
-                                                                        @enderror
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group mb-0" wire:ignore>
-                                                                            <label>Bán:</label>
-                                                                            <select class="select2 select2-buyer"
-                                                                                style="width: 100%;" name="buyer"
-                                                                                wire:model='buyer'>
-                                                                                <option></option>
-                                                                                @foreach ($buyers as $buyer)
-                                                                                    <option value="{{ $buyer->id }}"
-                                                                                        @if (old('buyer') and old('buyer') == $buyer->id) selected = 'selected' @endif>
-                                                                                        {{ $buyer->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        @error('buyer')
-                                                                            <small
-                                                                                class="text-danger">{{ $message }}</small>
-                                                                        @enderror
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group mb-0" wire:ignore>
-                                                                            <label>Đơn hàng:</label>
-                                                                            <select class="select2 select2-order"
-                                                                                style="width: 100%;" name="order"
-                                                                                wire:model='order'>
-                                                                                <option></option>
-                                                                                <option value='none'> Không thuộc
-                                                                                    đơn hàng nào</option>
-                                                                                @foreach ($orders as $order)
-                                                                                    <option value="{{ $order->id }}"
-                                                                                        @if (old('order') and old('order') == $order->id) selected = 'selected' @endif>
-                                                                                        {{ $order->summary }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        @error('order')
-                                                                            <small
-                                                                                class="text-danger">{{ $message }}</small>
-                                                                        @enderror
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group mb-0" wire:ignore>
-                                                                            <label>Loại hàng:</label>
-                                                                            <select class="select2 select2-category"
-                                                                                style="width: 100%;" name="category"
-                                                                                wire:model='category'>
-                                                                                <option></option>
-                                                                                @foreach ($categories as $category)
+                                                    @if ($todayDoingSchedule->status == 1)
+                                                        <div class="card">
+                                                            <div class="card-header"
+                                                                id="AddFormheadingTwo{{ $todayDoingSchedule->id }}">
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-light btn-sm collapsed"
+                                                                        wire:click="toggleAddForm">
+                                                                        Thêm chuyến
+                                                                    </button>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapseTwo{{ $todayDoingSchedule->id }}"
+                                                                @class(['d-none' => !$showAddForm])
+                                                                aria-labelledby="AddFormheadingTwo{{ $todayDoingSchedule->id }}">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <div class="form-group mb-0" wire:ignore>
+                                                                                <label>Mua:</label>
+                                                                                <select class="select2 select2-seller"
+                                                                                    style="width: 100%;" name="seller"
+                                                                                    wire:model='seller'>
                                                                                     <option
-                                                                                        value="{{ $category->id }}"
-                                                                                        @if (old('category') and old('category') == $category->id) selected = 'selected' @endif>
-                                                                                        {{ $category->name }}
+                                                                                        {{ !$seller ? 'selected="selected"' : '' }}>
                                                                                     </option>
-                                                                                @endforeach
-                                                                            </select>
+                                                                                    @foreach ($sellers as $seller)
+                                                                                        <option
+                                                                                            value="{{ $seller->id }}"
+                                                                                            @if (old('seller') and old('seller') == $seller->id) selected = 'selected' @endif>
+                                                                                            {{ $seller->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            @error('seller')
+                                                                                <small
+                                                                                    class="text-danger">{{ $message }}</small>
+                                                                            @enderror
                                                                         </div>
-                                                                        @error('category')
+                                                                        <div class="col-3">
+                                                                            <div class="form-group mb-0" wire:ignore>
+                                                                                <label>Bán:</label>
+                                                                                <select class="select2 select2-buyer"
+                                                                                    style="width: 100%;" name="buyer"
+                                                                                    wire:model='buyer'>
+                                                                                    <option></option>
+                                                                                    @foreach ($buyers as $buyer)
+                                                                                        <option
+                                                                                            value="{{ $buyer->id }}"
+                                                                                            @if (old('buyer') and old('buyer') == $buyer->id) selected = 'selected' @endif>
+                                                                                            {{ $buyer->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            @error('buyer')
+                                                                                <small
+                                                                                    class="text-danger">{{ $message }}</small>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group mb-0" wire:ignore>
+                                                                                <label>Đơn hàng:</label>
+                                                                                <select class="select2 select2-order"
+                                                                                    style="width: 100%;" name="order"
+                                                                                    wire:model='order'>
+                                                                                    <option></option>
+                                                                                    <option value='none'> Không thuộc
+                                                                                        đơn hàng nào</option>
+                                                                                    @foreach ($orders as $order)
+                                                                                        <option
+                                                                                            value="{{ $order->id }}"
+                                                                                            @if (old('order') and old('order') == $order->id) selected = 'selected' @endif>
+                                                                                            {{ $order->summary }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            @error('order')
+                                                                                <small
+                                                                                    class="text-danger">{{ $message }}</small>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group mb-0" wire:ignore>
+                                                                                <label>Loại hàng:</label>
+                                                                                <select class="select2 select2-category"
+                                                                                    style="width: 100%;" name="category"
+                                                                                    wire:model='category'>
+                                                                                    <option></option>
+                                                                                    @foreach ($categories as $category)
+                                                                                        <option
+                                                                                            value="{{ $category->id }}"
+                                                                                            @if (old('category') and old('category') == $category->id) selected = 'selected' @endif>
+                                                                                            {{ $category->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            @error('category')
+                                                                                <small
+                                                                                    class="text-danger">{{ $message }}</small>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Giá</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập giá ..."
+                                                                                    name="price"
+                                                                                    @if (old('price')) value="{{ old('price') }}" @else @endif
+                                                                                    wire:model='price'>
+                                                                                @error('price')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Thực chi</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập tiền thực thu ..."
+                                                                                    name="actual_price"
+                                                                                    @if (old('actual_price')) value="{{ old('actual_price') }}" @else @endif
+                                                                                    wire:model='actual_price'>
+                                                                                @error('actual_price')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Thu</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập doanh thu ..."
+                                                                                    name="revenue"
+                                                                                    @if (old('revenue')) value="{{ old('revenue') }}" @else @endif
+                                                                                    wire:model='revenue'>
+                                                                                @error('revenue')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Thực thu</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập tiền thực thu ..."
+                                                                                    name="actual_revenue"
+                                                                                    @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else @endif
+                                                                                    wire:model='actual_revenue'>
+                                                                                @error('actual_revenue')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Khối lượng</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập khối lượng hàng ..."
+                                                                                    name="quantity"
+                                                                                    @if (old('quantity')) value="{{ old('quantity') }}" @else @endif
+                                                                                    wire:model='quantity'>
+                                                                                @error('quantity')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="form-group">
+                                                                                <label>Quãng đường</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    placeholder="Nhập quãng đường di chuyển ..."
+                                                                                    name="distance"
+                                                                                    @if (old('distance')) value="{{ old('distance') }}" @else @endif
+                                                                                    wire:model='distance'>
+                                                                                @error('distance')
+                                                                                    <small
+                                                                                        class="text-danger">{{ $message }}</small>
+                                                                                @enderror
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="summernote">Mô tả chuyến vừa hoàn
+                                                                            thành (không bắt buộc)</label>
+                                                                        <textarea name="description"
+                                                                            class="form-control summernoteAdd"
+                                                                            wire:model='scheDetDescription'></textarea>
+                                                                        @error('summernote')
                                                                             <small
                                                                                 class="text-danger">{{ $message }}</small>
                                                                         @enderror
                                                                     </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Giá</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập giá ..." name="price"
-                                                                                @if (old('price')) value="{{ old('price') }}" @else @endif
-                                                                                wire:model='price'>
-                                                                            @error('price')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
+                                                                    <div class="w-100">
+                                                                        <button type="submit"
+                                                                            class="btn btn-success btn-sm float-right"
+                                                                            onclick='addScheduleDetail({{ $todayDoingSchedule->id }})'>Thêm</button>
                                                                     </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Thực chi</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập tiền thực thu ..."
-                                                                                name="actual_price"
-                                                                                @if (old('actual_price')) value="{{ old('actual_price') }}" @else @endif
-                                                                                wire:model='actual_price'>
-                                                                            @error('actual_price')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Thu</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập doanh thu ..."
-                                                                                name="revenue"
-                                                                                @if (old('revenue')) value="{{ old('revenue') }}" @else @endif
-                                                                                wire:model='revenue'>
-                                                                            @error('revenue')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Thực thu</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập tiền thực thu ..."
-                                                                                name="actual_revenue"
-                                                                                @if (old('actual_revenue')) value="{{ old('actual_revenue') }}" @else @endif
-                                                                                wire:model='actual_revenue'>
-                                                                            @error('actual_revenue')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Khối lượng</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập khối lượng hàng ..."
-                                                                                name="quantity"
-                                                                                @if (old('quantity')) value="{{ old('quantity') }}" @else @endif
-                                                                                wire:model='quantity'>
-                                                                            @error('quantity')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="form-group">
-                                                                            <label>Quãng đường</label>
-                                                                            <input type="number" class="form-control"
-                                                                                placeholder="Nhập quãng đường di chuyển ..."
-                                                                                name="distance"
-                                                                                @if (old('distance')) value="{{ old('distance') }}" @else @endif
-                                                                                wire:model='distance'>
-                                                                            @error('distance')
-                                                                                <small
-                                                                                    class="text-danger">{{ $message }}</small>
-                                                                            @enderror
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="summernote">Mô tả chuyến vừa hoàn
-                                                                        thành (không bắt buộc)</label>
-                                                                    <textarea name="description"
-                                                                        class="form-control summernoteAdd"
-                                                                        wire:model='scheDetDescription'></textarea>
-                                                                    @error('summernote')
-                                                                        <small
-                                                                            class="text-danger">{{ $message }}</small>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="w-100">
-                                                                    <button type="submit"
-                                                                        class="btn btn-success btn-sm float-right"
-                                                                        onclick='addScheduleDetail({{ $todayDoingSchedule->id }})'>Thêm</button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <h3 class="card-title">Danh sách chuyến</h3>
@@ -444,7 +458,8 @@
                                                     aria-labelledby="custom-tabs-four-profile-tab{{ $todayDoingSchedule->id }}">
                                                     {{-- add form --}}
                                                     <div class="card">
-                                                        <div class="card-header" id="headingTwo">
+                                                        <div class="card-header"
+                                                            id="CostAddFormheadingTwo{{ $todayDoingSchedule->id }}">
                                                             <h5 class="mb-0">
                                                                 <button class="btn btn-light btn-sm collapsed"
                                                                     wire:click="toggleAddForm">
@@ -454,7 +469,7 @@
                                                         </div>
                                                         <div id="collapseTwo{{ $todayDoingSchedule->id }}"
                                                             @class(['d-none' => !$showAddForm])
-                                                            aria-labelledby="headingTwo{{ $todayDoingSchedule->id }}">
+                                                            aria-labelledby="CostAddFormheadingTwo{{ $todayDoingSchedule->id }}">
                                                             @livewire('cost-detail-add-form',['todayDoingSchedule'=>
                                                             $todayDoingSchedule],key($todayDoingSchedule->id))
                                                         </div>
@@ -637,7 +652,7 @@
                                         {{ $todayCompltedSchedule->cost_details->count() }}</a>
 
                                     <a href="#" class="btn btn-tool" data-toggle="modal"
-                                        data-target="#completedexampleModal{{ $todayCompltedSchedule->id }}">
+                                        data-target="#exampleModal{{ $todayCompltedSchedule->id }}">
                                         <i class="fas fa-info"></i>
                                     </a>
                                 </div>
@@ -647,10 +662,9 @@
 
                     </div> --}}
                     </div>
-                    <div class="modal fade scheduleInforModal"
-                        id="completedexampleModal{{ $todayCompltedSchedule->id }}" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
-                        <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal fade scheduleInforModal" id="exampleModal{{ $todayCompltedSchedule->id }}"
+                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
+                        <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
@@ -659,7 +673,9 @@
                                     <div class="modal-body">
                                         <div class="card card-primary card-outline card-outline-tabs">
                                             <div class="card-header p-0 border-bottom-0">
-                                                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                                <ul class="nav nav-tabs"
+                                                    id="custom-tabs-four-tab{{ $todayCompltedSchedule->id }}"
+                                                    role="tablist">
                                                     <li class="nav-item">
                                                         <a @class(['nav-link', 'active' => !$activeCost]) id="custom-tabs-four-home-tab"
                                                             data-toggle="tab"
@@ -977,7 +993,7 @@
                     </div>
                     <div class="modal fade closeInforModal" id="inQueueExampleModal{{ $inQueueSchedule->id }}"
                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
-                        <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
@@ -991,7 +1007,8 @@
                                 <div class="modal-body">
                                     <div class="card card-primary card-outline card-outline-tabs">
                                         <div class="card-header p-0 border-bottom-0">
-                                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                            <ul class="nav nav-tabs"
+                                                id="custom-tabs-four-tab{{ $inQueueSchedule->id }}" role="tablist">
                                                 <li class="nav-item">
                                                     <a @class(['nav-link', 'active' => !$activeCost]) id="custom-tabs-four-home-tab"
                                                         data-toggle="tab"
@@ -1033,7 +1050,8 @@
                                                     </div>
                                                     @if ($isLate)
                                                         <div class="card">
-                                                            <div class="card-header" id="headingTwo">
+                                                            <div class="card-header"
+                                                                id="AddFormheadingTwo{{ $inQueueSchedule->id }}">
                                                                 <h5 class="mb-0">
                                                                     <button class="btn btn-light btn-sm collapsed"
                                                                         wire:click="toggleAddForm">
@@ -1043,7 +1061,7 @@
                                                             </div>
                                                             <div id="collapseTwo{{ $inQueueSchedule->id }}"
                                                                 @class(['d-none' => !$showAddForm])
-                                                                aria-labelledby="headingTwo{{ $inQueueSchedule->id }}">
+                                                                aria-labelledby="AddFormheadingTwo{{ $inQueueSchedule->id }}">
                                                                 <div class="card-body">
                                                                     <div class="row">
                                                                         <div class="col-3">
@@ -1366,7 +1384,8 @@
                                                     {{-- add form --}}
                                                     @if ($isLate)
                                                         <div class="card">
-                                                            <div class="card-header" id="headingTwo">
+                                                            <div class="card-header"
+                                                                id="CostAddFormheadingTwo{{ $inQueueSchedule->id }}">
                                                                 <h5 class="mb-0">
                                                                     <button class="btn btn-light btn-sm collapsed"
                                                                         wire:click="toggleAddForm">
@@ -1376,7 +1395,7 @@
                                                             </div>
                                                             <div id="collapseTwo{{ $inQueueSchedule->id }}"
                                                                 @class(['d-none' => !$showAddForm])
-                                                                aria-labelledby="headingTwo{{ $inQueueSchedule->id }}">
+                                                                aria-labelledby="CostAddFormheadingTwo{{ $inQueueSchedule->id }}">
                                                                 @livewire('cost-detail-add-form',['todayDoingSchedule'=>
                                                                 $inQueueSchedule],key($inQueueSchedule->id))
                                                             </div>

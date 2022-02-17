@@ -86,123 +86,11 @@
                 </li>
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="{{ route('chatify') }}">
-                        <i class="far fa-comments"></i>
-                        @if (\App\Models\ChMessage::where('seen', 0)->where('to_id', Auth::user()->id)->count() > 0)
-                            <span
-                                class="badge badge-danger navbar-badge">{{ \App\Models\ChMessage::where('seen', 0)->where('to_id', Auth::user()->id)->count() }}</span>
-                        @endif
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ url('bossUI') }}/dist/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ url('bossUI') }}/dist/img/user8-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ url('bossUI') }}/dist/img/user3-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
+                    @livewire('chat-bar')
                 </li>
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        @if (Auth::user()->unreadNotifications->count() > 0)
-                            <span class="badge badge-warning navbar-badge">
-                                {{ Auth::user()->unreadNotifications->count() }}
-                            </span>
-                        @endif
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        @foreach (Auth::user()->unreadNotifications as $unreadNotification)
-                            @php
-                                $notifiedUser = \App\Models\User::find($unreadNotification->data['userId']);
-                            @endphp
-                            @if ($notifiedUser)
-                                <a href="#" class="dropdown-item">
-                                    <!-- Message Start -->
-                                    <div class="media">
-                                        <img src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . $notifiedUser->avatar) }}"
-                                            alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                                        <div class="media-body">
-                                            <h3 class="dropdown-item-title font-weight-bold">
-                                                {{ $unreadNotification->data['name'] }}
-                                                <span class="float-right text-sm text-danger"><i
-                                                        class="fas fa-star"></i></span>
-                                            </h3>
-                                            @if ($unreadNotification->type == 'App\Notifications\NewUserNotification')
-                                                <p class="text-sm">Vừa đăng ký hệ thống với email
-                                                    <span
-                                                        class="font-weight-bold">{{ $unreadNotification->data['email'] }}</span>
-                                                </p>
-                                            @elseif ($unreadNotification->type == 'App\Notifications\completeSchedule')
-                                                <p class="text-sm">Vừa hoàn thành công việc giao ngày ngày
-                                                    <span
-                                                        class="font-weight-bold">{{ Carbon\Carbon::parse($unreadNotification->data['schedule']['date'])->format('d-m-Y') }}</span>
-                                                </p>
-                                            @else
-                                                <p class="text-sm"> Đã có lỗi sảy ra</p>
-                                            @endif
-                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>
-                                                {{ \Carbon\Carbon::createFromTimestamp(strtotime($unreadNotification->created_at))->diffForHumans(\Carbon\Carbon::now()) }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- Message End -->
-                                </a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                        @endforeach
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notification</a>
-                    </div>
+                    @livewire('notification-bar')
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -234,7 +122,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
