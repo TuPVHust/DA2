@@ -29,8 +29,13 @@ class AllSchedules extends Component
     public $itemsPerPage = 5;
 
     public function mount() {
-        $this->floorTimeBound=Schedule::min('date');
-        $this->ceilingTimeBound=Schedule::max('date');
+        $this->floorTimeBound = Carbon::now();
+        $this->ceilingTimeBound= Carbon::now();
+        if(Schedule::all()->count()>0)
+        {
+            $this->floorTimeBound=Schedule::min('date');
+            $this->ceilingTimeBound=Schedule::max('date');
+        }
         $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
     }
 
@@ -90,12 +95,10 @@ class AllSchedules extends Component
         else{
             $schedules = Schedule::leftJoin('schedule_details','schedule_details.schedule_id','=','schedules.id')->leftJoin('users','schedules.driver_id','=','users.id')->leftJoin('trucks','schedules.truck_id','=','trucks.id')->leftJoin('partners','schedules.car_owner_id','=','partners.id')->select('schedules.id as schedule_id',DB::raw('count(schedule_details.id) as detailNum'),'schedules.*','users.name as driverName','partners.name as carOwnerName','trucks.plate as truckPlate')->groupBy('schedules.id')->where('date','>=', $this->floorTimeBound)->where('date','<=',$this->ceilingTimeBound)->orderBy($this->orderBy, $this->order);
         }
-        if($this->detailNumFilter != null)
-        {
-            $schedules = $schedules->where('detailNum',$this->detailNumFilter);
-        }
+        
         if($this->driverFilter != null)
         {
+            //dd($schedules);
             $schedules = $schedules->where('driver_id',$this->driverFilter);
         }
         if($this->truckFilter != null)
@@ -106,8 +109,22 @@ class AllSchedules extends Component
         {
             $schedules = $schedules->where('car_owner_id',$this->carOwnerFilter);
         }
-        //dd($this->ceilingTimeBound);
+        if($this->detailNumFilter != null)
+        {
+            //dd($schedules);
+            if($schedules->get()->where('detailNum',$this->detailNumFilter)->count()>0)
+            {
+                $schedules = $schedules->get()->where('detailNum',$this->detailNumFilter);
+                $schedules = $schedules->toQuery();
+            }
+            else{
+                $schedules = $schedules->whereNull('schedules.id');
+            }
+        }
+        //dd($schedules->get()->where('detailNum',2));
         $schedules= $schedules->paginate($this->itemsPerPage);
+        
+        //dd($schedules);
         $this->resetPage();
         // dd($schedules);
         return view('livewire.all-schedules',[

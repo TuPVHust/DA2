@@ -56,6 +56,7 @@ class createSchedule extends Notification
     public function toArray($notifiable)
     {
         return [
+            'linkTo' => route('staff.index'),
             'userId' => $this->user->id,
             'name' => $this->user->name,
             'email' => $this->user->email,

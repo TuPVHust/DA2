@@ -55,6 +55,7 @@ class NewUserNotification extends Notification
     public function toArray($notifiable)
     {
         return [
+            'linkTo' => route('boss.driver.index'),
             'userId' => $this->user->id,
             'name' => $this->user->name,
             'email' => $this->user->email,

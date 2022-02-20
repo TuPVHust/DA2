@@ -18,7 +18,7 @@
         </a>
     </div>
     <div class="row">
-        <div class="card col-12" wire:ignore>
+        <div class="card col-12 sticky-top" wire:ignore>
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc</h3>
                 <div class="card-tools">
@@ -290,13 +290,21 @@
                                         <td>{{ number_format($schedule_detail->actual_revenue, 0) }}</td>
                                     @endif
                                     @if (!$hiddenColums['Đơn hàng'])
-                                        <td>@if ($schedule_detail->order_id) {{ $schedule_detail->order->summary }}@else Không có @endif</td>
+                                        <td>
+                                            @if ($schedule_detail->order_id)
+                                                {{ $schedule_detail->order->summary }}@else Không có
+                                            @endif
+                                        </td>
                                     @endif
                                     @if (!$hiddenColums['K.lượng'])
                                         <td>{{ $schedule_detail->quantity }}</td>
                                     @endif
                                     @if (!$hiddenColums['Mô tả'])
-                                        <td>@if ($schedule_detail->description){!! $schedule_detail->description !!} @else Không có @endif</td>
+                                        <td>
+                                            @if ($schedule_detail->description)
+                                            {!! $schedule_detail->description !!} @else Không có
+                                            @endif
+                                        </td>
                                     @endif
                                     @if (!$hiddenColums['Hành động'])
                                         <td class="text-right">
@@ -323,9 +331,34 @@
                     <div class="float-right">{{ $schedule_details->links() }}</div>
                 </div>
                 <hr class="mb-0">
-                <div class="card-footer mt-0">
-                    <span class="badge badge-light">
+                <div class="card-footer mt-0 sticky-bottom">
+                    <span class="badge badge-dark">
                         Hiển thị: {{ $countShowing }}/{{ $total }}</span>
+                    <span class="float-right">
+                        <span class="badge badge-light">
+                            Tổng doanh thu: </span>
+                        <span class="badge badge-dark">
+                            {{ $sum_revenue }} </span>
+                        <span>&#9474;</span>
+                        <span class="badge badge-light">
+                            Tổng thực thu: </span>
+                        <span class="badge badge-dark">
+                            {{ $sum_actual_revenue }} </span>
+                        <span>&#9474;</span>
+                        <span class="badge badge-light">
+                            Tổng chi: </span>
+                        <span class="badge badge-dark">
+                            {{ $sum_price }}</span>
+                        <span>&#9474;</span>
+                        <span class="badge badge-light">
+                            Tổng thực chi: </span>
+                        <span class="badge badge-dark">
+                            {{ $sum_actual_price }}</span>
+                        <span>&#9474;</span>
+                        <span class="m-2"> &bull;</span>
+                        <span class="badge badge-light">
+                            Đơn vị: Triệu VNĐ </span>
+                    </span>
                 </div>
             @endif
             <!-- /.card-body -->
@@ -359,5 +392,4 @@
     </script>
 </div>
 @push('scripts')
-
 @endpush

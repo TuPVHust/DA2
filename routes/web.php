@@ -29,9 +29,10 @@ use App\Http\Controllers\DriversController;
 // })->middleware(\App\Http\Middleware\Authenticate::class)->middleware(\App\Http\Middleware\BossGuard::class)->name('dashboard');
 
 Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->middleware(\App\Http\Middleware\Authenticate::class)->middleware(\App\Http\Middleware\BossGuard::class)->group(function(){
-    Route::get('/', function () {
-        return view('boss.dashboard');
-    })->name('dashboard');
+    // Route::get('/', function () {
+    //     return view('boss.dashboard');
+    // })->name('dashboard');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::resources([
         'category' => CategoriesController::class,
         'truck' => TrucksController::class,

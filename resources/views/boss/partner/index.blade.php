@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endsection
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Danh sách đối tác</li>
+    </ol>
+@endsection
 @section('title')
     <h1>Quản lý đổi tác</h1>
 @endsection
@@ -22,7 +28,6 @@
             @endif
         @endforeach
     </div>
-
     <div class="text-right mb-2">
         <a href="{{ route('boss.partner.create') }}">
             <button class="btn btn-primary">

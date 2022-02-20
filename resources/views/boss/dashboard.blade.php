@@ -31,11 +31,43 @@
 
             // Get context with jQuery - using jQuery's .get() method.
             var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+            // if (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+            //         'October', 'November', 'December'
+            //     ] == {{ $timeInterval }}) {
+            //     alert('oki');
+            // }
+            //alert({{ $timeInterval }});
 
-            var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            //  data for cost char
+            var areaCostChartData = {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                    'October', 'November', 'December'
+                ],
+                // labels: {{ $timeInterval }},
                 datasets: [{
-                        label: 'Digital Goods',
+                    label: 'Chi phí',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: {{ $costForMonth }}
+                }, ]
+            }
+            // end data for cost char
+
+
+
+            // Data for revenue chart
+            var areaChartData = {
+                // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                //     'October', 'November', 'December'
+                // ],
+                labels: {!! $timeInterval !!},
+                datasets: [{
+                        label: 'Doanh thu',
                         backgroundColor: 'rgba(60,141,188,0.9)',
                         borderColor: 'rgba(60,141,188,0.8)',
                         pointRadius: false,
@@ -43,10 +75,10 @@
                         pointStrokeColor: 'rgba(60,141,188,1)',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [28, 48, 40, 19, 86, 27, 90]
+                        data: {{ $revenueForMonth }}
                     },
                     {
-                        label: 'Electronics',
+                        label: 'Thực thu',
                         backgroundColor: 'rgba(210, 214, 222, 1)',
                         borderColor: 'rgba(210, 214, 222, 1)',
                         pointRadius: false,
@@ -54,7 +86,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40]
+                        data: {{ $actualRevenueForMonth }}
                     },
                 ]
             }
@@ -91,9 +123,9 @@
             //--------------
             var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
             var lineChartOptions = $.extend(true, {}, areaChartOptions)
-            var lineChartData = $.extend(true, {}, areaChartData)
+            var lineChartData = $.extend(true, {}, areaCostChartData)
             lineChartData.datasets[0].fill = false;
-            lineChartData.datasets[1].fill = false;
+            //lineChartData.datasets[1].fill = false;
             lineChartOptions.datasetFill = false
 
             var lineChart = new Chart(lineChartCanvas, {
@@ -106,18 +138,23 @@
             //- DONUT CHART -
             //-------------
             // Get context with jQuery - using jQuery's .get() method.
+            // const test = {{ $topCategories_name }}
+            // alert(typeof test);
+            //labels = JSON.parse({{ $topCategories_value }})
             var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
             var donutData = {
-                labels: [
-                    'Chrome',
-                    'IE',
-                    'FireFox',
-                    'Safari',
-                    'Opera',
-                    'Navigator',
-                ],
+                // labels: [
+                //     'Chrome',
+                //     'IE',
+                //     'FireFox',
+                //     'Safari',
+                //     'Opera',
+                //     'Navigator',
+                // ],
+
+                labels: {!! $topCategories_name !!},
                 datasets: [{
-                    data: [700, 500, 400, 600, 300, 100],
+                    data: {{ $topCategories_value }},
                     backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                 }]
             }

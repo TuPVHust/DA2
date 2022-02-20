@@ -1,4 +1,10 @@
 @extends('layouts.boss')
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Thêm đối tác</li>
+    </ol>
+@endsection
 @section('title')
     AdminLTE 3 | Thêm đối tác
 @endsection

@@ -13,7 +13,8 @@
                 $notifiedUser = \App\Models\User::find($unreadNotification->data['userId']);
             @endphp
             @if ($notifiedUser)
-                <a href="javascript:void(0)" class="dropdown-item" wire:click="markAsRead({{ $unreadNotification }})">
+                <a wire:click="markAsRead({{ $unreadNotification }})"
+                    href="{{ $unreadNotification->data['linkTo'] }}" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                         <img src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . $notifiedUser->avatar) }}"
@@ -21,7 +22,17 @@
                         <div class="media-body">
                             <h3 class="dropdown-item-title font-weight-bold">
                                 {{ $unreadNotification->data['name'] }}
-                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                <span class="float-right text-sm text-danger">
+                                    @if ($unreadNotification->type == 'App\Notifications\NewUserNotification')
+                                        <i class="fas fa-user-cog"></i>
+                                    @elseif($unreadNotification->type == 'App\Notifications\completeSchedule')
+                                        <i class="fas fa-users"></i>
+                                    @elseif($unreadNotification->type == 'App\Notifications\createSchedule')
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="fas fa-bug"></i>
+                                    @endif
+                                </span>
                             </h3>
                             @if ($unreadNotification->type == 'App\Notifications\NewUserNotification')
                                 <p class="text-sm">Vừa đăng ký tài khoản với email

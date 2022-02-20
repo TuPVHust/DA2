@@ -19,7 +19,6 @@ class DashBoard extends Component
 {
     public function render()
     {
-        
         return view('livewire.dash-board');
     }
 }

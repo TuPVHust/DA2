@@ -31,19 +31,20 @@ class AllScheduleDetail extends Component
     public $floorTimeBound;
     public $ceilingTimeBound;
     public $timeRange;
-    public $itemsPerPage = 5;
+    public $itemsPerPage = 3;
     public $updateNum = 1;
     public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
 
     public function ChangeTimeRange($value)
     {
-
         if((bool)strtotime(str_replace('/', '-', explode( ' - ', $value )[0])) && (bool)strtotime(str_replace('/', '-', explode( ' - ', $value )[0])))
         {
-            $this->floorTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[0])));
-            $this->ceilingTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[1])));
-            $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
-            
+            if(Schedule::all()->count()>0)
+            {
+                $this->floorTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[0])));
+                $this->ceilingTimeBound = date('Y-m-d',strtotime(str_replace('/', '-', explode( ' - ', $value )[1])));
+                $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
+            }
         }
         else{
             session()->flash('alert-date', 'Khong dung dinh dang ngay !!!');
@@ -127,8 +128,13 @@ class AllScheduleDetail extends Component
     }
     protected $listeners = ['ChangeTimeRange','changeOrderBy','changeOrder','changeDriver','changeTruck','changeCarOwner','ChangeHiddenColums','changeCategory','changeSeller','changeBuyer','changeOrder1','refresh_me' => '$refresh',];
     public function mount() {
-        $this->floorTimeBound=Schedule::min('date');
-        $this->ceilingTimeBound=Schedule::max('date');
+        $this->floorTimeBound = Carbon::now();
+        $this->ceilingTimeBound= Carbon::now();
+        if(Schedule::all()->count()>0)
+        {
+            $this->floorTimeBound=Schedule::min('date');
+            $this->ceilingTimeBound=Schedule::max('date');
+        }
         $this->timeRange = Carbon::parse($this->floorTimeBound)->format('d/m/Y') . " - " . Carbon::parse($this->ceilingTimeBound)->format('d/m/Y');
     }
     public function update()
@@ -188,7 +194,11 @@ class AllScheduleDetail extends Component
             }
         }
         //$this->dispatchBrowserEvent('contentChanged');
-        
+        $sum_revenue = $schedule_details->sum('revenue')/1000000;
+        $sum_actual_revenue = $schedule_details->sum('actual_revenue')/1000000;
+        $sum_price = $schedule_details->sum('price')/1000000;
+        $sum_actual_price = $schedule_details->sum('actual_price')/1000000;
+
         $schedule_details= $schedule_details->paginate($this->itemsPerPage);
         $countShowing = $schedule_details->count();
         $total = $schedule_details->total();
@@ -206,6 +216,10 @@ class AllScheduleDetail extends Component
             'orders' => $orders,
             'countShowing' => $countShowing,
             'total' => $total,
+            'sum_revenue' => $sum_revenue,
+            'sum_actual_revenue' => $sum_actual_revenue,
+            'sum_price' => $sum_price,
+            'sum_actual_price' => $sum_actual_price,
         ]);
     }
 }

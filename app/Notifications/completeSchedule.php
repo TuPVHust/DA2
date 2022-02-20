@@ -56,6 +56,7 @@ class completeSchedule extends Notification
     public function toArray($notifiable)
     {
         return [
+            'linkTo' => route('boss.schedule.index'),
             'userId' => $this->user->id,
             'name' => $this->user->name,
             'email' => $this->user->email,

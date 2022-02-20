@@ -19,6 +19,12 @@
 
     </style>
 @endsection
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Danh sách công việc</li>
+    </ol>
+@endsection
 @section('title')
     <h1>Công việc</h1>
 @endsection
@@ -96,43 +102,44 @@
                                             <div class="row">
                                                 <div class="col-12" id="accordion">
                                                     @if ($todayDoingSchedules->count() > 0)
-                                                        <div class="card card-outline">
+                                                        <div class="card card-info card-outline">
                                                             @php
                                                                 $i = 1;
                                                             @endphp
                                                             @foreach ($todayDoingSchedules as $todayDoingSchedule)
                                                                 <a class="d-block w-100" data-toggle="collapse"
                                                                     href="#completedOne{{ $todayDoingSchedule->id }}"
-                                                                    class="collapse">
+                                                                    class="collapse"
+                                                                    style="color: black">
                                                                     <div class="card-header w-100">
-                                                                        <div class="card-title">
-                                                                            <button type="button"
-                                                                                class="btn btn-sm bg-gray  border border-light color-palette"><i
+                                                                        <div class="card-title ">
+                                                                            <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-truck-moving"></i>
-                                                                                {{ $todayDoingSchedule->truck->plate }}</button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
+                                                                                {{ $todayDoingSchedule->truck->plate }}</span>
+                                                                                <span class="text-muted"> &bull;</span>
+                                                                                <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-users"></i>
-                                                                                {{ $todayDoingSchedule->driver->name }}</button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
+                                                                                {{ $todayDoingSchedule->driver->name }}</span>
+                                                                                <span class="text-muted"> &bull;</span>
+                                                                                <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-adjust"></i>
                                                                                 @if ($todayDoingSchedule->shift == 1)
                                                                                     <span>Ngày</span>
                                                                                 @else
                                                                                     <span>Đêm</span>
                                                                                 @endif
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
+                                                                            </span>
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-dollar-sign"></i>
-                                                                                {{ number_format($todayDoingSchedule->init_money, 0) }}</button>
+                                                                                {{ number_format($todayDoingSchedule->init_money, 0) }}</span>
                                                                         </div>
                                                                         <div class="card-tools">
                                                                             @if ($todayDoingSchedule->schedule_details)
                                                                                 <a class="btn btn-tool btn-link"
                                                                                     data-toggle="collapse"
-                                                                                    href="#completedOne{{ $todayDoingSchedule->id }}">#{{ $todayDoingSchedule->schedule_details->count() }}</a>
+                                                                                    href="#completedOne{{ $todayDoingSchedule->id }}"><i
+                                                                                    class="fas fa-truck-loading fa-xs"></i> {{ $todayDoingSchedule->schedule_details->count() }}</a>
                                                                             @endif
                                                                             <a href="{{ route('boss.schedule.edit', $todayDoingSchedule->id) }}"
                                                                                 class="btn btn-tool">
@@ -324,33 +331,33 @@
                                                                     href="#collapseOne{{ $todayCompltedSchedule->id }}">
                                                                     <div class="card-header w-100">
                                                                         <div class="card-title">
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
-                                                                                    class="fas fa-truck-moving"></i>
-                                                                                {{ $todayCompltedSchedule->truck->plate }}</button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
-                                                                                    class="fas fa-users"></i>
-                                                                                {{ $todayCompltedSchedule->driver->name }}</button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
-                                                                                    class="fas fa-adjust"></i>
-                                                                                @if ($todayCompltedSchedule->shift == 1)
-                                                                                    <span>Ngày</span>
-                                                                                @else
-                                                                                    <span>Đêm</span>
-                                                                                @endif
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                class="btn bg-gray color-palette btn-sm"><i
-                                                                                    class="fas fa-dollar-sign"></i>
-                                                                                {{ number_format($todayCompltedSchedule->init_money, 0) }}</button>
+                                                                            <span class="badge badge-light text-muted"><i
+                                                                                class="fas fa-truck-moving"></i>
+                                                                            {{ $todayCompltedSchedule->truck->plate }}</span>
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
+                                                                                class="fas fa-users"></i>
+                                                                            {{ $todayCompltedSchedule->driver->name }}</span>
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
+                                                                                class="fas fa-adjust"></i>
+                                                                            @if ($todayCompltedSchedule->shift == 1)
+                                                                                <span>Ngày</span>
+                                                                            @else
+                                                                                <span>Đêm</span>
+                                                                            @endif
+                                                                        </span>
+                                                                        <span class="text-muted"> &bull;</span>
+                                                                        <span class="badge badge-light text-muted"><i
+                                                                                class="fas fa-dollar-sign"></i>
+                                                                            {{ number_format($todayCompltedSchedule->init_money, 0) }}</span>
                                                                         </div>
                                                                         <div class="card-tools">
                                                                             @if ($todayCompltedSchedule->schedule_details)
                                                                                 <a class=" btn btn-tool btn-link "
                                                                                     data-toggle="collapse"
-                                                                                    href="#collapseOne{{ $todayCompltedSchedule->id }}">#{{ $todayCompltedSchedule->schedule_details->count() }}</a>
+                                                                                    href="#collapseOne{{ $todayCompltedSchedule->id }}"><i
+                                                                                    class="fas fa-truck-loading fa-xs"></i> {{ $todayCompltedSchedule->schedule_details->count() }}</a>
                                                                             @endif
                                                                             <a href="{{ route('boss.schedule.edit', $todayCompltedSchedule->id) }}"
                                                                                 class="btn btn-tool">
@@ -553,44 +560,37 @@
                                                                 <h4 class="card-title">
                                                                     {{-- <span class="badge badge-info letf">2</span> --}}
                                                                     {{-- {{ $i }}. --}}
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary btn-sm"><i
+                                                                    <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-truck-moving"></i>
-                                                                        {{ $inQueueSchedule->truck->plate }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary btn-sm"><i
+                                                                        {{ $inQueueSchedule->truck->plate }}</span>
+                                                                        <span class="text-muted"> &bull;</span>
+                                                                        <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-users"></i>
-                                                                        {{ $inQueueSchedule->driver->name }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary btn-sm"><i
+                                                                        {{ $inQueueSchedule->driver->name }}</span>
+                                                                        <span class="text-muted"> &bull;</span>
+                                                                        <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-adjust"></i>
                                                                         @if ($inQueueSchedule->shift == 1)
                                                                             <span>Ngày</span>
                                                                         @else
                                                                             <span>Đêm</span>
                                                                         @endif
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary btn-sm"><i
+                                                                    </span>
+                                                                    <span class="text-muted"> &bull;</span>
+                                                                    <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-dollar-sign"></i>
-                                                                        {{ number_format($inQueueSchedule->init_money, 0) }}</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary btn-sm"><i
+                                                                        {{ number_format($inQueueSchedule->init_money, 0) }}</span>
+                                                                    <span class="text-muted"> &bull;</span>
+                                                                    <span class="badge badge-light text-muted"><i
                                                                             class="far fa-calendar-alt"></i>
-                                                                        {{ Carbon\Carbon::parse($inQueueSchedule->date)->format('d-m-Y') }}</button>
-                                                                    {{-- <button
-                                                                        onclick="location.href='{{ route('boss.schedule.edit', $inQueueSchedule->id) }}'"
-                                                                        type="button"
-                                                                        class="btn btn-secondary float-right btn-sm"><i
-                                                                            class="fas fa-edit"></i>
-                                                                    </button> --}}
-                                                                    
+                                                                        {{ Carbon\Carbon::parse($inQueueSchedule->date)->format('d-m-Y') }}</span>
                                                                 </h4>
                                                                 <div class="card-tools">
                                                                     @if ($inQueueSchedule->schedule_details)
                                                                         <a class="btn btn-tool btn-link"
                                                                             data-toggle="collapse"
-                                                                            href="#waitingOne{{ $inQueueSchedule->id }}">#{{ $inQueueSchedule->schedule_details->count() }}</a>
+                                                                            href="#waitingOne{{ $inQueueSchedule->id }}"><i
+                                                                            class="fas fa-truck-loading fa-xs"></i> {{ $inQueueSchedule->schedule_details->count() }}</a>
                                                                     @endif
                                                                     <a href="{{ route('boss.schedule.edit', $inQueueSchedule->id) }}"
                                                                         class="btn btn-tool">
@@ -613,11 +613,7 @@
                                                                         @if ($inQueueSchedule->description)
                                                                             {!! $inQueueSchedule->description !!}
                                                                         @else
-                                                                            Lorem ipsum dolor sit amet, consectetuer
-                                                                            adipiscing elit. Aenean commodo ligula eget
-                                                                            dolor. Aenean massa. Cum sociis natoque
-                                                                            penatibus et magnis dis parturient montes,
-                                                                            nascetur ridiculus mus.
+                                                                            Không có
                                                                         @endif
                                                                     </span>
                                                                     {{-- <span class="col-2 text-right">

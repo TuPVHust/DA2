@@ -2,7 +2,12 @@
 @section('title')
     AdminLTE 3 | Chỉnh sửa thông tin đối tác
 @endsection
-
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Update đối tác</li>
+    </ol>
+@endsection
 @section('content')
     <div class="card card-primary">
         <div class="card-header">

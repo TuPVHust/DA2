@@ -6,6 +6,12 @@
     {{-- select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Update chuyến</li>
+    </ol>
+@endsection
 @section('content')
     <div class="card card-primary">
         <div class="card-header">

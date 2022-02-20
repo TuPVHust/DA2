@@ -19,6 +19,12 @@
 
     </style>
 @endsection
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item active">Danh Chuyến</li>
+    </ol>
+@endsection
 @section('title')
     <h1>Chuyến</h1>
 @endsection

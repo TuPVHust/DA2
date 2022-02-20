@@ -10,7 +10,7 @@
         @endforeach
     </div>
     <div class="row">
-        <div class="card col-12" wire:ignore>
+        <div class="card col-12 sticky-top" wire:ignore>
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc</h3>
                 <div class="card-tools">
@@ -42,17 +42,7 @@
                                     </option>
                                     <option value="truckPlate"
                                         {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Biển xe</option>
-                                    <option value="category"
-                                        {{ $orderBy == 'category' ? 'selected="selected"' : '' }}>Loại hàng</option>
-                                    <option value="buyer" {{ $orderBy == 'buyer' ? 'selected="selected"' : '' }}>Nơi
-                                        bán<nav></nav>
-                                    </option>
-                                    <option value="seller" {{ $orderBy == 'seller' ? 'selected="selected"' : '' }}>
-                                        Nơi mua</option>
-                                    <option value="price" {{ $orderBy == 'price' ? 'selected="selected"' : '' }}>Giá
-                                        mua</option>
-                                    <option value="revenue" {{ $orderBy == 'revenue' ? 'selected="selected"' : '' }}>
-                                        Giá bán</option>
+
                                 </select>
                             </div>
                         </div>
@@ -246,11 +236,17 @@
                                                                             <td colspan="5">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
-                                                                                        chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                        chú</span>:@if ($schedule_detail->description)
+                                                                                        {{ $schedule_detail->description }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                 </div>
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Đơn
-                                                                                        hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                        hàng</span>:@if ($schedule_detail->order)
+                                                                                        {{ $schedule_detail->order->summary }}
+                                                                                    @else Không có
+                                                                                    @endif
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-6">

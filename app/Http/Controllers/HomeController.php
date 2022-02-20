@@ -3,7 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Schedule;
+use App\Models\ScheduleDetail;
+use App\Models\User;
+use App\Models\Truck;
+use App\Models\Partner;
+use App\Models\Category;
+use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     /**
@@ -24,5 +32,53 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function dashboard()
+    {
+        $topCategories_name = array();
+        $topCategories_value = array();
+        $monthKey = array();
+        $revenueForMonth = array();
+        $costForMonth = array();
+        $actualRevenueForMonth = array();
+        $timeInterval = array(1 => 'January',2=>'February',3=>'March',4=>'April',5=>'May',6=>'June',7=>'July',8=>'August',9=>'September',10=>'October',11=>'November',12=>'December');
+        $year = Carbon::now()->year;
+        // $global_scheduleDetails = ScheduleDetail::rightJoin('schedules','schedule_details.schedule_id','=','schedules.id')->join('cost_details','cost_details.schedule_id','=','schedules.id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id')->rightJoin('categories','schedule_details.category_id','=','categories.id')->whereYear('date', $year);
+        $category_details = Category::leftJoin('schedule_details','schedule_details.category_id','=','categories.id')->leftJoin('schedules','schedule_details.schedule_id','=','schedules.id')->whereYear('schedules.date', $year);
+        $topCategories = $category_details->select('categories.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('categories.id')->orderBy('detailNum','desc')->get(6);
+        foreach($topCategories as $topCategory)
+        {
+            array_push($topCategories_name,$topCategory->name);
+            array_push($topCategories_value,$topCategory->detailNum);
+        }
+
+        foreach($timeInterval as $key => $value)
+        {
+            $scheduleDetails = ScheduleDetail::join('schedules','schedule_details.schedule_id','=','schedules.id')->join('cost_details','cost_details.schedule_id','=','schedules.id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id')->join('categories','schedule_details.category_id','=','categories.id')->whereMonth('date', $key)->whereYear('date', $year);
+            $scheduleDetails = $scheduleDetails->get();
+            $revenue = $scheduleDetails->sum('revenue')/1000000;
+            $actual_revenue = $scheduleDetails->sum('actual_revenue')/1000000;
+            $cost = $scheduleDetails->sum('cost')/1000000;
+            array_push($revenueForMonth,$revenue);
+            array_push($actualRevenueForMonth,$actual_revenue);
+            array_push($costForMonth,$cost);
+            array_push($monthKey,$value);
+        }
+        $js_revenueForMonth_array = json_encode($revenueForMonth);
+        $js_actualRevenueForMonth_array = json_encode($actualRevenueForMonth);
+        $js_costForMonth_array = json_encode($costForMonth);
+        $js_timeInterval_array = json_encode($monthKey,JSON_UNESCAPED_UNICODE);
+        $js_topCategories_name_array = json_encode($topCategories_name,JSON_UNESCAPED_UNICODE );
+        $js_topCategories_value_array = json_encode($topCategories_value);
+        $js_topCategories_name_array = str_replace('"', "'", $js_topCategories_name_array );
+        //dd($js_topCategories_name_array);
+        return view('boss.dashboard',[
+            'revenueForMonth' => $js_revenueForMonth_array,
+            'actualRevenueForMonth' => $js_actualRevenueForMonth_array,
+            'timeInterval' => $js_timeInterval_array,
+            'costForMonth' => $js_costForMonth_array,
+            'topCategories_name' => $js_topCategories_name_array,
+            'topCategories_value' => $js_topCategories_value_array,
+        ]);
     }
 }

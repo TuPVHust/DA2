@@ -1489,11 +1489,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @if ($isLate)
+                                    {{-- @if ($isLate)
                                         <button class="btn btn-success"
                                             onclick='handleClick({{ $inQueueSchedule->id }});'>Hoàn
                                             thành</button>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>
