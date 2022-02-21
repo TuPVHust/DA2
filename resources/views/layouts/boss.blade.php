@@ -30,7 +30,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
     {{-- select2 --}}
-
+    <script src="{{ asset('js/app.js') }}"></script>
     {{-- livewire --}}
     @livewireStyles
 </head>
@@ -122,7 +122,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -487,6 +487,15 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+
+    {{-- Echo listening to event --}}
+    <script>
+        Echo.private('App.Models.User.' + {{ Auth::user()->id }})
+            .notification((notification) => {
+                //console.log(notification.type);
+                Livewire.emit('newNotificationCreated');
+            });
+    </script>
     {{-- livewire --}}
     @livewireScripts
     @yield('js')

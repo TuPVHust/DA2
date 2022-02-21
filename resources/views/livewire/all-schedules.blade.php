@@ -63,7 +63,7 @@
                                         <span class="input-group-text"><i class="far fa-clock"></i></span>
                                     </div>
                                     <input type="text" class="form-control float-right" id="timeRangeFilter"
-                                        wire:model='timeRange' onchange="handleChangeTiemRange(this);">
+                                        wire:model='timeRange' onchange="handleChangeTimeRange(this);">
                                 </div>
                                 <!-- /.input group -->
                             </div>
@@ -349,16 +349,21 @@
         </div>
         <!-- /.card -->
     </div>
+    <script>
+        function handleChangeTimeRange(src) {
+            Livewire.emit('ChangeTimeRange', src.value);
+        }
+    </script>
+    <script>
+        window.addEventListener('contentChanged', event => {
+            $("#example1").DataTable({
+                paging: false,
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                select: true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 </div>
-<script>
-    window.addEventListener('contentChanged', event => {
-        $("#example1").DataTable({
-            paging: false,
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            select: true,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-</script>

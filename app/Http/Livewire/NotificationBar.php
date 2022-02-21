@@ -25,7 +25,10 @@ class NotificationBar extends Component
             })->markAsRead();
         }
     }
-
+    protected $listeners = ['newNotificationCreated',];
+    public function newNotificationCreated(){
+        //dd('oki');
+    }
     public function markAllAsRead(){
         $this->user->unreadNotifications->markAsRead();
     }

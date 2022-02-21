@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
     {{-- AlpineJS --}}
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @livewireStyles
 </head>
 
@@ -190,7 +191,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -384,9 +385,16 @@
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
-    @yield('js')
+    {{-- Echo --}}
+    <script>
+        Echo.private('App.Models.User.' + {{ Auth::user()->id }})
+            .notification((notification) => {
+                //console.log(notification.type);
+                Livewire.emit('newNotificationCreated');
+            });
+    </script>
     @livewireScripts
-
+    @yield('js')
 </body>
 
 </html>

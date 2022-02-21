@@ -30,7 +30,7 @@ class completeSchedule extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
 
     /**

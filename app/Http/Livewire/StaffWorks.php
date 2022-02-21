@@ -69,8 +69,10 @@ class StaffWorks extends Component
         //'scheDetDescription' => 'required',
         //'email' => 'required|email',
     ];
-    protected $listeners = ['completeWork','addScheduleDetail','handleAddCostDetail','changeOrder','changeBuyer','changeSeller','changeCategory','toggleAddForm','changeTab','deleteScheDetail','deleteCostDetail','editScheduleDetail','updateSchedulesDetail','cancelEdit','closeInforModal','editCostDeatail','updateCostDetail'];
-    
+    protected $listeners = ['completeWork','addScheduleDetail','handleAddCostDetail','changeOrder','changeBuyer','changeSeller','changeCategory','toggleAddForm','changeTab','deleteScheDetail','deleteCostDetail','editScheduleDetail','updateSchedulesDetail','cancelEdit','closeInforModal','editCostDeatail','updateCostDetail','newNotificationCreated'];
+    public function newNotificationCreated(){
+        //dd('oki');
+    }
     public function handleEditCostDetail(){
         //dd('oki');
         $validateData = Validator::make($this->editingCostDetail, [

@@ -858,11 +858,6 @@
         })
     </script>
     <script>
-        function handleChangeTiemRange(src) {
-            Livewire.emit('ChangeTimeRange', src.value);
-        }
-    </script>
-    <script>
         $(document).on('change.select', '#orderBy', function(event) {
             Livewire.emit('changeOrderBy', event.target.value);
         });
