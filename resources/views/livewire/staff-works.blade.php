@@ -84,7 +84,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="max-height: 300x; overflow: auto">
                                     <div class="card card-primary card-outline card-outline-tabs">
                                         <div class="card-header p-0 border-bottom-0">
                                             <ul class="nav nav-tabs"
@@ -670,213 +670,207 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
                                 </div>
-                                <div class="modal-body">
-                                    <div class="modal-body">
-                                        <div class="card card-primary card-outline card-outline-tabs">
-                                            <div class="card-header p-0 border-bottom-0">
-                                                <ul class="nav nav-tabs"
-                                                    id="custom-tabs-four-tab{{ $todayCompltedSchedule->id }}"
-                                                    role="tablist">
-                                                    <li class="nav-item">
-                                                        <a @class(['nav-link', 'active' => !$activeCost]) id="custom-tabs-four-home-tab"
-                                                            data-toggle="tab"
-                                                            href="#custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
-                                                            role="tab"
-                                                            aria-controls="custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
-                                                            aria-selected="true"
-                                                            wire:click="changeTab">Chuyến({{ $todayCompltedSchedule->schedule_details->count() }})</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a @class(['nav-link', 'active' => $activeCost])
-                                                            id="custom-tabs-four-profile-tab" data-toggle="tab"
-                                                            href="#custom-tabs-four-profile{{ $todayCompltedSchedule->id }}"
-                                                            role="tab" aria-controls="custom-tabs-four-profile"
-                                                            aria-selected="false" wire:click="changeTab">Chí
-                                                            phí({{ $todayCompltedSchedule->cost_details->count() }})</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="tab-content" id="custom-tabs-four-tabContent">
-                                                    <div @class([
-                                                        'tab-pane fade',
-                                                        'show active' => !$activeCost,
-                                                    ])
-                                                        id="custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
-                                                        role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
-                                                        <div class="">
-                                                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                                                                @if (Session::has('alert-' . $msg))
-                                                                    <div
-                                                                        class="alert alert-{{ $msg }} alert-dismissible fade show ">
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="alert">&times;</button>
-                                                                        {{ Session::get('alert-' . $msg) }}
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
+                                <div class="modal-body" style="max-height: 300x; overflow: auto">
+                                    <div class="card card-primary card-outline card-outline-tabs">
+                                        <div class="card-header p-0 border-bottom-0">
+                                            <ul class="nav nav-tabs"
+                                                id="custom-tabs-four-tab{{ $todayCompltedSchedule->id }}"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a @class(['nav-link', 'active' => !$activeCost]) id="custom-tabs-four-home-tab"
+                                                        data-toggle="tab"
+                                                        href="#custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
+                                                        role="tab"
+                                                        aria-controls="custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
+                                                        aria-selected="true"
+                                                        wire:click="changeTab">Chuyến({{ $todayCompltedSchedule->schedule_details->count() }})</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a @class(['nav-link', 'active' => $activeCost]) id="custom-tabs-four-profile-tab"
+                                                        data-toggle="tab"
+                                                        href="#custom-tabs-four-profile{{ $todayCompltedSchedule->id }}"
+                                                        role="tab" aria-controls="custom-tabs-four-profile"
+                                                        aria-selected="false" wire:click="changeTab">Chí
+                                                        phí({{ $todayCompltedSchedule->cost_details->count() }})</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="tab-content" id="custom-tabs-four-tabContent">
+                                                <div @class([
+                                                    'tab-pane fade',
+                                                    'show active' => !$activeCost,
+                                                ])
+                                                    id="custom-tabs-four-home{{ $todayCompltedSchedule->id }}"
+                                                    role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                                                    <div class="">
+                                                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                                            @if (Session::has('alert-' . $msg))
+                                                                <div
+                                                                    class="alert alert-{{ $msg }} alert-dismissible fade show ">
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="alert">&times;</button>
+                                                                    {{ Session::get('alert-' . $msg) }}
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
 
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h3 class="card-title">Danh sách chuyến</h3>
-                                                            </div>
-                                                            <!-- /.card-header -->
-                                                            <div class="card-body">
-                                                                <table
-                                                                    class="table table-bordered table-hover table-sm">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th>#</th>
-                                                                            <th>Loại</th>
-                                                                            <th>Mua</th>
-                                                                            <th>Bán</th>
-                                                                            <th>Lượng</th>
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Danh sách chuyến</h3>
+                                                        </div>
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body">
+                                                            <table class="table table-bordered table-hover table-sm">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Loại</th>
+                                                                        <th>Mua</th>
+                                                                        <th>Bán</th>
+                                                                        <th>Lượng</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($todayCompltedSchedule->schedule_details as $schedule_detail)
+                                                                        <tr data-widget="expandable-table"
+                                                                            aria-expanded="false">
+                                                                            <td>{{ $schedule_detail->id }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->category->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->seller->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->buyer->name }}
+                                                                            </td>
+                                                                            <td>{{ $schedule_detail->quantity }}
+                                                                            </td>
 
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($todayCompltedSchedule->schedule_details as $schedule_detail)
-                                                                            <tr data-widget="expandable-table"
-                                                                                aria-expanded="false">
-                                                                                <td>{{ $schedule_detail->id }}
-                                                                                </td>
-                                                                                <td>{{ $schedule_detail->category->name }}
-                                                                                </td>
-                                                                                <td>{{ $schedule_detail->seller->name }}
-                                                                                </td>
-                                                                                <td>{{ $schedule_detail->buyer->name }}
-                                                                                </td>
-                                                                                <td>{{ $schedule_detail->quantity }}
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr class="expandable-body d-none">
-                                                                                <td colspan="6">
-                                                                                    <div>
-                                                                                        <span
-                                                                                            class="font-weight-bold">Ghi
-                                                                                            chú</span>:@if ($schedule_detail->description)
-                                                                                            {{ $schedule_detail->description }}
-                                                                                        @else
-                                                                                            Không có
-                                                                                        @endif
-                                                                                        <br>
-                                                                                        <span
-                                                                                            class="font-weight-bold">Đơn
-                                                                                            hàng</span>:@if ($schedule_detail->order)
-                                                                                            {{ $schedule_detail->order->summary }}
-                                                                                        @else
-                                                                                            Không có
-                                                                                        @endif
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-6">
-                                                                                            <div>
-                                                                                                <span
-                                                                                                    class="font-weight-bold">Bán</span>:
-                                                                                                {{ number_format($schedule_detail->revenue, 0) }}
-                                                                                            </div>
-                                                                                            <div>
-                                                                                                <span
-                                                                                                    class="font-weight-bold">Mua</span>:
-                                                                                                {{ number_format($schedule_detail->price, 0) }}
-                                                                                            </div>
+                                                                        <tr class="expandable-body d-none">
+                                                                            <td colspan="6">
+                                                                                <div>
+                                                                                    <span class="font-weight-bold">Ghi
+                                                                                        chú</span>:@if ($schedule_detail->description)
+                                                                                        {{ $schedule_detail->description }}
+                                                                                    @else
+                                                                                        Không có
+                                                                                    @endif
+                                                                                    <br>
+                                                                                    <span class="font-weight-bold">Đơn
+                                                                                        hàng</span>:@if ($schedule_detail->order)
+                                                                                        {{ $schedule_detail->order->summary }}
+                                                                                    @else
+                                                                                        Không có
+                                                                                    @endif
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Bán</span>:
+                                                                                            {{ number_format($schedule_detail->revenue, 0) }}
                                                                                         </div>
-                                                                                        <div class="col-6">
-                                                                                            <div>
-                                                                                                <span
-                                                                                                    class="font-weight-bold">Thực
-                                                                                                    Thu</span>:
-                                                                                                {{ number_format($schedule_detail->actual_revenue, 0) }}
-                                                                                            </div>
-                                                                                            <div>
-                                                                                                <span
-                                                                                                    class="font-weight-bold">Thực
-                                                                                                    Chi</span>:
-                                                                                                {{ number_format($schedule_detail->actual_price, 0) }}
-                                                                                            </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Mua</span>:
+                                                                                            {{ number_format($schedule_detail->price, 0) }}
                                                                                         </div>
                                                                                     </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <!-- /.card-body -->
-                                                            {{-- <div class="card-footer clearfix">
+                                                                                    <div class="col-6">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Thực
+                                                                                                Thu</span>:
+                                                                                            {{ number_format($schedule_detail->actual_revenue, 0) }}
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="font-weight-bold">Thực
+                                                                                                Chi</span>:
+                                                                                            {{ number_format($schedule_detail->actual_price, 0) }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        {{-- <div class="card-footer clearfix">
     
                                                                 </div> --}}
-                                                        </div>
                                                     </div>
-                                                    <div @class(['tab-pane', 'show active' => $activeCost])
-                                                        id="custom-tabs-four-profile{{ $todayCompltedSchedule->id }}"
-                                                        role="tabpanel"
-                                                        aria-labelledby="custom-tabs-four-profile-tab{{ $todayCompltedSchedule->id }}">
-                                                        {{-- add form --}}
+                                                </div>
+                                                <div @class(['tab-pane', 'show active' => $activeCost])
+                                                    id="custom-tabs-four-profile{{ $todayCompltedSchedule->id }}"
+                                                    role="tabpanel"
+                                                    aria-labelledby="custom-tabs-four-profile-tab{{ $todayCompltedSchedule->id }}">
+                                                    {{-- add form --}}
 
-                                                        <div class="">
-                                                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                                                                @if (Session::has('alert-' . $msg))
-                                                                    <div
-                                                                        class="alert alert-{{ $msg }} alert-dismissible fade show ">
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="alert">&times;</button>
-                                                                        {{ Session::get('alert-' . $msg) }}
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
+                                                    <div class="">
+                                                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                                            @if (Session::has('alert-' . $msg))
+                                                                <div
+                                                                    class="alert alert-{{ $msg }} alert-dismissible fade show ">
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="alert">&times;</button>
+                                                                    {{ Session::get('alert-' . $msg) }}
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                    {{-- end add form --}}
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">Danh sách chi phí</h3>
                                                         </div>
-                                                        {{-- end add form --}}
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h3 class="card-title">Danh sách chi phí</h3>
-                                                            </div>
-                                                            <!-- /.card-header -->
-                                                            <div class="card-body">
-                                                                <table
-                                                                    class="table table-bordered table-hover table-sm">
-                                                                    <thead class="thead-light">
+                                                        <!-- /.card-header -->
+                                                        <div class="card-body">
+                                                            <table class="table table-bordered table-hover table-sm">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Loại</th>
+                                                                        <th>Giá</th>
+                                                                        <th>Thực chi</th>
+                                                                        <th>Mô Tả</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($todayCompltedSchedule->cost_details as $cost_detail)
                                                                         <tr>
-                                                                            <th>#</th>
-                                                                            <th>Loại</th>
-                                                                            <th>Giá</th>
-                                                                            <th>Thực chi</th>
-                                                                            <th>Mô Tả</th>
+                                                                            <td>{{ $cost_detail->id }}
+                                                                            </td>
+                                                                            <td>{{ $cost_detail->cost_group->name }}
+                                                                            </td>
+                                                                            <td>{{ number_format($cost_detail->cost, 0) }}
+                                                                            </td>
+                                                                            <td>{{ number_format($cost_detail->actual_cost, 0) }}
+                                                                            </td>
+                                                                            <td>
+                                                                                {!! $cost_detail->description !!}
+                                                                            </td>
 
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($todayCompltedSchedule->cost_details as $cost_detail)
-                                                                            <tr>
-                                                                                <td>{{ $cost_detail->id }}
-                                                                                </td>
-                                                                                <td>{{ $cost_detail->cost_group->name }}
-                                                                                </td>
-                                                                                <td>{{ number_format($cost_detail->cost, 0) }}
-                                                                                </td>
-                                                                                <td>{{ number_format($cost_detail->actual_cost, 0) }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {!! $cost_detail->description !!}
-                                                                                </td>
-
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <!-- /.card-body -->
-                                                            {{-- <div class="card-footer clearfix">
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        {{-- <div class="card-footer clearfix">
                                                                     
                                                                 </div> --}}
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- /.card -->
                                         </div>
+                                        <!-- /.card -->
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -1006,7 +1000,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button> --}}
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="max-height: 300x; overflow: auto">
                                     <div class="card card-primary card-outline card-outline-tabs">
                                         <div class="card-header p-0 border-bottom-0">
                                             <ul class="nav nav-tabs"

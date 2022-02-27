@@ -149,8 +149,8 @@ class AllScheduleDetail extends Component
         
         $trucks = Truck::all();
         $categories = Category::all();
-        $orders = Order::all();
-        $drivers = User::where('role', 0)->get();
+        $orders = Order::where('status',1)->get();
+        $drivers = User::where('role', 0)->where('status', 1)->get();
         $car_owners = Partner::where('car_owner', 1)->get();
         $buyers = Partner::where('NM', 1)->get();
         $sellers = Partner::where('NCC', 1)->get();

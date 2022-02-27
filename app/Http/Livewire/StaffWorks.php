@@ -294,20 +294,26 @@ class StaffWorks extends Component
     }
     public function handleAddCostDetail($id, $costGroup, $cost, $actual_cost,$costDescription){
         $this->dispatchBrowserEvent('reloadJs', []);
-        $CostDetail = CostDetail::create([
-            'description' => $costDescription,
-            'cost' => $cost,
-            'actual_cost' => $actual_cost,
-            'schedule_id' => $id,
-            'cost_group_id' => $costGroup
-        ]);
-        $this->resetAttribute();
-        session()->flash('alert-success', 'Thêm mới thành công !!!');
+        $user = Auth::user();
+        $schedule = Schedule::find($id);
+        // dd($schedule);
+        if($schedule !=null && $user != null && $schedule->driver_id == $user->id && $schedule->status == 1)
+        {
+            $CostDetail = CostDetail::create([
+                'description' => $costDescription,
+                'cost' => $cost,
+                'actual_cost' => $actual_cost,
+                'schedule_id' => $id,
+                'cost_group_id' => $costGroup
+            ]);
+            $this->resetAttribute();
+            session()->flash('alert-success', 'Thêm mới thành công !!!');
+        }
     }
 
     public function completeWork($id){
         //abort(403);
-        
+        $this->showAddForm = false;
         $user = Auth::user();
         $schedule = Schedule::find($id);
         //dd($schedule);
@@ -321,6 +327,8 @@ class StaffWorks extends Component
             //dd($id);
         }
         else{
+            //session()->flash('alert-danger', 'Đã có lỗi sảy ra, có thể dữ liệu đã bị thay đổi, hay refresh lại trang !!!');
+            //$this->resetAttribute();
             abort(403);
         }
     }

@@ -10,6 +10,7 @@ use App\Models\Truck;
 use App\Models\Partner;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\CostDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
@@ -37,19 +38,33 @@ class HomeController extends Controller
     {
         $topCategories_name = array();
         $topCategories_value = array();
+
+        $topCosts_name = array();
+        $topCosts_value = array();
+
         $monthKey = array();
         $revenueForMonth = array();
         $costForMonth = array();
         $actualRevenueForMonth = array();
+
         $timeInterval = array(1 => 'January',2=>'February',3=>'March',4=>'April',5=>'May',6=>'June',7=>'July',8=>'August',9=>'September',10=>'October',11=>'November',12=>'December');
         $year = Carbon::now()->year;
-        // $global_scheduleDetails = ScheduleDetail::rightJoin('schedules','schedule_details.schedule_id','=','schedules.id')->join('cost_details','cost_details.schedule_id','=','schedules.id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id')->rightJoin('categories','schedule_details.category_id','=','categories.id')->whereYear('date', $year);
+
+        $cost_details = CostDetail::join('schedules','schedules.id','=','cost_details.schedule_id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id');
         $category_details = Category::leftJoin('schedule_details','schedule_details.category_id','=','categories.id')->leftJoin('schedules','schedule_details.schedule_id','=','schedules.id')->whereYear('schedules.date', $year);
         $topCategories = $category_details->select('categories.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('categories.id')->orderBy('detailNum','desc')->get(6);
+        $topCosts = $cost_details->select('cost_groups.*', DB::raw('sum(cost_details.cost)/1000000 as costSum'))->groupBy('cost_groups.id')->orderBy('costSum', 'desc')->get(6);
+        //dd($topCosts);
         foreach($topCategories as $topCategory)
         {
             array_push($topCategories_name,$topCategory->name);
             array_push($topCategories_value,$topCategory->detailNum);
+        }
+
+        foreach($topCosts as $topCost)
+        {
+            array_push($topCosts_name,$topCost->name);
+            array_push($topCosts_value,$topCost->costSum);
         }
 
         foreach($timeInterval as $key => $value)
@@ -67,10 +82,17 @@ class HomeController extends Controller
         $js_revenueForMonth_array = json_encode($revenueForMonth);
         $js_actualRevenueForMonth_array = json_encode($actualRevenueForMonth);
         $js_costForMonth_array = json_encode($costForMonth);
+
         $js_timeInterval_array = json_encode($monthKey,JSON_UNESCAPED_UNICODE);
+
         $js_topCategories_name_array = json_encode($topCategories_name,JSON_UNESCAPED_UNICODE );
+
         $js_topCategories_value_array = json_encode($topCategories_value);
         $js_topCategories_name_array = str_replace('"', "'", $js_topCategories_name_array );
+
+        $js_topCosts_name_array = json_encode($topCosts_name,JSON_UNESCAPED_UNICODE );
+        $js_topCosts_value_array = json_encode($topCosts_value);
+        
         //dd($js_topCategories_name_array);
         return view('boss.dashboard',[
             'revenueForMonth' => $js_revenueForMonth_array,
@@ -79,6 +101,9 @@ class HomeController extends Controller
             'costForMonth' => $js_costForMonth_array,
             'topCategories_name' => $js_topCategories_name_array,
             'topCategories_value' => $js_topCategories_value_array,
+            'topCosts_name' => $js_topCosts_name_array,
+            'topCosts_value' => $js_topCosts_value_array,
+            'thisYear' => $year,
         ]);
     }
 }

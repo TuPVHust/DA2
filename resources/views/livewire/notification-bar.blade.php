@@ -69,6 +69,7 @@
             <a href="#" class="dropdown-item dropdown-footer" wire:click="markAllAsRead()">Mark all
                 as read</a>
         @endif
-        <a href="#" class="dropdown-item dropdown-footer">See all notification</a>
+        <a href="#" class="dropdown-item dropdown-footer" data-toggle="modal" data-target="#notificationModal">See all
+            notification</a>
     </div>
 </div>

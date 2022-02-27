@@ -62,6 +62,7 @@ class completeSchedule extends Notification
             'email' => $this->user->email,
             'avatar' => $this->user->avatar,
             'schedule' => $this->schedule,
+            'type' => 'Hoàn thành công việc'
         ];
     }
 }

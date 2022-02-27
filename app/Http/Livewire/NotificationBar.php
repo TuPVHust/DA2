@@ -26,7 +26,8 @@ class NotificationBar extends Component
         }
     }
     protected $listeners = ['newNotificationCreated',];
-    public function newNotificationCreated(){
+    public function newNotificationCreated($newNotifi){
+        //dd($newNotifi);
         //dd('oki');
     }
     public function markAllAsRead(){

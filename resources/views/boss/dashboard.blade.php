@@ -14,7 +14,7 @@
     </ol>
 @endsection
 @section('content')
-    @livewire('dash-board')
+    @livewire('dash-board',['thisYear' => $thisYear])
 @endsection
 
 @section('js')
@@ -32,13 +32,8 @@
             //--------------
 
             // Get context with jQuery - using jQuery's .get() method.
-            var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-            // if (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-            //         'October', 'November', 'December'
-            //     ] == {{ $timeInterval }}) {
-            //     alert('oki');
-            // }
-            //alert({{ $timeInterval }});
+
+            //var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
             //  data for cost char
             var areaCostChartData = {
@@ -59,8 +54,6 @@
                 }, ]
             }
             // end data for cost char
-
-
 
             // Data for revenue chart
             var areaChartData = {
@@ -114,27 +107,28 @@
             }
 
             // This will get the first returned node in the jQuery collection.
-            new Chart(areaChartCanvas, {
-                type: 'line',
-                data: areaChartData,
-                options: areaChartOptions
-            })
+
+            // new Chart(areaChartCanvas, {
+            //     type: 'line',
+            //     data: areaChartData,
+            //     options: areaChartOptions
+            // })
 
             //-------------
             //- LINE CHART -
             //--------------
-            var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-            var lineChartOptions = $.extend(true, {}, areaChartOptions)
-            var lineChartData = $.extend(true, {}, areaCostChartData)
-            lineChartData.datasets[0].fill = false;
-            //lineChartData.datasets[1].fill = false;
-            lineChartOptions.datasetFill = false
+            // var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+            // var lineChartOptions = $.extend(true, {}, areaChartOptions)
+            // var lineChartData = $.extend(true, {}, areaCostChartData)
+            // lineChartData.datasets[0].fill = false;
+            // lineChartData.datasets[1].fill = false;
+            // lineChartOptions.datasetFill = false
 
-            var lineChart = new Chart(lineChartCanvas, {
-                type: 'line',
-                data: lineChartData,
-                options: lineChartOptions
-            })
+            // var lineChart = new Chart(lineChartCanvas, {
+            //     type: 'line',
+            //     data: lineChartData,
+            //     options: lineChartOptions
+            // })
 
             //-------------
             //- DONUT CHART -
@@ -177,7 +171,14 @@
             //-------------
             // Get context with jQuery - using jQuery's .get() method.
             var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieData = donutData;
+            //var pieData = donutData;
+            var pieData = {
+                labels: {!! $topCosts_name !!},
+                datasets: [{
+                    data: {{ $topCosts_value }},
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                }]
+            }
             var pieOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
@@ -215,8 +216,8 @@
             //---------------------
             //- STACKED BAR CHART -
             //---------------------
-            var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-            var stackedBarChartData = $.extend(true, {}, barChartData)
+            // var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+            // var stackedBarChartData = $.extend(true, {}, barChartData)
 
             var stackedBarChartOptions = {
                 responsive: true,
@@ -231,11 +232,11 @@
                 }
             }
 
-            new Chart(stackedBarChartCanvas, {
-                type: 'bar',
-                data: stackedBarChartData,
-                options: stackedBarChartOptions
-            })
+            // new Chart(stackedBarChartCanvas, {
+            //     type: 'bar',
+            //     data: stackedBarChartData,
+            //     options: stackedBarChartOptions
+            // })
         })
     </script>
     <!-- DataTables  & Plugins -->

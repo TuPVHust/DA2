@@ -191,7 +191,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -333,6 +333,34 @@
             </section>
             <!-- /.content -->
         </div>
+        <div class="modal fade" id="notificationModal" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">TẤT CẢ THÔNG BÁO</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="max-height: 300x; overflow: auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Danh sách thông báo</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                @livewire('all-notification-modal')
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
@@ -390,7 +418,7 @@
         Echo.private('App.Models.User.' + {{ Auth::user()->id }})
             .notification((notification) => {
                 //console.log(notification.type);
-                Livewire.emit('newNotificationCreated');
+                Livewire.emit('newNotificationCreated', notification);
             });
     </script>
     @livewireScripts

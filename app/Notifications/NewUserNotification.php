@@ -60,6 +60,7 @@ class NewUserNotification extends Notification
             'name' => $this->user->name,
             'email' => $this->user->email,
             'avatar' => $this->user->avatar,
+            'type' => 'Đăng ký tìa khoản mới'
         ];
     }
 }

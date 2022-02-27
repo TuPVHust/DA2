@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- AREA CHART -->
-            <div class="card card-primary">
+            {{-- <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Area Chart</h3>
 
@@ -22,13 +22,13 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div>
+            </div> --}}
             <!-- /.card -->
 
             <!-- DONUT CHART -->
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Donut Chart</h3>
+                    <h3 class="card-title">Top Hàng Bán Chạy</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -50,7 +50,7 @@
             <!-- PIE CHART -->
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Pie Chart</h3>
+                    <h3 class="card-title">Top Các Loại Chi Phí</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -73,7 +73,7 @@
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
             <!-- LINE CHART -->
-            <div class="card card-info">
+            {{-- <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">Line Chart</h3>
 
@@ -93,13 +93,13 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div>
+            </div> --}}
             <!-- /.card -->
 
             <!-- BAR CHART -->
             <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Bar Chart</h3>
+                    <h3 class="card-title">Doanh Thu Theo Tháng ({{ $thisYear }})</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -121,7 +121,7 @@
             <!-- /.card -->
 
             <!-- STACKED BAR CHART -->
-            <div class="card card-success">
+            {{-- <div class="card card-success">
                 <div class="card-header">
                     <h3 class="card-title">Stacked Bar Chart</h3>
 
@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div>
+            </div> --}}
             <!-- /.card -->
 
         </div>

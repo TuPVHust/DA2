@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashBoard extends Component
 {
+    public $thisYear;
     public function render()
     {
         return view('livewire.dash-board');

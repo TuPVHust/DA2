@@ -62,6 +62,7 @@ class createSchedule extends Notification
             'email' => $this->user->email,
             'avatar' => $this->user->avatar,
             'schedule' => $this->schedule,
+            'type' => 'Công việc mới được giao'
         ];
     }
 }
