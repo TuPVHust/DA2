@@ -8,16 +8,6 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     {{-- select2 --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-        .border-5 {
-            border-width: 5px !important;
-        }
-
-        .border-2 {
-            border-width: 2px !important;
-        }
-
-    </style>
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
@@ -109,19 +99,18 @@
                                                             @foreach ($todayDoingSchedules as $todayDoingSchedule)
                                                                 <a class="d-block w-100" data-toggle="collapse"
                                                                     href="#completedOne{{ $todayDoingSchedule->id }}"
-                                                                    class="collapse"
-                                                                    style="color: black">
+                                                                    class="collapse" style="color: black">
                                                                     <div class="card-header w-100">
                                                                         <div class="card-title ">
                                                                             <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-truck-moving"></i>
                                                                                 {{ $todayDoingSchedule->truck->plate }}</span>
-                                                                                <span class="text-muted"> &bull;</span>
-                                                                                <span class="badge badge-light text-muted"><i
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-users"></i>
                                                                                 {{ $todayDoingSchedule->driver->name }}</span>
-                                                                                <span class="text-muted"> &bull;</span>
-                                                                                <span class="badge badge-light text-muted"><i
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
                                                                                     class="fas fa-adjust"></i>
                                                                                 @if ($todayDoingSchedule->shift == 1)
                                                                                     <span>Ngày</span>
@@ -139,7 +128,8 @@
                                                                                 <a class="btn btn-tool btn-link"
                                                                                     data-toggle="collapse"
                                                                                     href="#completedOne{{ $todayDoingSchedule->id }}"><i
-                                                                                    class="fas fa-truck-loading fa-xs"></i> {{ $todayDoingSchedule->schedule_details->count() }}</a>
+                                                                                        class="fas fa-truck-loading fa-xs"></i>
+                                                                                    {{ $todayDoingSchedule->schedule_details->count() }}</a>
                                                                             @endif
                                                                             <a href="{{ route('boss.schedule.edit', $todayDoingSchedule->id) }}"
                                                                                 class="btn btn-tool">
@@ -203,12 +193,22 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                                                    chú</span>:
+                                                                                                                @if ($schedule_detail->description)
+                                                                                                                    {{ $schedule_detail->description }}
+                                                                                                                @else
+                                                                                                                    Không có
+                                                                                                                @endif
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Đơn
-                                                                                                                    hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                                                    hàng</span>:
+                                                                                                                @if ($schedule_detail->order)
+                                                                                                                    {{ $schedule_detail->order->summary }}
+                                                                                                                @else
+                                                                                                                    Không có
+                                                                                                                @endif
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="row">
@@ -244,7 +244,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
-                                                                                                
+
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -286,7 +286,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
-                                                                                                
+
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -332,32 +332,33 @@
                                                                     <div class="card-header w-100">
                                                                         <div class="card-title">
                                                                             <span class="badge badge-light text-muted"><i
-                                                                                class="fas fa-truck-moving"></i>
-                                                                            {{ $todayCompltedSchedule->truck->plate }}</span>
+                                                                                    class="fas fa-truck-moving"></i>
+                                                                                {{ $todayCompltedSchedule->truck->plate }}</span>
                                                                             <span class="text-muted"> &bull;</span>
                                                                             <span class="badge badge-light text-muted"><i
-                                                                                class="fas fa-users"></i>
-                                                                            {{ $todayCompltedSchedule->driver->name }}</span>
+                                                                                    class="fas fa-users"></i>
+                                                                                {{ $todayCompltedSchedule->driver->name }}</span>
                                                                             <span class="text-muted"> &bull;</span>
                                                                             <span class="badge badge-light text-muted"><i
-                                                                                class="fas fa-adjust"></i>
-                                                                            @if ($todayCompltedSchedule->shift == 1)
-                                                                                <span>Ngày</span>
-                                                                            @else
-                                                                                <span>Đêm</span>
-                                                                            @endif
-                                                                        </span>
-                                                                        <span class="text-muted"> &bull;</span>
-                                                                        <span class="badge badge-light text-muted"><i
-                                                                                class="fas fa-dollar-sign"></i>
-                                                                            {{ number_format($todayCompltedSchedule->init_money, 0) }}</span>
+                                                                                    class="fas fa-adjust"></i>
+                                                                                @if ($todayCompltedSchedule->shift == 1)
+                                                                                    <span>Ngày</span>
+                                                                                @else
+                                                                                    <span>Đêm</span>
+                                                                                @endif
+                                                                            </span>
+                                                                            <span class="text-muted"> &bull;</span>
+                                                                            <span class="badge badge-light text-muted"><i
+                                                                                    class="fas fa-dollar-sign"></i>
+                                                                                {{ number_format($todayCompltedSchedule->init_money, 0) }}</span>
                                                                         </div>
                                                                         <div class="card-tools">
                                                                             @if ($todayCompltedSchedule->schedule_details)
                                                                                 <a class=" btn btn-tool btn-link "
                                                                                     data-toggle="collapse"
                                                                                     href="#collapseOne{{ $todayCompltedSchedule->id }}"><i
-                                                                                    class="fas fa-truck-loading fa-xs"></i> {{ $todayCompltedSchedule->schedule_details->count() }}</a>
+                                                                                        class="fas fa-truck-loading fa-xs"></i>
+                                                                                    {{ $todayCompltedSchedule->schedule_details->count() }}</a>
                                                                             @endif
                                                                             <a href="{{ route('boss.schedule.edit', $todayCompltedSchedule->id) }}"
                                                                                 class="btn btn-tool">
@@ -422,12 +423,22 @@
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Ghi
-                                                                                                                    chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                                                    chú</span>:
+                                                                                                                @if ($schedule_detail->description)
+                                                                                                                    {{ $schedule_detail->description }}
+                                                                                                                @else
+                                                                                                                    Không có
+                                                                                                                @endif
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
                                                                                                                     class="font-weight-bold">Đơn
-                                                                                                                    hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                                                    hàng</span>:
+                                                                                                                @if ($schedule_detail->order)
+                                                                                                                    {{ $schedule_detail->order->summary }}
+                                                                                                                @else
+                                                                                                                    Không có
+                                                                                                                @endif
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="row">
@@ -463,7 +474,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
-                                                                                                
+
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -505,7 +516,7 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
-                                                                                                
+
                                                                                             </tbody>
                                                                                         </table>
                                                                                     </div>
@@ -555,20 +566,19 @@
                                                     <div class="card ">
                                                         <a class="d-inline w-80" data-toggle="collapse"
                                                             href="#waitingOne{{ $inQueueSchedule->id }}">
-                                                            <div
-                                                                class="card-header border-left  border-bottom-0 border-5">
+                                                            <div class="card-header border-left  border-bottom-0 border-5">
                                                                 <h4 class="card-title">
                                                                     {{-- <span class="badge badge-info letf">2</span> --}}
                                                                     {{-- {{ $i }}. --}}
                                                                     <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-truck-moving"></i>
                                                                         {{ $inQueueSchedule->truck->plate }}</span>
-                                                                        <span class="text-muted"> &bull;</span>
-                                                                        <span class="badge badge-light text-muted"><i
+                                                                    <span class="text-muted"> &bull;</span>
+                                                                    <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-users"></i>
                                                                         {{ $inQueueSchedule->driver->name }}</span>
-                                                                        <span class="text-muted"> &bull;</span>
-                                                                        <span class="badge badge-light text-muted"><i
+                                                                    <span class="text-muted"> &bull;</span>
+                                                                    <span class="badge badge-light text-muted"><i
                                                                             class="fas fa-adjust"></i>
                                                                         @if ($inQueueSchedule->shift == 1)
                                                                             <span>Ngày</span>
@@ -590,7 +600,8 @@
                                                                         <a class="btn btn-tool btn-link"
                                                                             data-toggle="collapse"
                                                                             href="#waitingOne{{ $inQueueSchedule->id }}"><i
-                                                                            class="fas fa-truck-loading fa-xs"></i> {{ $inQueueSchedule->schedule_details->count() }}</a>
+                                                                                class="fas fa-truck-loading fa-xs"></i>
+                                                                            {{ $inQueueSchedule->schedule_details->count() }}</a>
                                                                     @endif
                                                                     <a href="{{ route('boss.schedule.edit', $inQueueSchedule->id) }}"
                                                                         class="btn btn-tool">
@@ -671,12 +682,22 @@
                                                                                                     <div>
                                                                                                         <span
                                                                                                             class="font-weight-bold">Ghi
-                                                                                                            chú</span>:@if ($schedule_detail->description) {{ $schedule_detail->description }} @else Không có @endif
+                                                                                                            chú</span>:
+                                                                                                        @if ($schedule_detail->description)
+                                                                                                            {{ $schedule_detail->description }}
+                                                                                                        @else
+                                                                                                            Không có
+                                                                                                        @endif
                                                                                                     </div>
                                                                                                     <div>
                                                                                                         <span
                                                                                                             class="font-weight-bold">Đơn
-                                                                                                            hàng</span>:@if ($schedule_detail->order) {{ $schedule_detail->order->summary }} @else Không có @endif
+                                                                                                            hàng</span>:
+                                                                                                        @if ($schedule_detail->order)
+                                                                                                            {{ $schedule_detail->order->summary }}
+                                                                                                        @else
+                                                                                                            Không có
+                                                                                                        @endif
                                                                                                     </div>
                                                                                                     <div
                                                                                                         class="row">
@@ -810,18 +831,10 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    {{-- <script>
-        $(function() {
-            $("#example1").DataTable({
-                paging: false,
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                select: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script> --}}
+    <!-- Sparkline -->
+    <script src="{{ url('bossUI') }}/plugins/sparklines/sparkline.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/moment/moment.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
         $(".btndelete").click(function(ev) {
             ev.preventDefault();
@@ -882,5 +895,4 @@
             Livewire.emit('changeCarOwner', event.target.value);
         });
     </script>
-    
 @endsection

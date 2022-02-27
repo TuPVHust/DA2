@@ -32,8 +32,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
     {{-- AlpineJS --}}
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script> --}}
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     @livewireStyles
 </head>
 
@@ -191,7 +191,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -363,13 +363,13 @@
     <script src="{{ url('bossUI') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->
     <script src="{{ url('bossUI') }}/plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
-    <script src="{{ url('bossUI') }}/plugins/sparklines/sparkline.js"></script>
-    <!-- JQVMap -->
+    {{-- <!-- Sparkline -->
+    <script src="{{ url('bossUI') }}/plugins/sparklines/sparkline.js"></script> --}}
+    {{-- <!-- JQVMap -->
     <script src="{{ url('bossUI') }}/plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="{{ url('bossUI') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ url('bossUI') }}/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script> --}}
+    {{-- <!-- jQuery Knob Chart -->
+    <script src="{{ url('bossUI') }}/plugins/jquery-knob/jquery.knob.min.js"></script> --}}
     <!-- daterangepicker -->
     <script src="{{ url('bossUI') }}/plugins/moment/moment.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.js"></script>
@@ -380,9 +380,9 @@
     <!-- overlayScrollbars -->
     <script src="{{ url('bossUI') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="{{ url('bossUI') }}/dist/js/adminlte.js"></script>
+    {{-- <script src="{{ url('bossUI') }}/dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
+    <script src="{{ url('bossUI') }}/dist/js/demo.js"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
     {{-- Echo --}}

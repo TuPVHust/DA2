@@ -217,7 +217,8 @@
             @else
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table table-bordered table-striped" id="example{{ $updateNum }}" wire:ignore.self>
+                    <table class="table table-bordered table-striped table-responsive-sm"
+                        id="example{{ $updateNum }}" wire:ignore.self>
                         <thead>
                             <tr>
                                 @foreach ($hiddenColums as $key => $value)

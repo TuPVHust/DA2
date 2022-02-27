@@ -134,7 +134,7 @@
                 </div>
             @else
                 <div class="card-body">
-                    <table class="table table-hover table-responsive-xl" id="example1">
+                    <table class="table table-hover table-responsive-xl">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -238,14 +238,16 @@
                                                                                     <span class="font-weight-bold">Ghi
                                                                                         chú</span>:@if ($schedule_detail->description)
                                                                                         {{ $schedule_detail->description }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                 </div>
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Đơn
                                                                                         hàng</span>:@if ($schedule_detail->order)
                                                                                         {{ $schedule_detail->order->summary }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                 </div>
                                                                                 <div class="row">
@@ -304,8 +306,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     @foreach ($schedule->cost_details as $cost_detail)
-                                                                        <tr data-widget="expandable-table"
-                                                                            aria-expanded="false">
+                                                                        <tr>
                                                                             <td>{{ $cost_detail->id }}</td>
                                                                             <td>{{ $cost_detail->cost_group->name }}
                                                                             </td>
@@ -327,15 +328,6 @@
                                             </div>
                                         </div>
                                     </td>
-                                    {{-- <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -353,17 +345,5 @@
         function handleChangeTimeRange(src) {
             Livewire.emit('ChangeTimeRange', src.value);
         }
-    </script>
-    <script>
-        window.addEventListener('contentChanged', event => {
-            $("#example1").DataTable({
-                paging: false,
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                select: true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
     </script>
 </div>

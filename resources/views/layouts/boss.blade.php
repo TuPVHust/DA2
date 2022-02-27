@@ -10,6 +10,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     @yield('css')
+    <link href="/css/app.css" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -29,8 +31,7 @@
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.css">
-    {{-- select2 --}}
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" deter></script>
     {{-- livewire --}}
     @livewireStyles
 </head>
@@ -122,7 +123,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -460,33 +461,18 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-
+    {{-- <script src="/js/app.js"></script> --}}
     <!-- Bootstrap 4 -->
     <script src="{{ url('bossUI') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
-    <script src="{{ url('bossUI') }}/plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
-    <script src="{{ url('bossUI') }}/plugins/sparklines/sparkline.js"></script>
-    <!-- JQVMap -->
-    <script src="{{ url('bossUI') }}/plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="{{ url('bossUI') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ url('bossUI') }}/plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
-    <script src="{{ url('bossUI') }}/plugins/moment/moment.min.js"></script>
-    <script src="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.js"></script>
+
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ url('bossUI') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    {{-- <script src="{{ url('bossUI') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> --}}
     <!-- Summernote -->
     <script src="{{ url('bossUI') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="{{ url('bossUI') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="{{ url('bossUI') }}/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ url('bossUI') }}/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    {{-- <script src="{{ url('bossUI') }}/dist/js/adminlte.js"></script> --}}
 
     {{-- Echo listening to event --}}
     <script>
@@ -498,6 +484,7 @@
     </script>
     {{-- livewire --}}
     @livewireScripts
+
     @yield('js')
 </body>
 

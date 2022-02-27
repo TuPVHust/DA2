@@ -51,7 +51,7 @@
                                 text-overflow: ellipsis;
                                 display: -webkit-box;
                                 -webkit-line-clamp: 1;
-                                        line-clamp: 1; 
+                                        line-clamp: 1;
                                 -webkit-box-orient: vertical;">{!! $todayDoingSchedule->description !!}</p>
                                 @else
                                     Không có
@@ -364,7 +364,7 @@
                                                                 <tbody>
                                                                     @foreach ($todayDoingSchedule->schedule_details as $schedule_detail)
                                                                         <tr data-widget="expandable-table"
-                                                                            aria-expanded="true">
+                                                                            aria-expanded="false">
                                                                             <td>{{ $schedule_detail->id }}
                                                                             </td>
                                                                             <td>{{ $schedule_detail->category->name }}
@@ -397,19 +397,21 @@
                                                                                 </a>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr class="expandable-body">
+                                                                        <tr class="expandable-body d-none">
                                                                             <td colspan="6">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
                                                                                         chú</span>:@if ($schedule_detail->description)
                                                                                         {{ $schedule_detail->description }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                     <br>
                                                                                     <span class="font-weight-bold">Đơn
                                                                                         hàng</span>:@if ($schedule_detail->order)
                                                                                         {{ $schedule_detail->order->summary }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                 </div>
                                                                                 <div class="row">
@@ -506,8 +508,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     @foreach ($todayDoingSchedule->cost_details as $cost_detail)
-                                                                        <tr data-widget="expandable-table"
-                                                                            aria-expanded="false">
+                                                                        <tr>
                                                                             <td>{{ $cost_detail->id }}
                                                                             </td>
                                                                             <td>{{ $cost_detail->cost_group->name }}
@@ -634,7 +635,7 @@
                                 text-overflow: ellipsis;
                                 display: -webkit-box;
                                 -webkit-line-clamp: 1;
-                                        line-clamp: 1; 
+                                        line-clamp: 1;
                                 -webkit-box-orient: vertical;">{!! $todayCompltedSchedule->description !!}</p>
                                 @else
                                     Không có
@@ -737,7 +738,7 @@
                                                                     <tbody>
                                                                         @foreach ($todayCompltedSchedule->schedule_details as $schedule_detail)
                                                                             <tr data-widget="expandable-table"
-                                                                                aria-expanded="true">
+                                                                                aria-expanded="false">
                                                                                 <td>{{ $schedule_detail->id }}
                                                                                 </td>
                                                                                 <td>{{ $schedule_detail->category->name }}
@@ -750,21 +751,23 @@
                                                                                 </td>
 
                                                                             </tr>
-                                                                            <tr class="expandable-body">
+                                                                            <tr class="expandable-body d-none">
                                                                                 <td colspan="6">
                                                                                     <div>
                                                                                         <span
                                                                                             class="font-weight-bold">Ghi
                                                                                             chú</span>:@if ($schedule_detail->description)
                                                                                             {{ $schedule_detail->description }}
-                                                                                        @else Không có
+                                                                                        @else
+                                                                                            Không có
                                                                                         @endif
                                                                                         <br>
                                                                                         <span
                                                                                             class="font-weight-bold">Đơn
                                                                                             hàng</span>:@if ($schedule_detail->order)
                                                                                             {{ $schedule_detail->order->summary }}
-                                                                                        @else Không có
+                                                                                        @else
+                                                                                            Không có
                                                                                         @endif
                                                                                     </div>
                                                                                     <div class="row">
@@ -846,8 +849,7 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         @foreach ($todayCompltedSchedule->cost_details as $cost_detail)
-                                                                            <tr data-widget="expandable-table"
-                                                                                aria-expanded="false">
+                                                                            <tr>
                                                                                 <td>{{ $cost_detail->id }}
                                                                                 </td>
                                                                                 <td>{{ $cost_detail->cost_group->name }}
@@ -953,7 +955,7 @@
                                 text-overflow: ellipsis;
                                 display: -webkit-box;
                                 -webkit-line-clamp: 1;
-                                        line-clamp: 1; 
+                                        line-clamp: 1;
                                 -webkit-box-orient: vertical;">{!! $inQueueSchedule->description !!}</p>
                                 @else
                                     Không có
@@ -1287,7 +1289,7 @@
                                                                 <tbody>
                                                                     @foreach ($inQueueSchedule->schedule_details as $schedule_detail)
                                                                         <tr data-widget="expandable-table"
-                                                                            aria-expanded="true">
+                                                                            aria-expanded="false">
                                                                             <td>{{ $schedule_detail->id }}
                                                                             </td>
                                                                             <td>{{ $schedule_detail->category->name }}
@@ -1322,19 +1324,21 @@
                                                                                 </td>
                                                                             @endif
                                                                         </tr>
-                                                                        <tr class="expandable-body">
+                                                                        <tr class="expandable-body d-none">
                                                                             <td colspan="6">
                                                                                 <div>
                                                                                     <span class="font-weight-bold">Ghi
                                                                                         chú</span>:@if ($schedule_detail->description)
                                                                                         {{ $schedule_detail->description }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                     <br>
                                                                                     <span class="font-weight-bold">Đơn
                                                                                         hàng</span>:@if ($schedule_detail->order)
                                                                                         {{ $schedule_detail->order->summary }}
-                                                                                    @else Không có
+                                                                                    @else
+                                                                                        Không có
                                                                                     @endif
                                                                                 </div>
                                                                                 <div class="row">
@@ -1435,8 +1439,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     @foreach ($inQueueSchedule->cost_details as $cost_detail)
-                                                                        <tr data-widget="expandable-table"
-                                                                            aria-expanded="false">
+                                                                        <tr>
                                                                             <td>{{ $cost_detail->id }}
                                                                             </td>
                                                                             <td>{{ $cost_detail->cost_group->name }}

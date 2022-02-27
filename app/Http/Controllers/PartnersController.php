@@ -145,7 +145,13 @@ class PartnersController extends Controller
      */
     public function destroy(Partner $partner)
     {
-        $partner->delete();
-        return redirect()->route('boss.partner.index')->with('alert-success','Xóa bản ghi thành công.');
+        if($partner->orders->count()==0 && $partner->schedule_details_as_buyer->count()==0 && $partner->schedule_details_as_seller->count()==0 && $partner->trucks->count()==0)
+        {
+            $partner->delete();
+            return redirect()->route('boss.partner.index')->with('alert-success','Xóa bản ghi thành công.');
+        }
+        else{
+            return redirect()->route('boss.partner.index')->with('alert-danger','Xóa bản ghi thất bại.');
+        }
     }
 }

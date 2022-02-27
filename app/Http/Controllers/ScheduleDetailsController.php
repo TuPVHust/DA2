@@ -250,6 +250,7 @@ class ScheduleDetailsController extends Controller
      */
     public function destroy(ScheduleDetail $scheduleDetail)
     {
-        //
+        $scheduleDetail->delete();
+        return redirect()->route('boss.partner.index')->with('alert-success','Xóa bản ghi thành công.');
     }
 }

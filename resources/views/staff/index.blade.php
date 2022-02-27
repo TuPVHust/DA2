@@ -10,7 +10,7 @@
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('staff.index') }}">Home</a></li>
     </ol>
 @endsection
 @section('content')

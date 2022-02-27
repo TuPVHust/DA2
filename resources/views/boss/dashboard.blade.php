@@ -18,6 +18,8 @@
 @endsection
 
 @section('js')
+    {{-- {{-- <!-- ChartJS --> --}}
+    <script src="{{ url('bossUI') }}/plugins/chart.js/Chart.min.js"></script> --}}
     <script>
         $(function() {
             /* ChartJS
