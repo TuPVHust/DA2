@@ -34,6 +34,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function tracking()
+    {
+        return view('boss.tracking');
+    }
+
     public function dashboard()
     {
         $topCategories_name = array();
@@ -49,12 +55,17 @@ class HomeController extends Controller
 
         $timeInterval = array(1 => 'January',2=>'February',3=>'March',4=>'April',5=>'May',6=>'June',7=>'July',8=>'August',9=>'September',10=>'October',11=>'November',12=>'December');
         $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
 
+        $driver_details = User::join('schedules','users.id','=','schedules.driver_id')->join('schedule_details','schedule_details.schedule_id','=','schedules.id');
+        //dd($driver_details->get());
+        
         $cost_details = CostDetail::join('schedules','schedules.id','=','cost_details.schedule_id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id');
         $category_details = Category::leftJoin('schedule_details','schedule_details.category_id','=','categories.id')->leftJoin('schedules','schedule_details.schedule_id','=','schedules.id')->whereYear('schedules.date', $year);
         $topCategories = $category_details->select('categories.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('categories.id')->orderBy('detailNum','desc')->get(6);
         $topCosts = $cost_details->select('cost_groups.*', DB::raw('sum(cost_details.cost)/1000000 as costSum'))->groupBy('cost_groups.id')->orderBy('costSum', 'desc')->get(6);
-        //dd($topCosts);
+        $topDrivers = $driver_details->select('users.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('users.id')->whereMonth('date', $month)->orderBy('detailNum','desc')->get(4);
+        //dd($topDriver);
         foreach($topCategories as $topCategory)
         {
             array_push($topCategories_name,$topCategory->name);
@@ -104,6 +115,7 @@ class HomeController extends Controller
             'topCosts_name' => $js_topCosts_name_array,
             'topCosts_value' => $js_topCosts_value_array,
             'thisYear' => $year,
+            'topDrivers' => $topDrivers,
         ]);
     }
 }

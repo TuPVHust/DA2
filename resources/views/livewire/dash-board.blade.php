@@ -73,9 +73,9 @@
         <!-- /.col (LEFT) -->
         <div class="col-md-6">
             <!-- LINE CHART -->
-            {{-- <div class="card card-info">
+            <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Line Chart</h3>
+                    <h3 class="card-title">Chi phí Theo Tháng ({{ $thisYear }})</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -88,12 +88,12 @@
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="lineChart"
+                        <canvas id="barChartCost"
                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div> --}}
+            </div>
             <!-- /.card -->
 
             <!-- BAR CHART -->
@@ -112,7 +112,7 @@
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="barChart"
+                        <canvas id="barChartRevenue"
                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
@@ -150,44 +150,34 @@
     <!-- /.card -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Top tài xế trong tháng</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
+                        <th>#</th>
+                        <th>Tên</th>
+                        <th>Số chuyến</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>KHTML</td>
-                        <td>Konqureror 3.5</td>
-                        <td>KDE 3.5</td>
-                        <td>3.5</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td>Tasman</td>
-                        <td>Internet Explorer 4.5</td>
-                        <td>Mac OS 8-9</td>
-                        <td>-</td>
-                        <td>X</td>
-                    </tr>
-                    <tr>
-                        <td>Tasman</td>
-                        <td>Internet Explorer 5.1</td>
-                        <td>Mac OS 7.6-9</td>
-                        <td>1</td>
-                        <td>C</td>
-                    </tr>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($topDrivers as $topDriver)
+                        <tr>
+                            <th>{{ $i }}.</th>
+                            <th>{{ $topDriver->name }}</th>
+                            <th>{{ $topDriver->detailNum }}</th>
+                        </tr>
+                        @php
+                            $i += 1;
+                        @endphp
+                    @endforeach
                 </tbody>
-                <tfoot>
+                {{-- <tfoot>
                     <tr>
                         <th>Rendering engine</th>
                         <th>Browser</th>
@@ -195,7 +185,7 @@
                         <th>Engine version</th>
                         <th>CSS grade</th>
                     </tr>
-                </tfoot>
+                </tfoot> --}}
             </table>
         </div>
         <!-- /.card-body -->

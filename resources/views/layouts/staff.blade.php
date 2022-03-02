@@ -191,7 +191,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -309,6 +309,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
+                            <button id="location-button">Click</button>
                             @yield('breadcrumb')
                         </div>
                         <!-- /.col -->
@@ -369,7 +370,7 @@
                 <b>Version</b> 3.1.0
             </div>
         </footer>
-
+        @livewire('broadcast-position')
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -412,7 +413,42 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('bossUI') }}/dist/js/demo.js"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script>
+    {{-- <script src="{{ url('bossUI') }}/dist/js/pages/dashboard.js"></script> --}}
+
+
+    {{-- GG map api --}}
+    <script>
+        const successCallBack = function(position) {
+            console.log(position);
+            Livewire.emit('positionBroadCastes', position.coords.latitude, position.coords.longitude, position.coords
+                .speed);
+        }
+        $('#location-button').click(function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(successCallBack);
+            }
+        });
+        // let map;
+
+        // function initMap() {
+        //     map = new google.maps.Map(document.getElementById("map"), {
+        //         center: {
+        //             lat: -34.397,
+        //             lng: 150.644
+        //         },
+        //         zoom: 8,
+        //     });
+
+        // $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords
+        //     .latitude + "," + position.coords.longitude + "&sensor=false",
+        //     function(data) {
+        //         console.log(data);
+        //     })
+        // var img = new Image();
+        // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords
+        //     .latitude + "," + position.coords.longitude + "&zoom=13&size=800x400&sensor=false";
+        // $('#output').html(img);
+    </script>
     {{-- Echo --}}
     <script>
         Echo.private('App.Models.User.' + {{ Auth::user()->id }})

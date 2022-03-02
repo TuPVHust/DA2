@@ -5,7 +5,11 @@
 @section('css')
     {{-- datatables --}}
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> --}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('bossUI') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" /> --}}
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
@@ -14,12 +18,14 @@
     </ol>
 @endsection
 @section('content')
-    @livewire('dash-board',['thisYear' => $thisYear])
+    @livewire('dash-board',['thisYear' => $thisYear, 'topDrivers' => $topDrivers,])
 @endsection
 
 @section('js')
-    {{-- {{-- <!-- ChartJS --> --}}
-    <script src="{{ url('bossUI') }}/plugins/chart.js/Chart.min.js"></script> --}}
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuRhWjgbSc-xuAY5C8oFb5M1vACc1LhuU&callback=initMap">
+    </script> --}}
+    {{-- <!-- ChartJS --> --}}
+    <script src="{{ url('bossUI') }}/plugins/chart.js/Chart.min.js"></script>
     <script>
         $(function() {
             /* ChartJS
@@ -33,7 +39,7 @@
 
             // Get context with jQuery - using jQuery's .get() method.
 
-            //var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+            // var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
             //  data for cost char
             var areaCostChartData = {
@@ -192,14 +198,37 @@
             })
 
             //-------------
-            //- BAR CHART -
+            //- BAR CHART FOR REVENUE AND ACTUAL REVENUE -
             //-------------
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = $.extend(true, {}, areaChartData)
+            var barChartCanvasRevenue = $('#barChartRevenue').get(0).getContext('2d')
+            var barChartDataRevenue = $.extend(true, {}, areaChartData)
             var temp0 = areaChartData.datasets[0]
             var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
+            barChartDataRevenue.datasets[0] = temp1
+            barChartDataRevenue.datasets[1] = temp0
+
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            }
+
+            new Chart(barChartCanvasRevenue, {
+                type: 'bar',
+                data: barChartDataRevenue,
+                options: barChartOptions
+            })
+
+
+            //-------------
+            //- BAR CHART FOR COST AND ACTUAL COST -
+            //-------------
+            var barChartCanvas = $('#barChartCost').get(0).getContext('2d')
+            var barChartData = $.extend(true, {}, areaCostChartData)
+            var temp0 = areaCostChartData.datasets[0]
+            //var temp1 = areaCostChartData.datasets[1]
+            barChartData.datasets[0] = temp0
+            //barChartData.datasets[1] = temp0
 
             var barChartOptions = {
                 responsive: true,
@@ -241,7 +270,20 @@
     </script>
     <!-- DataTables  & Plugins -->
     {{-- <script type="text/javascript" src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
+    {{-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script> --}}
+    <!-- DataTables  & Plugins -->
+    <script src="{{ url('bossUI') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
         $(function() {
             $("#example1").DataTable({

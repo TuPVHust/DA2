@@ -33,6 +33,7 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
     //     return view('boss.dashboard');
     // })->name('dashboard');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/tracking', [App\Http\Controllers\HomeController::class, 'tracking'])->name('tracking');
     Route::resources([
         'category' => CategoriesController::class,
         'truck' => TrucksController::class,
