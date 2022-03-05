@@ -191,7 +191,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -418,16 +418,32 @@
 
     {{-- GG map api --}}
     <script>
+        options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
         const successCallBack = function(position) {
             console.log(position);
             Livewire.emit('positionBroadCastes', position.coords.latitude, position.coords.longitude, position.coords
-                .speed);
+                .speed, position.timestamp);
         }
         $('#location-button').click(function() {
             if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(successCallBack);
+                navigator.geolocation.watchPosition(successCallBack, error, options);
             }
         });
+        Echo.channel('chatBoxApp')
+            .listen('AskForPositionInfo', (e) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(successCallBack, error, options);
+                }
+            });
         // let map;
 
         // function initMap() {

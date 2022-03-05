@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\createSchedule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SchedulesController extends Controller
 {
@@ -138,6 +139,10 @@ class SchedulesController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
+        //$schedule = Schedule::find($schedule->id);
+        if (! Gate::allows('update-schedule', $schedule)) {
+            abort(403);
+        }
         if($request->validate([
             'init_money' => 'required|numeric',
             'shift' => 'required|in:0,1',

@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -111,6 +112,8 @@ class StaffWorks extends Component
         //dd('oki');
         $this->resetAttribute();
         $this->dispatchBrowserEvent('removeInputValue', []);
+        $this->resetErrorBag();
+    $this->resetValidation();
         //Session::flush('errors');
     }
 
@@ -132,6 +135,7 @@ class StaffWorks extends Component
 
     public function editScheduleDetail()
     {
+        
         $validateData = Validator::make($this->editingScheDetail, [
             'buyer_id' => 'required',
             'seller_id' => 'required',
@@ -143,7 +147,10 @@ class StaffWorks extends Component
             'quantity' => 'required|gt:0',
             'distance' => 'required|gt:0',
         ])->validate();
-        $editingScheDetail = ScheduleDetail::where('id',$this->editingScheDetail['id']);
+        $editingScheDetail = ScheduleDetail::where('id',$this->editingScheDetail['id'])->first();
+        if (! Gate::allows('update-schedule', $editingScheDetail->schedule)) {
+            abort(403);
+        }
         if($editingScheDetail){
             if($this->order !== 'none'&& $this->order !== null){
                 $editingScheDetail->update([
@@ -197,6 +204,9 @@ class StaffWorks extends Component
     public function deleteCostDetail($id){
         $cost_detail = CostDetail::find($id);
         if($cost_detail){
+            if (! Gate::allows('update-schedule', $cost_detail->schedule)) {
+                abort(403);
+            }
             if($cost_detail->schedule->status == 1 && $cost_detail->schedule->driver->id == Auth::user()->id)
             {
                 $cost_detail->delete();
@@ -208,6 +218,9 @@ class StaffWorks extends Component
     public function deleteScheDetail($id){
         $schedule_detail = ScheduleDetail::find($id);
         if($schedule_detail){
+            if (! Gate::allows('update-schedule', $schedule_detail->schedule)) {
+                abort(403);
+            }
             if($schedule_detail->schedule->status == 1 && $schedule_detail->schedule->driver->id == Auth::user()->id)
             {
                 $schedule_detail->delete();
@@ -254,6 +267,10 @@ class StaffWorks extends Component
         $this->dispatchBrowserEvent('reloadJs', []);
     }
     public function addScheduleDetail($id){
+        $schedule = Schedule::find($id);
+        if (! Gate::allows('update-schedule', $schedule)) {
+            abort(403);
+        }
         $this->dispatchBrowserEvent('reloadJs', []);
         $this->validate();
         //dd('oki');
@@ -297,8 +314,9 @@ class StaffWorks extends Component
         $user = Auth::user();
         $schedule = Schedule::find($id);
         // dd($schedule);
-        if($schedule !=null && $user != null && $schedule->driver_id == $user->id && $schedule->status == 1)
-        {
+        if (! Gate::allows('update-schedule', $schedule)) {
+            abort(403);
+        }
             $CostDetail = CostDetail::create([
                 'description' => $costDescription,
                 'cost' => $cost,
@@ -308,7 +326,6 @@ class StaffWorks extends Component
             ]);
             $this->resetAttribute();
             session()->flash('alert-success', 'Thêm mới thành công !!!');
-        }
     }
 
     public function completeWork($id){
@@ -317,6 +334,9 @@ class StaffWorks extends Component
         $user = Auth::user();
         $schedule = Schedule::find($id);
         //dd($schedule);
+        if (! Gate::allows('update-schedule', $schedule)) {
+            abort(403);
+        }
         if($schedule !=null && $user != null && $schedule->driver_id == $user->id && $schedule->status == 1)
         {
             $schedule->update([

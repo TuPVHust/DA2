@@ -128,7 +128,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -540,13 +540,14 @@
                 //     subtitle: 'Subtitle',
                 //     body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
                 // })
-                toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+                //toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
                 //alert(notification);
             });
         Echo.channel('chatBoxApp')
             .listen('TruckMoved', (e) => {
                 //console.log('oki');
                 console.log(e);
+                Livewire.emit('handlePositionsInfo', e);
             });
     </script>
     {{-- livewire --}}

@@ -10,27 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TruckMoved implements ShouldBroadcast
+class AskForPositionInfo implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $lat;
-    public $lng;
-    public $speed;
-    public $driver;
-    public $timeStamp;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($lat, $lng, $speed,$timeStamp, $driver)
+    public function __construct()
     {
-        $this->lat = $lat;
-        $this->lng = $lng;
-        $this->driver = $driver;
-        $this->speed = $speed;
-        $this->timeStamp = $timeStamp;
+        //
     }
 
     /**

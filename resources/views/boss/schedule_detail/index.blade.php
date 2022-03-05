@@ -55,6 +55,10 @@
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="{{ url('bossUI') }}/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Sparkline -->
+    <script src="{{ url('bossUI') }}/plugins/sparklines/sparkline.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/moment/moment.min.js"></script>
+    <script src="{{ url('bossUI') }}/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
         Livewire.on('contentChanged', async (updateNum) => {
             //alert(updateNum);

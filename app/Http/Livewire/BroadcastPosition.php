@@ -10,11 +10,11 @@ class BroadcastPosition extends Component
     protected $listeners = [
         'positionBroadCastes',
     ];
-    public function positionBroadCastes($latitude, $longitude, $speed)
+    public function positionBroadCastes($latitude, $longitude, $speed, $timeStamp)
     {
         //dd(Auth::user()->name);
-        //dd($position);
-        event(new TruckMoved($latitude, $longitude, $speed, Auth::user()->name));
+        //dd($timeStamp);
+        event(new TruckMoved($latitude, $longitude, $speed, $timeStamp, Auth::user()->name));
     }
     public function render()
     {

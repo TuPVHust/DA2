@@ -14,7 +14,14 @@
     </ol>
 @endsection
 @section('content')
+    @livewire('tracking')
 @endsection
 
 @section('js')
+    <script>
+        $(document).ready(function() {
+            //alert('oki');
+            Livewire.emit('askForPositionInfo');
+        });
+    </script>
 @endsection

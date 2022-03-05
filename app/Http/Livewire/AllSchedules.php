@@ -26,7 +26,7 @@ class AllSchedules extends Component
     public $floorTimeBound;
     public $ceilingTimeBound;
     public $timeRange;
-    public $itemsPerPage = 5;
+    public $itemsPerPage = 4;
 
     public function mount() {
         $this->floorTimeBound = Carbon::now();
