@@ -14,7 +14,7 @@ class CostDetailsController extends Controller
      */
     public function index()
     {
-        //
+        return view('boss.cost_detail.index');
     }
 
     /**
@@ -80,6 +80,7 @@ class CostDetailsController extends Controller
      */
     public function destroy(CostDetail $costDetail)
     {
-        //
+        $costDetail->delete();
+        return redirect()->route('boss.cost_detail.index')->with('alert-success','Xóa bản ghi thành công.');
     }
 }

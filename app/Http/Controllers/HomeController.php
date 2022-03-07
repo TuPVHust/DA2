@@ -62,10 +62,10 @@ class HomeController extends Controller
         
         $cost_details = CostDetail::join('schedules','schedules.id','=','cost_details.schedule_id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id');
         $category_details = Category::leftJoin('schedule_details','schedule_details.category_id','=','categories.id')->leftJoin('schedules','schedule_details.schedule_id','=','schedules.id')->whereYear('schedules.date', $year);
-        $topCategories = $category_details->select('categories.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('categories.id')->orderBy('detailNum','desc')->get(6);
-        $topCosts = $cost_details->select('cost_groups.*', DB::raw('sum(cost_details.cost)/1000000 as costSum'))->groupBy('cost_groups.id')->orderBy('costSum', 'desc')->get(6);
-        $topDrivers = $driver_details->select('users.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('users.id')->whereMonth('date', $month)->orderBy('detailNum','desc')->get(4);
-        //dd($topDriver);
+        $topCategories = $category_details->select('categories.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('categories.id')->orderBy('detailNum','desc')->take(5)->get();
+        $topCosts = $cost_details->select('cost_groups.*', DB::raw('sum(cost_details.cost)/1000000 as costSum'))->groupBy('cost_groups.id')->orderBy('costSum', 'desc')->take(5)->get();
+        $topDrivers = $driver_details->select('users.*',DB::raw('count(schedule_details.id) as detailNum'))->groupBy('users.id')->whereMonth('date', $month)->orderBy('detailNum','desc')->take(4)->get();
+        //dd($topCategories);
         foreach($topCategories as $topCategory)
         {
             array_push($topCategories_name,$topCategory->name);

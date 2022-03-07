@@ -9,14 +9,13 @@
             @endif
         @endforeach
     </div>
-
-    <div class="text-right mb-2">
-        <a href="{{ route('boss.schedule_detail.create') }}">
+    {{-- <div class="text-right mb-2">
+        <a href="{{ route('boss.cost_detail.create') }}">
             <button class="btn btn-primary">
                 Thêm mới
             </button>
         </a>
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-md-3">
             <div class="sticky-top mb-3">
@@ -46,24 +45,17 @@
                                             <option value="shift"
                                                 {{ $orderBy == 'shift' ? 'selected="selected"' : '' }}>Ca
                                                 làm việc</option>
-                                            <option value="sellerLoan"
-                                                {{ $orderBy == 'sellerLoan' ? 'selected="selected"' : '' }}>Nợ người
-                                                bán
-                                            </option>
-                                            <option value="buyerLoan"
-                                                {{ $orderBy == 'buyerLoan' ? 'selected="selected"' : '' }}>Người mua
-                                                chịu
-                                            </option>
                                             <option value="carOwnerName"
                                                 {{ $orderBy == 'carOwnerName' ? 'selected="selected"' : '' }}>Tên chủ
                                                 xe
                                             </option>
-                                            <option value="schedule_details.updated_at"
+                                            <option value="cost_details.updated_at"
                                                 {{ $orderBy == 'updated_at' ? 'selected="selected"' : '' }}>Ngày cập
                                                 nhật
                                             </option>
-                                            <option value="categories.name"
-                                                {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Loại hàng
+                                            <option value="cost_groups.name"
+                                                {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Loại Chi
+                                                Phí
                                             </option>
                                             <option value="truckPlate"
                                                 {{ $orderBy == 'truckPlate' ? 'selected="selected"' : '' }}>Biển xe
@@ -133,59 +125,17 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Loại hàng:</label>
-                                        <select class="select2" style="width: 100%;" id="categoryFilter"
-                                            wire:model='categoryFilter'>
+                                        <label>Loại Chi Phí:</label>
+                                        <select class="select2" style="width: 100%;" id="costGroupFilter"
+                                            wire:model='costGroupFilter'>
                                             <option></option>
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"> {{ $category->name }}
+                                            @foreach ($costGroups as $costGroups)
+                                                <option value="{{ $costGroups->id }}"> {{ $costGroups->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Mua:</label>
-                                        <select class="select2" style="width: 100%;" id="sellerFilter"
-                                            wire:model='sellerFilter'>
-                                            <option></option>
-                                            @foreach ($sellers as $seller)
-                                                <option value="{{ $seller->id }}"> {{ $seller->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Bán:</label>
-                                        <select class="select2" style="width: 100%;" id="buyerFilter"
-                                            wire:model='buyerFilter'>
-                                            <option></option>
-                                            @foreach ($buyers as $buyer)
-                                                <option value="{{ $buyer->id }}"> {{ $buyer->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Đơn hàng:</label>
-                                        <select class="select2" style="width: 100%;" id="orderFilter"
-                                            wire:model='orderFilter'>
-                                            <option></option>
-                                            <option value="none"> Không thuộc đơn hàng nào</option>
-                                            @foreach ($orders as $order)
-                                                <option value="{{ $order->id }}"> {{ $order->summary }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-3">
-                            <label>Định dạng lại bảng:</label>
-                            <button type="button" class="btn btn-block btn-default"
-                                onclick="contentChanged()">Default</button>
-                        </div> --}}
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Ẩn cột:</label>
@@ -196,13 +146,6 @@
                                                     {{ $key }}
                                                 </option>
                                             @endforeach
-                                            {{-- <option>Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -216,7 +159,7 @@
         <div class="col-md-9">
             <div class="card w-100">
                 <div class="card-header">
-                    <h3 class="card-title">Danh sách chuyến</h3>
+                    <h3 class="card-title">Danh sách chi phí</h3>
                     <div class="input-group input-group-sm card-tools w-50">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="searchKey">Tìm kiếm</span>
@@ -225,7 +168,7 @@
                             aria-describedby="searchKey" wire:model='searchKey'>
                     </div>
                 </div>
-                @if ($schedule_details->count() == 0)
+                @if ($cost_details->count() == 0)
                     <div class="text-center alert mt-5">
                         <h2>Không tìm thấy dữ liệu</h2>
                     </div>
@@ -241,86 +184,46 @@
                                             <th>{{ $key }}</th>
                                         @endif
                                     @endforeach
-                                    {{-- <th>Ngày</th>
-                                <th>Xe</th>
-                                <th>Chủ xe</th>
-                                <th>Tài xế</th>
-                                <th>Ca</th>
-                                <th>Loại hàng</th>
-                                <th>Nơi mua</th>
-                                <th>Nơi bán</th>
-                                <th>Giá mua</th>
-                                <th>Giá bán</th>
-                                <th>Thực chi</th>
-                                <th>Thực thu</th>
-                                <th>Đơn hàng</th>
-                                <th>Khối lượng</th>
-                                <th>Mô tả</th>
-                                <th class="text-right">Hành động</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($schedule_details as $schedule_detail)
+                                @foreach ($cost_details as $cost_detail)
                                     <tr>
                                         @if (!$hiddenColums['Ngày'])
-                                            <td>{{ Carbon\Carbon::parse($schedule_detail->schedule->date)->format('d-m-Y') }}
+                                            <td>{{ Carbon\Carbon::parse($cost_detail->schedule->date)->format('d-m-Y') }}
                                             </td>
                                         @endif
                                         @if (!$hiddenColums['Xe'])
-                                            <td>{{ $schedule_detail->schedule->truck->plate }}</td>
+                                            <td>{{ $cost_detail->schedule->truck->plate }}</td>
                                         @endif
                                         @if (!$hiddenColums['Chủ xe'])
-                                            <td>{{ $schedule_detail->schedule->car_owner->name }}</td>
+                                            <td>{{ $cost_detail->schedule->car_owner->name }}</td>
                                         @endif
                                         @if (!$hiddenColums['Tài xế'])
-                                            <td>{{ $schedule_detail->schedule->driver->name }}</td>
+                                            <td>{{ $cost_detail->schedule->driver->name }}</td>
                                         @endif
                                         @if (!$hiddenColums['Ca'])
                                             <td>
-                                                @if ($schedule_detail->schedule->shift == 1)
+                                                @if ($cost_detail->schedule->shift == 1)
                                                     <span>Ngày</span>
                                                 @else
                                                     <span>Đêm</span>
                                                 @endif
                                             </td>
                                         @endif
-                                        @if (!$hiddenColums['Hàng'])
-                                            <td>{{ $schedule_detail->category->name }}</td>
+                                        @if (!$hiddenColums['Loại'])
+                                            <td>{{ $cost_detail->cost_group->name }}</td>
                                         @endif
-                                        @if (!$hiddenColums['Mua'])
-                                            <td>{{ $schedule_detail->seller->name }}</td>
-                                        @endif
-                                        @if (!$hiddenColums['Bán'])
-                                            <td>{{ $schedule_detail->buyer->name }}</td>
-                                        @endif
-                                        @if (!$hiddenColums['Giá mua'])
-                                            <td>{{ number_format($schedule_detail->price, 0) }}</td>
-                                        @endif
-                                        @if (!$hiddenColums['Giá bán'])
-                                            <td>{{ number_format($schedule_detail->revenue, 0) }}</td>
+                                        @if (!$hiddenColums['Giá'])
+                                            <td>{{ number_format($cost_detail->cost, 0) }}</td>
                                         @endif
                                         @if (!$hiddenColums['Thực chi'])
-                                            <td>{{ number_format($schedule_detail->actual_price, 0) }}</td>
-                                        @endif
-                                        @if (!$hiddenColums['Thực thu'])
-                                            <td>{{ number_format($schedule_detail->actual_revenue, 0) }}</td>
-                                        @endif
-                                        @if (!$hiddenColums['Đơn hàng'])
-                                            <td>
-                                                @if ($schedule_detail->order_id)
-                                                    {{ $schedule_detail->order->summary }}
-                                                @else
-                                                    Không có
-                                                @endif
-                                            </td>
-                                        @endif
-                                        @if (!$hiddenColums['K.lượng'])
-                                            <td>{{ $schedule_detail->quantity }}</td>
+                                            <td>{{ number_format($cost_detail->actual_cost, 0) }}</td>
                                         @endif
                                         @if (!$hiddenColums['Mô tả'])
                                             <td>
-                                                @if ($schedule_detail->description)
-                                                    {!! $schedule_detail->description !!}
+                                                @if ($cost_detail->description)
+                                                    {!! $cost_detail->description !!}
                                                 @else
                                                     Không có
                                                 @endif
@@ -328,14 +231,8 @@
                                         @endif
                                         @if (!$hiddenColums['Hành động'])
                                             <td class="text-right">
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('boss.schedule_detail.edit', $schedule_detail->id) }}">
-                                                    <i class="fas fa-pencil-alt">
-                                                    </i>
-                                                    Edit
-                                                </a>
                                                 <a class="btn btn-danger btn-sm btndelete"
-                                                    href="{{ route('boss.schedule_detail.destroy', $schedule_detail->id) }}">
+                                                    href="{{ route('boss.cost_detail.destroy', $cost_detail->id) }}">
                                                     <i class="fas fa-trash">
                                                     </i>
                                                     Delete
@@ -356,7 +253,7 @@
                             </div>
                         </div>
                         {{-- <input type="text"> --}}
-                        <div class="">{{ $schedule_details->links() }}</div>
+                        <div class="">{{ $cost_details->links() }}</div>
                     </div>
                     <hr class="mb-0">
                     <div class="card-footer mt-0 sticky-bottom">
@@ -364,24 +261,14 @@
                             Hiển thị: {{ $countShowing }}/{{ $total }}</span>
                         <span class="float-right">
                             <span class="badge badge-light">
-                                Tổng doanh thu: </span>
+                                Tổng chi phí: </span>
                             <span class="badge badge-dark">
-                                {{ $sum_revenue }} </span>
-                            <span>&#9474;</span>
-                            <span class="badge badge-light">
-                                Tổng thực thu: </span>
-                            <span class="badge badge-dark">
-                                {{ $sum_actual_revenue }} </span>
-                            <span>&#9474;</span>
-                            <span class="badge badge-light">
-                                Tổng chi: </span>
-                            <span class="badge badge-dark">
-                                {{ $sum_price }}</span>
+                                {{ $sum_cost }} </span>
                             <span>&#9474;</span>
                             <span class="badge badge-light">
                                 Tổng thực chi: </span>
                             <span class="badge badge-dark">
-                                {{ $sum_actual_price }}</span>
+                                {{ $sum_actual_cost }} </span>
                             <span class="m-2"> &bull;</span>
                             <span class="badge badge-light">
                                 Đơn vị: Triệu VNĐ </span>

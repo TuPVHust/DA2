@@ -126,9 +126,8 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
@@ -227,18 +226,21 @@
                                 </p>
                             </a>
                         </li>
-                        {{-- <li class="nav-header">TIN NHẮN</li>
                         <li class="nav-item">
-                            <a href="{{ route('chatify') }}" @class([
+                            <a href="{{ route('boss.cost_detail.index') }}" @class([
                                 'nav-link',
-                                'active' => strpos(Route::currentRouteName(), 'chatify'),
+                                'active' => strpos(Route::currentRouteName(), 'cost_detail'),
+                                // 'active' => Route::currentRouteName() == 'boss.truck.create',
+                                // 'active' => Route::currentRouteName() == 'boss.truck.edit',
                             ])>
-                                <i class="nav-icon fas fa-messages"></i>
+                                <i class="nav-icon fas fa-dollar-sign"></i>
                                 <p>
-                                    Hộp tin nhắn
+                                    Chi phí
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
-                        </li> --}}
+                        </li>
+
                         <li class="nav-header">GIÁM SÁT</li>
                         <li class="nav-item">
                             <a href="{{ route('boss.tracking') }}" @class([

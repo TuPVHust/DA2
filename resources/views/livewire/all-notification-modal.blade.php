@@ -1,5 +1,5 @@
-<div>
-    <table class="table table-sm">
+<div class="container" style="max-height: 500px; overflow: auto">
+    <table class="table table-bordered table-hover table-sm">
         <thead>
             <tr>
                 <th style="width: 10px">#</th>

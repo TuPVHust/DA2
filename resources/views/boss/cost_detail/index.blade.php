@@ -1,6 +1,6 @@
 @extends('layouts.boss')
 @section('title')
-    AdminLTE 3 | Chuyến
+    AdminLTE 3 | Chi phí
 @endsection
 
 @section('css')
@@ -19,19 +19,18 @@
 
     </style>
 @endsection
-@section('title')
-    <h1>Chuyến</h1>
-@endsection
-
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item active">Danh sách chuyến</li>
+        <li class="breadcrumb-item active">Danh Chi Phí</li>
     </ol>
+@endsection
+@section('title')
+    <h1>Chi Phí</h1>
 @endsection
 
 @section('content')
-    @livewire('all-schedule-detail')
+    @livewire('all-cost-details')
 @endsection
 
 @section('js')
@@ -151,23 +150,8 @@
         });
     </script>
     <script>
-        $(document).on('change.select', '#categoryFilter', function(event) {
-            Livewire.emit('changeCategory', event.target.value);
-        });
-    </script>
-    <script>
-        $(document).on('change.select', '#sellerFilter', function(event) {
-            Livewire.emit('changeSeller', event.target.value);
-        });
-    </script>
-    <script>
-        $(document).on('change.select', '#buyerFilter', function(event) {
-            Livewire.emit('changeBuyer', event.target.value);
-        });
-    </script>
-    <script>
-        $(document).on('change.select', '#orderFilter', function(event) {
-            Livewire.emit('changeOrder1', event.target.value);
+        $(document).on('change.select', '#costGroupFilter', function(event) {
+            Livewire.emit('changeCostGroup', event.target.value);
         });
     </script>
 @endsection

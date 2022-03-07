@@ -247,24 +247,19 @@
                                                                             </tr>
                                                                             <tr class="expandable-body d-none">
                                                                                 <td colspan="5">
-                                                                                    <div>
-                                                                                        <span
-                                                                                            class="font-weight-bold">Ghi
-                                                                                            chú</span>:@if ($schedule_detail->description)
-                                                                                            {{ $schedule_detail->description }}
-                                                                                        @else
-                                                                                            Không có
-                                                                                        @endif
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <span
-                                                                                            class="font-weight-bold">Đơn
-                                                                                            hàng</span>:@if ($schedule_detail->order)
-                                                                                            {{ $schedule_detail->order->summary }}
-                                                                                        @else
-                                                                                            Không có
-                                                                                        @endif
-                                                                                    </div>
+                                                                                    <span class="font-weight-bold">Ghi
+                                                                                        chú</span>:@if ($schedule_detail->description)
+                                                                                        {{ $schedule_detail->description }}
+                                                                                    @else
+                                                                                        Không có
+                                                                                    @endif
+                                                                                    <br>
+                                                                                    <span class="font-weight-bold">Đơn
+                                                                                        hàng</span>:@if ($schedule_detail->order)
+                                                                                        {{ $schedule_detail->order->summary }}
+                                                                                    @else
+                                                                                        Không có
+                                                                                    @endif
                                                                                     <div class="row">
                                                                                         <div class="col-6">
                                                                                             <div>

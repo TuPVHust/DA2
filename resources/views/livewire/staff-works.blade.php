@@ -80,7 +80,7 @@
                     <div class="modal fade scheduleInforModal" id="exampleModal{{ $todayDoingSchedule->id }}"
                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
                         <div class="modal-dialog modal-xl overflow-auto" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content" style="max-height: 90vh; overflow: auto">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
                                 </div>
@@ -666,7 +666,7 @@
                     <div class="modal fade scheduleInforModal" id="exampleModal{{ $todayCompltedSchedule->id }}"
                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
                         <div class="modal-dialog modal-xl" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content" style="max-height: 90vh; overflow: auto">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
                                 </div>
@@ -990,7 +990,7 @@
                     <div class="modal fade closeInforModal" id="inQueueExampleModal{{ $inQueueSchedule->id }}"
                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
                         <div class="modal-dialog modal-xl" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content" style="max-height: 90vh; overflow: auto">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN LỊCH TRÌNH
                                         {{-- {{ Carbon\Carbon::parse($inQueueSchedule->date)->format('d-m-Y') }} -

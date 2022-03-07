@@ -31,7 +31,7 @@ class AllScheduleDetail extends Component
     public $floorTimeBound;
     public $ceilingTimeBound;
     public $timeRange;
-    public $itemsPerPage = 3;
+    public $itemsPerPage = 5;
     public $updateNum = 1;
     public $hiddenColums = array('Ngày'=>false,'Xe'=>false,'Chủ xe'=>false,'Tài xế'=>false,'Ca'=>false,'Hàng'=>false,'Mua'=>false,'Bán'=>false,'Giá mua'=>false,'Giá bán'=>false,'Thực chi'=>false,'Thực thu'=>false,'Đơn hàng'=>true,'K.lượng'=>false,'Mô tả'=>true,'Hành động'=>false);
 
@@ -199,7 +199,12 @@ class AllScheduleDetail extends Component
         $sum_price = $schedule_details->sum('price')/1000000;
         $sum_actual_price = $schedule_details->sum('actual_price')/1000000;
 
-        $schedule_details= $schedule_details->paginate($this->itemsPerPage);
+        if($this->itemsPerPage < 0)
+        {
+            $this->itemsPerPage =null;
+        }
+        $this->itemsPerPage =(int)$this->itemsPerPage;
+        $schedule_details= $schedule_details->paginate((int)$this->itemsPerPage);
         $countShowing = $schedule_details->count();
         $total = $schedule_details->total();
         $this->resetPage();
