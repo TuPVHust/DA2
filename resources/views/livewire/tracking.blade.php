@@ -1,4 +1,5 @@
 <div>
+    <div id="map"></div>
     @foreach ($positionsArray as $key1 => $items)
         <p>{{ $key1 }}: </p>
         @foreach ($items as $key2 => $item)

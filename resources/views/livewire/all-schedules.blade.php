@@ -146,7 +146,7 @@
                     </div>
                 @else
                     <div class="card-body">
-                        <table class="table table-hover table-responsive-xl">
+                        <table class="table table-hover table-responsive-xl" wire:loading.remove>
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -343,6 +343,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center" wire:loading>
+                            <div class="spinner-border" role="status" wire:loading>
+                                <span class="sr-only" wire:loading>Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 @endif
                 <!-- /.card-body -->

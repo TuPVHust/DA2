@@ -233,7 +233,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table class="table table-bordered table-striped table-responsive-sm"
-                            id="example{{ $updateNum }}" wire:ignore.self>
+                            id="example{{ $updateNum }}" wire:ignore.self wire:loading.remove>
                             <thead>
                                 <tr>
                                     @foreach ($hiddenColums as $key => $value)
@@ -346,6 +346,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center" wire:loading>
+                            <div class="spinner-border" role="status" wire:loading>
+                                <span class="sr-only" wire:loading>Loading...</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="container w-100 d-flex justify-content-between pl-4 pr-4">
                         <div class="form-group row">

@@ -6,7 +6,7 @@
     </style>
 @endsection
 @section('title')
-    Home
+    Trang chủ
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">

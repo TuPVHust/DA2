@@ -16,12 +16,12 @@
     </style>
 @endsection
 @section('title')
-    My-Work
+    Công việc
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item active">My-Work</li>
+        <li class="breadcrumb-item"><a href="{{ route('boss.dashboard') }}">Trang Chủ</a></li>
+        <li class="breadcrumb-item active">Công việc</li>
     </ol>
 @endsection
 @section('content')
