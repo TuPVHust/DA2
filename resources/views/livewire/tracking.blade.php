@@ -1,16 +1,31 @@
 <div>
-    <div id="map"></div>
-    @foreach ($positionsArray as $key1 => $items)
-        <p>{{ $key1 }}: </p>
-        @foreach ($items as $key2 => $item)
-            @if ($key2 === 'timeStamp')
-                {{-- <span>{{ $key2 }}:
-                    {{ Carbon\Carbon::parse($item)->format('d-m-Y') }}</span> --}}
-                <span>{{ $key2 }}: {{ $item }}</span><span>&#9474;</span>
-            @else
-                <span>{{ $key2 }}: {{ $item }}</span><span>&#9474;</span>
-            @endif
+    <h4>Tài xế đang hoạt động</h4>
+    <hr>
+    @if (sizeof($positionsArray) > 0)
+        @foreach ($positionsArray as $key1 => $items)
+            {{-- <pre>{!! $positionsArray !!}</pre> --}}
+            <div class="user-block">
+                <img class="img-circle img-bordered-sm"
+                    src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . $items['userAvatar']) }}"
+                    alt="Avatar">
+                <span class="username">
+                    <a href="#">{{ $key1 }}.</a>
+                    {{-- <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a> --}}
+                </span>
+                <span class="description">
+                    @if ($items['speed'])
+                        {{ $items['speed'] }} km/h
+                    @else
+                        0 km/h
+                    @endif
+                    - {{ Carbon\Carbon::parse($items['timeStamp'])->format('h:m') }} PM
+                </span>
+            </div>
         @endforeach
-    @endforeach
-
+    @else
+        <div class="d-flex align-items-center">
+            <strong>Loading...</strong>
+            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+        </div>
+    @endif
 </div>

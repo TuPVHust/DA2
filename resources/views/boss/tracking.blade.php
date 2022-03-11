@@ -14,7 +14,7 @@
         crossorigin=""></script>
     <style>
         #map {
-            height: 70vh;
+            height: 100%;
         }
 
     </style>
@@ -26,54 +26,88 @@
     </ol>
 @endsection
 @section('content')
-    @livewire('tracking')
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Bản đồ</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="d-md-flex p-0">
+                    <div class="p-0 flex-fill" style="overflow: hidden">
+                        <!-- Map will be created here -->
+                        <div id="world-map-markers" style="height: 450px; overflow: hidden">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <div class="card-pane-right bg-light pt-2 pb-2 pl-4 pr-4">
+                        @livewire('tracking')
+                        <!-- /.description-block -->
+                    </div><!-- /.card-pane-right -->
+                </div><!-- /.d-md-flex -->
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
 @endsection
 
 @section('js')
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script>
-        var map = L.map('map').setView([14.0860746, 100.608406], 6);
+        var map = L.map('map').setView([20.8175668, 105.7439194], 7);
         //alert('oki');
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         });
         osm.addTo(map);
-
-        if (!navigator.geolocation) {
-            console.log("Your browser doesn't support geolocation feature!")
-        } else {
-            setInterval(() => {
-                navigator.geolocation.getCurrentPosition(getPosition)
-            }, 5000);
-        }
-
-        var marker, circle;
-
-        function getPosition(position) {
-            // console.log(position)
-            var lat = position.coords.latitude
-            var long = position.coords.longitude
-            var accuracy = position.coords.accuracy
-
-            if (marker) {
-                map.removeLayer(marker)
+        var markers = new Array();
+        var circles = new Array();
+        Livewire.on('updateMap', (positionInfo) => {
+            //var map = L.map('map').setView([14.0860746, 100.608406], 10);
+            //osm.addTo(map);
+            //console.log(positionInfo);
+            for (var i = 0; i < this.markers.length; i++) {
+                map.removeLayer(markers[i]);
             }
-
-            if (circle) {
-                map.removeLayer(circle)
+            for (var i = 0; i < this.circles.length; i++) {
+                map.removeLayer(circles[i]);
             }
+            circles = []
+            markers = []
+            for (const iterator in positionInfo) {
+                //console.log(positionInfo[iterator]['lat']);
+                var marker, circle;
+                // if (marker) {
+                //     map.removeLayer(marker)
+                // }
 
-            marker = L.marker([lat, long])
-            circle = L.circle([lat, long], {
-                radius: accuracy
-            })
+                // if (circle) {
+                //     map.removeLayer(circle)
+                // }
 
-            var featureGroup = L.featureGroup([marker, circle]).addTo(map)
-
-            map.fitBounds(featureGroup.getBounds())
-
-            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-        }
+                marker = new L.marker([positionInfo[iterator]['lat'], positionInfo[iterator]['lng']]).bindPopup(
+                    iterator)
+                circle = new L.circle([positionInfo[iterator]['lat'], positionInfo[iterator]['lng']], {
+                    radius: 100
+                })
+                markers.push(marker);
+                circles.push(circle);
+            }
+            //console.log(markers[0]);
+            for (var i = 0; i < markers.length; i++) {
+                var featureGroup = L.featureGroup([markers[i], circles[i]]).addTo(map)
+                //map.fitBounds(featureGroup.getBounds())
+            }
+        })
     </script>
     <script>
         $(document).ready(function() {

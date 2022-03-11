@@ -15,6 +15,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\User;
 Use App\Events\AskForPositionInfo;
 class Tracking extends Component
 {
@@ -26,7 +27,6 @@ class Tracking extends Component
     ];
     public function askForPositionInfo(){
         //dd('oki');
-        
         event(new AskForPositionInfo());
     }
     public function handlePositionsInfo($positionsInfo){
@@ -35,14 +35,19 @@ class Tracking extends Component
         // {
         //     $this->positionsArray[$positionsInfo['driver']] = $positionsInfo;
         // }
-        $this->positionsArray[$positionsInfo['driver']] = $positionsInfo;
+        $user = User::find($positionsInfo['driver']);
+        $userAvatar = $user->avatar;
+        $this->positionsArray[$user->name] = $positionsInfo;
+        $this->positionsArray[$user->name]['userAvatar'] = $userAvatar;
+        $this->emit('updateMap',$this->positionsArray );
         //dd($this->positionsArray);
     }
     public function render()
-    {
-        
+    { 
+        //dd('oki');
+        //$this->emit('postAdded');
         return view('livewire.tracking',[
             'positionsArray' => $this->positionsArray,
-        ]);
+        ]); 
     }
 }

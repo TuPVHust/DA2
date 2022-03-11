@@ -14,7 +14,7 @@ class BroadcastPosition extends Component
     {
         //dd(Auth::user()->name);
         //dd($timeStamp);
-        event(new TruckMoved($latitude, $longitude, $speed, $timeStamp, Auth::user()->name));
+        event(new TruckMoved($latitude, $longitude, $speed, $timeStamp, Auth::user()->id));
     }
     public function render()
     {
