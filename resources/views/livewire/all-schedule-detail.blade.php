@@ -174,10 +174,10 @@
                                         <select class="select2" style="width: 100%;" id="orderFilter"
                                             wire:model='orderFilter'>
                                             <option></option>
-                                            <option value="none"> Không thuộc đơn hàng nào</option>
+                                            {{-- <option value="none"> Không thuộc đơn hàng nào</option>
                                             @foreach ($orders as $order)
                                                 <option value="{{ $order->id }}"> {{ $order->summary }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div>

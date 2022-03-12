@@ -4,12 +4,13 @@
     @if (sizeof($positionsArray) > 0)
         @foreach ($positionsArray as $key1 => $items)
             {{-- <pre>{!! $positionsArray !!}</pre> --}}
-            <div class="user-block">
+            <div class="user-block mt-2">
                 <img class="img-circle img-bordered-sm"
                     src="{{ asset('/storage/' . config('chatify.user_avatar.folder') . '/' . $items['userAvatar']) }}"
                     alt="Avatar">
                 <span class="username">
-                    <a href="#">{{ $key1 }}.</a>
+                    <a href="javascript:void(0)"
+                        onclick="flyToLatLng({{ $items['lat'] }}, {{ $items['lng'] }})">{{ $key1 }}.</a>
                     {{-- <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a> --}}
                 </span>
                 <span class="description">
@@ -21,6 +22,7 @@
                     - {{ Carbon\Carbon::parse($items['timeStamp'])->format('h:m') }} PM
                 </span>
             </div>
+            <br>
         @endforeach
     @else
         <div class="d-flex align-items-center">

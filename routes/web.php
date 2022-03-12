@@ -32,6 +32,7 @@ Route::prefix('boss')->name('boss.')->middleware([CheckAdminLogin::class])->midd
     // Route::get('/', function () {
     //     return view('boss.dashboard');
     // })->name('dashboard');
+    Route::get('/getOrder', [OrdersController::class, 'getOrderFromSelect2'])->name('getOrderFromSelect2');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/tracking', [App\Http\Controllers\HomeController::class, 'tracking'])->name('tracking');
     Route::resources([

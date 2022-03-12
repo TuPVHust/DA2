@@ -21,6 +21,25 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function getOrderFromSelect2(Request $request)
+    {
+        //dd($_POST);
+        //include 'config.php';
+        if(!isset($_GET['searchTerm'])){ 
+            $fetchData = Order::take(7)->get();
+        }
+        else
+        { 
+            $search = $_GET['searchTerm'];   
+            $fetchData = Order::where('orders.summary' ,'LIKE','%'. $search .'%')->take(7)->get();
+        } 
+        $data = array();
+        $data[] = array("id"=>'none', "text"=>'Không thuộc đơn hàng nào');
+        foreach( $fetchData as $row ){
+            $data[] = array("id"=>$row['id'], "text"=>$row['summary']);
+        }   
+        return json_encode($data);
+    }
     /**
      * Show the form for creating a new resource.
      *

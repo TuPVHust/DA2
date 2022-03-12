@@ -111,6 +111,30 @@
     </script>
     <script>
         $(document).ready(function() {
+            $("#orderFilter").select2({
+                ajax: {
+                    url: "{{ route('boss.getOrderFromSelect2') }}",
+                    type: "get",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            searchTerm: params.term // search term
+                        };
+                    },
+                    processResults: function(response) {
+                        return {
+                            results: response
+                        };
+                    },
+                    cache: true,
+                },
+                placeholder: "Chọn để lọc",
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
             $('.select2_no_delete').select2({
                 placeholder: "Chọn để lọc",
             })

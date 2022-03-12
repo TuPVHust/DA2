@@ -108,7 +108,13 @@
                 //map.fitBounds(featureGroup.getBounds())
             }
         })
+
+        function flyToLatLng(lat, lng) {
+            //alert(lng);
+            map.flyTo([lat, lng], 10);
+        };
     </script>
+
     <script>
         $(document).ready(function() {
             //alert('oki');
