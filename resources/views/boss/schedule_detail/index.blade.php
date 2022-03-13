@@ -130,6 +130,7 @@
                     cache: true,
                 },
                 placeholder: "Chọn để lọc",
+                allowClear: true,
             });
         });
     </script>

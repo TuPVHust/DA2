@@ -32,7 +32,8 @@
                         @endif
                     </td>
                     <td class="text-right">
-                        <a class="btn btn-tool" wire:click="removeNotifi({{ $unreadNotification }})">
+                        <a href="javascript:void(0)" class="btn btn-tool"
+                            wire:click="removeNotifi({{ $unreadNotification }})">
                             <i class="fas fa-trash ">
                             </i>
                         </a>

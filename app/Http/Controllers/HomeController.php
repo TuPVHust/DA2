@@ -55,6 +55,7 @@ class HomeController extends Controller
 
         $timeInterval = array(1 => 'January',2=>'February',3=>'March',4=>'April',5=>'May',6=>'June',7=>'July',8=>'August',9=>'September',10=>'October',11=>'November',12=>'December');
         $year = Carbon::now()->year;
+        //$year = 2020;
         $month = Carbon::now()->month;
 
         $driver_details = User::join('schedules','users.id','=','schedules.driver_id')->join('schedule_details','schedule_details.schedule_id','=','schedules.id');
@@ -80,8 +81,9 @@ class HomeController extends Controller
 
         foreach($timeInterval as $key => $value)
         {
-            $scheduleDetails = ScheduleDetail::join('schedules','schedule_details.schedule_id','=','schedules.id')->join('cost_details','cost_details.schedule_id','=','schedules.id')->join('cost_groups','cost_groups.id','=','cost_details.cost_group_id')->join('categories','schedule_details.category_id','=','categories.id')->whereMonth('date', $key)->whereYear('date', $year);
+            $scheduleDetails = ScheduleDetail::leftJoin('schedules','schedule_details.schedule_id','=','schedules.id')->leftJoin('cost_details','cost_details.schedule_id','=','schedules.id')->leftJoin('cost_groups','cost_groups.id','=','cost_details.cost_group_id')->leftJoin('categories','schedule_details.category_id','=','categories.id')->whereMonth('schedules.date', $key)->whereYear('schedules.date', $year);
             $scheduleDetails = $scheduleDetails->get();
+            //dd($scheduleDetails->count());
             $revenue = $scheduleDetails->sum('revenue')/1000000;
             $actual_revenue = $scheduleDetails->sum('actual_revenue')/1000000;
             $cost = $scheduleDetails->sum('cost')/1000000;
@@ -104,7 +106,7 @@ class HomeController extends Controller
         $js_topCosts_name_array = json_encode($topCosts_name,JSON_UNESCAPED_UNICODE );
         $js_topCosts_value_array = json_encode($topCosts_value);
         
-        //dd($js_topCategories_name_array);
+        //dd($scheduleDetails->count());
         return view('boss.dashboard',[
             'revenueForMonth' => $js_revenueForMonth_array,
             'actualRevenueForMonth' => $js_actualRevenueForMonth_array,

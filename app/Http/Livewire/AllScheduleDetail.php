@@ -203,8 +203,15 @@ class AllScheduleDetail extends Component
         {
             $this->itemsPerPage =null;
         }
-        $this->itemsPerPage =(int)$this->itemsPerPage;
-        $schedule_details= $schedule_details->paginate((int)$this->itemsPerPage);
+        if($this->itemsPerPage)
+        {
+            $this->itemsPerPage =(int)$this->itemsPerPage;
+            $schedule_details= $schedule_details->paginate((int)$this->itemsPerPage);
+        }
+        else{
+            $this->itemsPerPage = 20;
+            $schedule_details= $schedule_details->paginate($this->itemsPerPage);
+        }
         $countShowing = $schedule_details->count();
         $total = $schedule_details->total();
         $this->resetPage();
